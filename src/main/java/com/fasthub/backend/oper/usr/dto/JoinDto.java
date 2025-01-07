@@ -1,4 +1,4 @@
-package com.fasthub.backend.usr.dto;
+package com.fasthub.backend.oper.usr.dto;
 
 import lombok.*;
 
@@ -11,6 +11,6 @@ public class JoinDto {
     private String userId;
     private String userPwd;
     private String userNm;
-    private String userAge;
+    private int userAge;
 
 }

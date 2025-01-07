@@ -1,4 +1,4 @@
-package com.fasthub.backend.usr.dto;
+package com.fasthub.backend.oper.usr.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsrDto {
+public class UserDto {
     private Long id;
     private String usrName;
     private String usrEmail;
