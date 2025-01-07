@@ -30,8 +30,8 @@ public class SecurityConfig {
                         .requestMatchers( "/usr/insert" , "/").permitAll()
                         .requestMatchers( PathRequest.toH2Console()).permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/usr/**").hasAnyRole("USER","ADMIN","MANGER")
                         .requestMatchers("/buyer").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/usr/**").hasAnyRole("USER","ADMIN","MANGER")
                         .anyRequest().authenticated()
                 )
                 .formLogin((formLogin) ->

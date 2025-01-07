@@ -1,5 +1,6 @@
 package com.fasthub.backend.oper.usr.entity;
 
+import com.fasthub.backend.cmm.jpa.UserRoleEntity;
 import com.fasthub.backend.oper.usr.dto.JoinDto;
 import jakarta.persistence.*;
 import lombok.*;
