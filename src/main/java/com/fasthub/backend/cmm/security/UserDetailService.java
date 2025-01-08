@@ -1,5 +1,6 @@
 package com.fasthub.backend.cmm.security;
 
+import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.oper.usr.dto.JoinDto;
 import com.fasthub.backend.oper.usr.entity.User;
 import com.fasthub.backend.oper.usr.repository.UserRepository;
@@ -30,6 +31,7 @@ public class UserDetailService implements UserDetailsService {
                 .userPw(passwordEncoder.encode(joinDto.getUserPwd()))
                 .userAge(joinDto.getUserAge())
                 .userNm(joinDto.getUserNm())
+                .authName(UserRole.valueOf("ROLE_"+joinDto.getAuthName()))
                 .build();
         User resultUsrEntity = userRepository.save(usrEntity);
         log.info("result : " + resultUsrEntity.getAuthorities());

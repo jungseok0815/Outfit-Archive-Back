@@ -8,19 +8,19 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-@Component
-@RequiredArgsConstructor
-@Slf4j
-public class initUserRole implements CommandLineRunner {
-
-    private final RoleRepository roleRepository;
-
-    @Override
-    public void run(String... args) {
-        Arrays.stream(UserRole.values()).forEach(role -> {
-            if (!roleRepository.existsByName(role)){
-                roleRepository.save(new UserRoleEntity(role));
-            }
-        });
-    }
-}
+//@Component
+//@RequiredArgsConstructor
+//@Slf4j
+//public class initUserRole implements CommandLineRunner {
+//
+//    private final RoleRepository roleRepository;
+//
+//    @Override
+//    public void run(String... args) {
+//        Arrays.stream(UserRole.values()).forEach(role -> {
+//            if (!roleRepository.existsByName(role)){
+//                roleRepository.save(new UserRoleEntity(role));
+//            }
+//        });
+//    }
+//}

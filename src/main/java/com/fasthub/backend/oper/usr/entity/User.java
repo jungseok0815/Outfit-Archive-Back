@@ -1,12 +1,13 @@
 package com.fasthub.backend.oper.usr.entity;
 
-import com.fasthub.backend.cmm.jpa.UserRoleEntity;
+import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.oper.usr.dto.JoinDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
@@ -36,13 +37,9 @@ public class User implements UserDetails {
     @Column(nullable = false, name = "USER_AGE")
     private long userAge;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",              // 조인 테이블 이름
-            joinColumns = @JoinColumn(name = "user_id"),           // 현재 엔티티(User)를 참조하는 컬럼
-            inverseJoinColumns = @JoinColumn(name = "role_id")     // 대상 엔티티(Role)를 참조하는 컬럼
-    )
-    private Set<UserRoleEntity> roles = new HashSet<>();
+    @Column(nullable = false, name = "AUTH_NAME")
+    @Enumerated(EnumType.STRING)
+    private UserRole authName;
 
     @CreatedDate
     @Column(updatable = false)
@@ -53,7 +50,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {;
-        return null;
+        return Collections.singleton(new SimpleGrantedAuthority(authName.name()));
     }
 
     @Override

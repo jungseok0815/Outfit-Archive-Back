@@ -10,7 +10,8 @@ public enum UserRole {
     ROLE_ADMIN,
     ROLE_MANAGER;
 
-    public GrantedAuthority getAuthority() {
-        return new SimpleGrantedAuthority("ROLE_"+this.name());
+    public String getAuthority() {
+        return "ROLE_"+this.name();
     }
+
 }

@@ -28,7 +28,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests((auth) -> auth
                         .requestMatchers( "/usr/insert" , "/").permitAll()
-                        .requestMatchers( PathRequest.toH2Console()).permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/buyer").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/usr/**").hasAnyRole("USER","ADMIN","MANGER")
