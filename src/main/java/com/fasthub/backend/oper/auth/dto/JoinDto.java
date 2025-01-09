@@ -1,4 +1,4 @@
-package com.fasthub.backend.oper.usr.dto;
+package com.fasthub.backend.oper.auth.dto;
 
 import com.fasthub.backend.cmm.enums.UserRole;
 import lombok.*;

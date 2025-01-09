@@ -1,7 +1,6 @@
-package com.fasthub.backend.oper.usr.entity;
+package com.fasthub.backend.oper.auth.entity;
 
 import com.fasthub.backend.cmm.enums.UserRole;
-import com.fasthub.backend.oper.usr.dto.JoinDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,6 +17,7 @@ import java.util.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "Member")
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User implements UserDetails {
     @Id
@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private String userPw;
 
     @Column(nullable = false, name = "USER_AGE")
-    private long userAge;
+    private int userAge;
 
     @Column(nullable = false, name = "AUTH_NAME")
     @Enumerated(EnumType.STRING)

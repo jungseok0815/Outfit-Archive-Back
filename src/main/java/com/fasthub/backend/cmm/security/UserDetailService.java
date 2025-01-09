@@ -1,12 +1,11 @@
 package com.fasthub.backend.cmm.security;
 
 import com.fasthub.backend.cmm.enums.UserRole;
-import com.fasthub.backend.oper.usr.dto.JoinDto;
-import com.fasthub.backend.oper.usr.entity.User;
-import com.fasthub.backend.oper.usr.repository.UserRepository;
+import com.fasthub.backend.oper.auth.dto.JoinDto;
+import com.fasthub.backend.oper.auth.entity.User;
+import com.fasthub.backend.oper.auth.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.mapping.Join;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AuthRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
