@@ -1,6 +1,5 @@
-package com.fasthub.backend.cmm.security;
+package com.fasthub.backend.cmm.jwt;
 
-import com.fasthub.backend.oper.auth.dto.CustomUserDetails;
 import com.fasthub.backend.oper.auth.service.CoustomUserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

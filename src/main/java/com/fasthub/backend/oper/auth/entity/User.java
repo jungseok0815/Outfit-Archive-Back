@@ -19,7 +19,7 @@ import java.util.*;
 @Table(name = "Member")
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User implements UserDetails {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -47,21 +47,5 @@ public class User implements UserDetails {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {;
-        return Collections.singleton(new SimpleGrantedAuthority(authName.name()));
-    }
-
-    @Override
-    public String getPassword() {
-        return userPw;
-    }
-
-    @Override
-    public String getUsername() {
-        return userId;
-    }
-
 }
 

@@ -1,4 +1,4 @@
-package com.fasthub.backend.cmm.security;
+package com.fasthub.backend.cmm.jwt;
 
 import com.fasthub.backend.oper.auth.dto.CustomUserInfoDto;
 import io.jsonwebtoken.*;

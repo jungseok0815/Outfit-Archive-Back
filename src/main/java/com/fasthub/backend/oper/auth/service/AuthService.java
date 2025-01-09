@@ -1,7 +1,7 @@
 package com.fasthub.backend.oper.auth.service;
 
 import com.fasthub.backend.cmm.enums.UserRole;
-import com.fasthub.backend.cmm.security.JwtUtil;
+import com.fasthub.backend.cmm.jwt.JwtUtil;
 import com.fasthub.backend.oper.auth.dto.CustomUserInfoDto;
 import com.fasthub.backend.oper.auth.dto.JoinDto;
 import com.fasthub.backend.oper.auth.dto.LoginDto;
@@ -47,15 +47,14 @@ public class AuthService {
         return accessToken;
     }
 
-    public void join(JoinDto joinDto){
+    public User join(JoinDto joinDto){
         User usrEntity = User.builder().userId(joinDto.getUserId())
                 .userPw(passwordEncoder.encode(joinDto.getUserPwd()))
                 .userAge(joinDto.getUserAge())
                 .userNm(joinDto.getUserNm())
                 .authName(UserRole.valueOf("ROLE_"+joinDto.getAuthName()))
                 .build();
-        User resultUsrEntity = authRepository.save(usrEntity);
-        log.info("result : " + resultUsrEntity.getAuthorities());
+        return authRepository.save(usrEntity);
     }
 
 
