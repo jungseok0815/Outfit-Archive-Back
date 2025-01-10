@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: backend
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/FastHub
+    username: root
+    password: wjdtjr9401@
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        hibernate:
+          ddl-auto: update
+          database-platform: org.hibernate.dialect.MySQLDialect
+
+  jwt:
+    access-exporation: 86400000
+    refresh-exporation: 10800000  # 3hours * 60min * 60sec * 1000 millisecond
+    access-secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+    refesh-secret: VlwEyVBsYt9V7zq57TeasdfjasdfjascfPQye08f7MGVA9XkHa
+
+# H2 ?? (?? ???)
+#spring:
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    username: jungseok
+#    password: 9401
+#    url: jdbc:h2:~/test

@@ -1,50 +1,51 @@
 package com.fasthub.backend.oper.auth.service;
 
+import com.fasthub.backend.cmm.enums.ErrorCode;
 import com.fasthub.backend.cmm.enums.UserRole;
-import com.fasthub.backend.cmm.jwt.JwtUtil;
-import com.fasthub.backend.oper.auth.dto.CustomUserInfoDto;
+import com.fasthub.backend.cmm.exception.BusinessException;
+import com.fasthub.backend.cmm.jwt.JwtService;
+import com.fasthub.backend.oper.auth.dto.UserDto;
 import com.fasthub.backend.oper.auth.dto.JoinDto;
 import com.fasthub.backend.oper.auth.dto.LoginDto;
 import com.fasthub.backend.oper.auth.entity.User;
 import com.fasthub.backend.oper.auth.repository.AuthRepository;
-import lombok.AllArgsConstructor;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
-@AllArgsConstructor
 public class AuthService {
-
     private final AuthRepository authRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
     private final ModelMapper modelMapper;
+    private final JwtService jwtService;
 
-    public String login(LoginDto loginDto){
+    public UserDto login(LoginDto loginDto, HttpServletResponse response){
         User usrEntity = User.builder().userId(loginDto.getUserId())
                 .userPw(loginDto.getUserPwd())
                 .build();
         Optional<User> user  = authRepository.findByUserId(usrEntity.getUserId());
+
         if (user.isEmpty()){
-            log.info("아이디가 존재하지 않습니다.");
-            throw new UsernameNotFoundException("아이디가 존재하지 않습니다.");
+            throw new BusinessException(ErrorCode.ID_NOT_FOUND);
         }
         if (!passwordEncoder.matches(loginDto.getUserPwd(), user.get().getUserPw())){
-            log.info("password가 존재하지 않습니다.");
-            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+            throw new BusinessException(ErrorCode.PWD_NOT_FOUND);
         }
-        CustomUserInfoDto info = modelMapper.map(usrEntity, CustomUserInfoDto.class);
-        log.info(info.toString());
-        String accessToken = jwtUtil.createAccessToken(info);
-        log.info("accessToken : " + accessToken);
-        return accessToken;
+        String accessToken = jwtService.generateAccessToken(response, user.get());
+        String refreshToken = jwtService.generateRefreshToken(response, user.get());
+        System.out.println("accessToken : " + accessToken);
+        System.out.println("refreshToken : " + refreshToken);
+
+        return null;
     }
 
     public User join(JoinDto joinDto){
@@ -56,6 +57,4 @@ public class AuthService {
                 .build();
         return authRepository.save(usrEntity);
     }
-
-
 }

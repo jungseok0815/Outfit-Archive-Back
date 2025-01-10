@@ -1,14 +1,19 @@
 package com.fasthub.backend.oper.auth.controller;
 
+import com.fasthub.backend.cmm.jwt.JwtGenerator;
+import com.fasthub.backend.cmm.result.Result;
 import com.fasthub.backend.oper.auth.dto.JoinDto;
 import com.fasthub.backend.oper.auth.dto.LoginDto;
+import com.fasthub.backend.oper.auth.dto.UserDto;
+import com.fasthub.backend.oper.auth.entity.User;
+import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.oper.auth.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,22 +28,18 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(LoginDto loginDto){
-        String token = authService.login(loginDto);
-//
-//        ResponseCookie cookie = ResponseCookie.from("accessToken",token)
-//                .maxAge(7 * 24 * 60 * 60)
-//                .path("/")
-//                .secure(true)
-//                .sameSite("None")
-//                .httpOnly(true)
-//                .build();
-//
-        return ResponseEntity.status(HttpStatus.OK).body(token);
+    public ResponseEntity<String> login(LoginDto loginDto, HttpServletRequest request, HttpServletResponse response){
+        authService.login(loginDto, response);
+        return ResponseEntity.status(HttpStatus.OK).body("test");
     }
 
     @PostMapping("/join")
-    public void join(JoinDto joinDto){
-        authService.join(joinDto);
+    public Result join(JoinDto joinDto){
+        User user = authService.join(joinDto);
+        if (user == null){
+            return Result.fail("회원가입 실패");
+        }else{
+           return Result.success("회원가입 성공");
+        }
     }
 }
