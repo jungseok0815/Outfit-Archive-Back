@@ -1,6 +1,5 @@
 package com.fasthub.backend.oper.auth.dto;
 
-import com.fasthub.backend.oper.auth.dto.CustomUserInfoDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +13,7 @@ import java.util.Collections;
 @Getter
 public class CustomUserDetails implements UserDetails {
 
-    private final CustomUserInfoDto userInfoDto;
+    private final UserDto userInfoDto;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

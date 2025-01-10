@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class CustomUserInfoDto extends User {
+public class UserDto extends User {
     private Long id;
     private String userId;
     private String userPwd;

@@ -1,7 +1,7 @@
 package com.fasthub.backend.oper.auth.service;
 
 import com.fasthub.backend.oper.auth.dto.CustomUserDetails;
-import com.fasthub.backend.oper.auth.dto.CustomUserInfoDto;
+import com.fasthub.backend.oper.auth.dto.UserDto;
 import com.fasthub.backend.oper.auth.entity.User;
 import com.fasthub.backend.oper.auth.repository.AuthRepository;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class CoustomUserDetailService implements UserDetailsService {
         User user = authRepository.findById(Long.valueOf(userId))
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저가 없습니다."));
 
-        CustomUserInfoDto dto = modelMapper.map(user, CustomUserInfoDto.class);
+        UserDto dto = modelMapper.map(user, UserDto.class);
 
         return new CustomUserDetails(dto);
 
