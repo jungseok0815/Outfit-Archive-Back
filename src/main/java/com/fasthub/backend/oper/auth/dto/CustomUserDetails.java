@@ -2,6 +2,7 @@ package com.fasthub.backend.oper.auth.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import java.util.Collections;
 
 @RequiredArgsConstructor
 @Getter
+@ToString
 public class CustomUserDetails implements UserDetails {
 
     private final UserDto userInfoDto;

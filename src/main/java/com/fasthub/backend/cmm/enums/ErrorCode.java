@@ -22,7 +22,10 @@ public enum ErrorCode {
 
     // Coupon
     COUPON_ALREADY_USE(400, "CP001", "Coupon was already used"),
-    COUPON_EXPIRE(400, "CP002", "Coupon was already expired");
+    COUPON_EXPIRE(400, "CP002", "Coupon was already expired"),
+    NOT_REFRESG_KEY(400, "CP003", "리프레쉬 키 해석 실패");
+
+
 
     private final int status;
     private final String code;

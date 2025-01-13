@@ -8,10 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @Getter
 @RequiredArgsConstructor
 public enum UserRole {
-    NOT_REGISTERED("ROLE_NOT_REGISTERED", "회원가입 이전 사용자"),
-    USER("ROLE_USER", "일반 사용자"),
-    ADMIN("ROLE_ADMIN", "관리자");
+    NOT_REGISTERED,
+    ROLE_USER,
+    ADMIN
 
-    private final String key;
-    private final String title;
 }

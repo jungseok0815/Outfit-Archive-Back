@@ -1,6 +1,7 @@
 package com.fasthub.backend.oper.auth.service;
 
 import com.fasthub.backend.cmm.enums.ErrorCode;
+import com.fasthub.backend.cmm.enums.JwtRule;
 import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.exception.BusinessException;
 import com.fasthub.backend.cmm.jwt.JwtService;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.XSlf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -40,10 +42,11 @@ public class AuthService {
         if (!passwordEncoder.matches(loginDto.getUserPwd(), user.get().getUserPw())){
             throw new BusinessException(ErrorCode.PWD_NOT_FOUND);
         }
+
         String accessToken = jwtService.generateAccessToken(response, user.get());
         String refreshToken = jwtService.generateRefreshToken(response, user.get());
-        System.out.println("accessToken : " + accessToken);
-        System.out.println("refreshToken : " + refreshToken);
+        System.out.println("issued accessToken : " + accessToken);
+        System.out.println("issued refreshToken : " + refreshToken);
 
         return null;
     }
@@ -53,7 +56,7 @@ public class AuthService {
                 .userPw(passwordEncoder.encode(joinDto.getUserPwd()))
                 .userAge(joinDto.getUserAge())
                 .userNm(joinDto.getUserNm())
-                .authName(UserRole.valueOf("ROLE_"+joinDto.getAuthName()))
+                .authName(UserRole.ROLE_USER)
                 .build();
         return authRepository.save(usrEntity);
     }

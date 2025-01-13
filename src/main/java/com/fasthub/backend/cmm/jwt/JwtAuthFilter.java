@@ -1,57 +1,73 @@
 package com.fasthub.backend.cmm.jwt;
 
 import com.fasthub.backend.cmm.enums.JwtRule;
+import com.fasthub.backend.oper.auth.entity.User;
+import com.fasthub.backend.oper.auth.repository.AuthRepository;
+import com.fasthub.backend.oper.auth.service.AuthService;
 import com.fasthub.backend.oper.auth.service.CoustomUserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-//    private final JwtUtil jwtUtil;
-//    private final CoustomUserDetailService customUserDetailsService;
-    private final JwtService authService;
-    private final CoustomUserDetailService coustomUserDetailService;
+    private final JwtService jwtService;
+    private final AuthRepository authRepository;
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-//        String authorizationHeader = request.getHeader("Authorization");
-//        System.out.println("authorizationHeader : " + authorizationHeader);
-//
-//        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
-//            System.out.println("authorizationHeader : " + authorizationHeader);
-//            String token = authorizationHeader.substring(7);
-//            if (jwtUtil.validateToken(token)) {
-//                String userId = jwtUtil.getUserId(token);
-//                UserDetails userDetails = customUserDetailsService.loadUserByUsername(userId);
-//
-//                if (userDetails != null){
-//                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-//                }
-//            }
-//
-//        }
 
+        String accessToken = jwtService.resolveTokenFromCookie(request, JwtRule.ACCESS_PREFIX);
+        String refreshToken = jwtService.resolveTokenFromCookie(request, JwtRule.REFRESH_PREFIX);
 
-        String accessToken = authService.resolveTokenFromCookie(request, JwtRule.ACCESS_PREFIX);
-        if (authService.validateAccessToken(accessToken)){
-            System.out.println("accessToke in JwtFilter : " + accessToken);
+        if (accessToken == null && refreshToken == null){
+            SecurityContextHolder.getContext().setAuthentication(null);
             filterChain.doFilter(request,response);
             return;
         }
 
-        String refreshToken = authService.resolveTokenFromCookie(request, JwtRule.REFRESH_PREFIX);
-//        User user = findUserByRefreshToken(refreshToken);
+        if (jwtService.validateAccessToken(accessToken)) {
+            System.out.println("accessToke in JwtFilter : " + accessToken);
+            setAuthenticationToContext(accessToken);
+            filterChain.doFilter(request, response);
+            return;
+        }
 
+        User user = findUserByRefreshToken(refreshToken);
+        if (jwtService.validateRefreshToken(refreshToken, user.getUserId())) {
+            String reissuedAccessToken = jwtService.generateAccessToken(response, user);
+            jwtService.generateRefreshToken(response, user);
 
+            setAuthenticationToContext(reissuedAccessToken);
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         filterChain.doFilter(request, response); // 다음 필터로 넘기기
     }
+
+
+    private void setAuthenticationToContext(String accessToken) {
+        Authentication authentication = jwtService.getAuthentication(accessToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    private User findUserByRefreshToken(String refreshToken){
+        String identifier = jwtService.getIdentifierFromRefresh(refreshToken);
+        return  authRepository.findByUserId(identifier).get();
+    }
+
+
+
 }

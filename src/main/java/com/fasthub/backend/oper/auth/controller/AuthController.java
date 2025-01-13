@@ -1,5 +1,6 @@
 package com.fasthub.backend.oper.auth.controller;
 
+import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.jwt.JwtGenerator;
 import com.fasthub.backend.cmm.result.Result;
 import com.fasthub.backend.oper.auth.dto.JoinDto;
@@ -15,7 +16,13 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Slf4j
@@ -29,6 +36,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(LoginDto loginDto, HttpServletRequest request, HttpServletResponse response){
+        System.out.println("lksddjfklsjdkfljlks");
         authService.login(loginDto, response);
         return ResponseEntity.status(HttpStatus.OK).body("test");
     }
@@ -42,4 +50,19 @@ public class AuthController {
            return Result.success("회원가입 성공");
         }
     }
+
+    @PostMapping("/vailData")
+    public Result vailData(){
+        // SecurityContext에서 인증 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("authenticated : " + authentication);
+        if (authentication != null && authentication.isAuthenticated()) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            log.info("userDetail : " + userDetails.toString());
+            return Result.success("인증 성공", userDetails);
+        }
+        return Result.fail("인증 실패" , null);
+
+    }
+
 }
