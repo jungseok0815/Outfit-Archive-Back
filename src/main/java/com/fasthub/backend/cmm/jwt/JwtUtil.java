@@ -18,85 +18,12 @@ import java.util.Base64;
 @Slf4j
 @Component
 public class JwtUtil {
-//    private final Key key;
-//    private final long accessTokenExpTime;
-
-//    public JwtUtil(
-//            @Value("${jwt.secret}")
-//            String secretKey,
-//            @Value("${jwt.expiration_time}")
-//            long accessTokenExpTime
-//    ) {
-//        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-//        this.key = Keys.hmacShaKeyFor(keyBytes);
-//        this.accessTokenExpTime = accessTokenExpTime;
-//    }
-//
-//    /**
-//     * Access Token 생성
-//     * @param member
-//     * @return Access Token String
-//     */
-//    public String createAccessToken(CustomUserInfoDto member) {
-//        return createToken(member, accessTokenExpTime);
-//    }
-//
-//    /**
-//     * JWT 생성
-//     * @param member
-//     * @param expireTime
-//     * @return JWT String
-//     */
-//    private String createToken(CustomUserInfoDto member, long expireTime) {
-//        Claims claims = Jwts.claims();
-//        claims.put("userId", member.getUserId());
-//        claims.put("userNm", member.getUserNm());
-//        claims.put("role", member.getRole());
-//
-//        ZonedDateTime now = ZonedDateTime.now();
-//        ZonedDateTime tokenValidity = now.plusSeconds(expireTime);
-//
-//
-//        return Jwts.builder()
-//                .setClaims(claims)
-//                .setIssuedAt(Date.from(now.toInstant()))
-//                .setExpiration(Date.from(tokenValidity.toInstant()))
-//                .signWith(key, SignatureAlgorithm.HS256)
-//                .compact();
-//    }
-//
-//    /**
-//     * Token에서 User ID 추출
-//     * @param token
-//     * @return User ID
-//     */
-//    public String getUserId(String token) {
-//        return parseClaims(token).get("userId", String.class);
-//    }
-
-//    /**
-//     * JWT 검증
-//     * @param token
-//     * @return IsValidate
-//     */
-//    public boolean validateToken(String token) {
-//        try {
-//            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-//            return true;
-//        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-//            log.info("Invalid JWT Token", e);
-//        } catch (ExpiredJwtException e) {
-//            log.info("Expired JWT Token", e);
-//        } catch (UnsupportedJwtException e) {
-//            log.info("Unsupported JWT Token", e);
-//        } catch (IllegalArgumentException e) {
-//            log.info("JWT claims string is empty.", e);
-//        }
-//        return false;
-//    }
-
-
-    //Token의 상태를 확인하는 매소드
+    /**
+     * Token의 상태를 확인하는 매소드
+     * @param token
+     * @param secretKey
+     * @return
+     */
     public TokenStatus getTokenStatus(String token, Key secretKey) {
         try {
             Jwts.parserBuilder()
@@ -113,11 +40,14 @@ public class JwtUtil {
 
     // 쿠키에서 원하는 토큰을 찾는다!
     public String resolveTokenFromCookie(Cookie[] cookies, JwtRule tokenPrefix) {
-        return Arrays.stream(cookies)
-                .filter(cookie -> cookie.getName().equals(tokenPrefix.getValue()))
-                .findFirst()
-                .map(Cookie::getValue)
-                .orElse("");
+        if (cookies != null){
+            return Arrays.stream(cookies)
+                    .filter(cookie -> cookie.getName().equals(tokenPrefix.getValue()))
+                    .findFirst()
+                    .map(Cookie::getValue)
+                    .orElse(null);
+        }
+        return null;
     }
 
     public Key getSigningKey(String secretKey) {
@@ -136,20 +66,5 @@ public class JwtUtil {
         return cookie;
     }
 
-
-
-
-//    /**
-//     * JWT Claims 추출
-//     * @param accessToken
-//     * @return JWT Claims
-//     */
-//    public Claims parseClaims(String accessToken) {
-//        try {
-//            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
-//        } catch (ExpiredJwtException e) {
-//            return e.getClaims();
-//        }
-//    }
 
 }

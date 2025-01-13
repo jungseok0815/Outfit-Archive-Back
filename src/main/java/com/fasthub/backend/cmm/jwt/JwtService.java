@@ -4,9 +4,11 @@ import com.fasthub.backend.cmm.enums.JwtRule;
 import com.fasthub.backend.cmm.enums.TokenStatus;
 import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.exception.BusinessException;
+import com.fasthub.backend.oper.auth.dto.CustomUserDetails;
 import com.fasthub.backend.oper.auth.entity.User;
 import com.fasthub.backend.oper.auth.repository.AuthRepository;
 import com.fasthub.backend.oper.auth.service.CoustomUserDetailService;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +16,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +26,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Key;
 
 import static com.fasthub.backend.cmm.enums.ErrorCode.NOT_AUTHENTICATED_USER;
+import static com.fasthub.backend.cmm.enums.ErrorCode.NOT_REFRESG_KEY;
 import static com.fasthub.backend.cmm.enums.JwtRule.*;
 
 @Service
 @Slf4j
-@AllArgsConstructor
 @Transactional(readOnly = true)
 public class JwtService {
 
@@ -40,7 +45,8 @@ public class JwtService {
     private final long ACCESS_EXPIRATION;
     private final long REFRESH_EXPIRATION;
 
-    private JwtService(
+
+    public JwtService(
             CoustomUserDetailService coustomUserDetailService,
             JwtGenerator jwtGenerator,
             JwtUtil jwtUtil,
@@ -94,7 +100,7 @@ public class JwtService {
     @Transactional
     public String generateRefreshToken(HttpServletResponse response, User requestUser) {
         String refreshToken = jwtGenerator.generateRefreshToken(REFRESH_SECRET_KEY, REFRESH_EXPIRATION, requestUser);
-        ResponseCookie cookie = setTokenToCookie(REFRESH_PREFIX.name(), refreshToken, REFRESH_EXPIRATION / 1000);
+        ResponseCookie cookie = setTokenToCookie(REFRESH_PREFIX.getValue(), refreshToken, REFRESH_EXPIRATION / 1000);
         response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
         return refreshToken;
     }
@@ -151,5 +157,41 @@ public class JwtService {
 //        boolean isTokenMatched = storedToken.getToken().equals(token);
         return isRefreshValid;
     }
+
+
+    /**
+     *
+     * @param token
+     * @return
+     */
+    public Authentication getAuthentication(String token) {
+        CustomUserDetails principal = coustomUserDetailService.loadUserByUsername(getUserPk(token, ACCESS_SECRET_KEY));
+        log.info("principal11111 : " + principal);
+        log.info("principal22222 : " + principal.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
+    }
+
+    private String getUserPk(String token, Key secretKey) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public String getIdentifierFromRefresh(String refreshToken) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(REFRESH_SECRET_KEY)
+                    .build()
+                    .parseClaimsJws(refreshToken)
+                    .getBody()
+                    .getSubject();
+        } catch (Exception e) {
+            throw new BusinessException(NOT_REFRESG_KEY);
+        }
+    }
+
 
 }

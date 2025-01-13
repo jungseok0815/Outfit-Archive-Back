@@ -17,7 +17,6 @@ public class JwtGenerator {
     //Access Token생성
     public String generateAccessToken(final Key ACCESS_SECRET, final long ACCESS_EXPIRATION, User user) {
         Long now = System.currentTimeMillis();
-
         return Jwts.builder()
                 .setHeader(createHeader())
                 .setClaims(createClaims(user))
@@ -30,12 +29,10 @@ public class JwtGenerator {
     //Refresh Token생성
     public String generateRefreshToken(final Key REFRESH_SECRET, final long REFRESH_EXPIRATION, User user) {
         Long now = System.currentTimeMillis();
-
         Map<String, Object> userIdentifier = new HashMap<>();
         userIdentifier.put("userId" , user.getUserId());
         userIdentifier.put("userNm",  user.getUserNm());
         userIdentifier.put("authName", user.getAuthName());
-
         return Jwts.builder()
                 .setHeader(createHeader())
                 .setSubject(user.getUserId())
