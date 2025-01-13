@@ -3,6 +3,7 @@ package com.fasthub.backend.oper.auth.controller;
 import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.jwt.JwtGenerator;
 import com.fasthub.backend.cmm.result.Result;
+import com.fasthub.backend.oper.auth.dto.CustomUserDetails;
 import com.fasthub.backend.oper.auth.dto.JoinDto;
 import com.fasthub.backend.oper.auth.dto.LoginDto;
 import com.fasthub.backend.oper.auth.dto.UserDto;
@@ -36,7 +37,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(LoginDto loginDto, HttpServletRequest request, HttpServletResponse response){
-        System.out.println("lksddjfklsjdkfljlks");
         authService.login(loginDto, response);
         return ResponseEntity.status(HttpStatus.OK).body("test");
     }
@@ -51,15 +51,18 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/vailData")
+    /**
+     * 로그인이 되어잇는지 유저 확인
+     * @return
+     */
+    @GetMapping("/validate")
     public Result vailData(){
         // SecurityContext에서 인증 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.info("authenticated : " + authentication);
-        if (authentication != null && authentication.isAuthenticated()) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            log.info("userDetail : " + userDetails.toString());
-            return Result.success("인증 성공", userDetails);
+        authentication.getName();
+        if (authentication.getName() != "anonymousUser" ) {
+            CustomUserDetails CustomUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            return Result.success("인증 성공", CustomUserDetails);
         }
         return Result.fail("인증 실패" , null);
 

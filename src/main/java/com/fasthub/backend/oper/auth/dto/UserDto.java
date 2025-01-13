@@ -1,5 +1,6 @@
 package com.fasthub.backend.oper.auth.dto;
 
+import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.oper.auth.entity.User;
 import lombok.*;
 
@@ -15,5 +16,7 @@ public class UserDto extends User {
     private String userPwd;
     private String userNm;
     private int userAge;
-    private String role;
+    private UserRole authName;
+
+
 }
