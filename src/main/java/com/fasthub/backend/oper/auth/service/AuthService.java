@@ -27,10 +27,9 @@ import java.util.Optional;
 public class AuthService {
     private final AuthRepository authRepository;
     private final PasswordEncoder passwordEncoder;
-    private final ModelMapper modelMapper;
     private final JwtService jwtService;
 
-    public UserDto login(LoginDto loginDto, HttpServletResponse response){
+    public User login(LoginDto loginDto, HttpServletResponse response){
         User usrEntity = User.builder().userId(loginDto.getUserId())
                 .userPw(loginDto.getUserPwd())
                 .build();
@@ -42,13 +41,9 @@ public class AuthService {
         if (!passwordEncoder.matches(loginDto.getUserPwd(), user.get().getUserPw())){
             throw new BusinessException(ErrorCode.PWD_NOT_FOUND);
         }
-
-        String accessToken = jwtService.generateAccessToken(response, user.get());
-        String refreshToken = jwtService.generateRefreshToken(response, user.get());
-        System.out.println("issued accessToken : " + accessToken);
-        System.out.println("issued refreshToken : " + refreshToken);
-
-        return null;
+        jwtService.generateAccessToken(response, user.get());
+        jwtService.generateRefreshToken(response, user.get());
+        return user.get();
     }
 
     public User join(JoinDto joinDto){
