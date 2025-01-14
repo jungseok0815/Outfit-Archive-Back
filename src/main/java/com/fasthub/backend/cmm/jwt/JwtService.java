@@ -36,7 +36,6 @@ public class JwtService {
 
     private final AuthRepository authRepository;
     private final JwtGenerator jwtGenerator;
-    private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final CoustomUserDetailService coustomUserDetailService;
 
@@ -56,12 +55,12 @@ public class JwtService {
             @Value("${jwt.refresh-secret}") String REFRESH_SECRET_KEY,
             @Value("${jwt.access-expiration}") long ACCESS_EXPIRATION,
             @Value("${jwt.refresh-expiration}") long REFRESH_EXPIRATION
+
     ) {
         this.coustomUserDetailService = coustomUserDetailService;
         this.jwtGenerator = jwtGenerator;
         this.jwtUtil = jwtUtil;
         this.authRepository = authRepository;
-        this.passwordEncoder = passwordEncoder;
         this.ACCESS_SECRET_KEY = jwtUtil.getSigningKey(ACCESS_SECRET_KEY);
         this.REFRESH_SECRET_KEY = jwtUtil.getSigningKey(REFRESH_SECRET_KEY);
         this.ACCESS_EXPIRATION = ACCESS_EXPIRATION;
@@ -106,7 +105,7 @@ public class JwtService {
     }
 
     /**
-     * 쿠기
+     * 쿠기 세팅
      * @param tokenPrefix
      * @param token
      * @param maxAgeSeconds
@@ -142,6 +141,7 @@ public class JwtService {
      * @return
      */
     public boolean validateAccessToken(String token) {
+        log.info("valiDataResult : " + jwtUtil.getTokenStatus(token, ACCESS_SECRET_KEY));
         return jwtUtil.getTokenStatus(token, ACCESS_SECRET_KEY) == TokenStatus.AUTHENTICATED;
     }
 
@@ -152,6 +152,7 @@ public class JwtService {
      * @return
      */
     public boolean validateRefreshToken(String token, String identifier) {
+        log.info("refreshToken identifier : " + identifier);
         boolean isRefreshValid = jwtUtil.getTokenStatus(token, REFRESH_SECRET_KEY) == TokenStatus.AUTHENTICATED;
 //        Token storedToken = tokenRepository.findByIdentifier(identifier);
 //        boolean isTokenMatched = storedToken.getToken().equals(token);
@@ -160,17 +161,21 @@ public class JwtService {
 
 
     /**
-     *
+     * access token을 통해서 security principal에 유저 상태 및 정보 저장
      * @param token
      * @return
      */
     public Authentication getAuthentication(String token) {
         CustomUserDetails principal = coustomUserDetailService.loadUserByUsername(getUserPk(token, ACCESS_SECRET_KEY));
-        log.info("principal11111 : " + principal);
-        log.info("principal22222 : " + principal.getAuthorities());
         return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
     }
 
+    /**
+     * 토큰을 가지고 유저 정보 추출
+     * @param token
+     * @param secretKey
+     * @return
+     */
     private String getUserPk(String token, Key secretKey) {
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
@@ -180,6 +185,11 @@ public class JwtService {
                 .getSubject();
     }
 
+    /**
+     *
+     * @param refreshToken
+     * @return
+     */
     public String getIdentifierFromRefresh(String refreshToken) {
         try {
             return Jwts.parserBuilder()

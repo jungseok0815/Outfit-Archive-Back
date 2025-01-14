@@ -27,7 +27,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+        /**
+         * 쿠기에서 담겨서 전달되는 token을 가져온다.
+         */
         String accessToken = jwtService.resolveTokenFromCookie(request, JwtRule.ACCESS_PREFIX);
         String refreshToken = jwtService.resolveTokenFromCookie(request, JwtRule.REFRESH_PREFIX);
 
@@ -37,23 +39,26 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
+        /**
+         * access token토큰 유효성 검사
+         */
         if (jwtService.validateAccessToken(accessToken)) {
-            System.out.println("accessToke in JwtFilter : " + accessToken);
             setAuthenticationToContext(accessToken);
             filterChain.doFilter(request, response);
             return;
         }
 
+        /**
+         * refresh token 유효성 검사
+         */
         User user = findUserByRefreshToken(refreshToken);
         if (jwtService.validateRefreshToken(refreshToken, user.getUserId())) {
             String reissuedAccessToken = jwtService.generateAccessToken(response, user);
             jwtService.generateRefreshToken(response, user);
-
             setAuthenticationToContext(reissuedAccessToken);
             filterChain.doFilter(request, response);
             return;
         }
-
         filterChain.doFilter(request, response); // 다음 필터로 넘기기
     }
 

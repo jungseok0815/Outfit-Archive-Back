@@ -32,13 +32,19 @@ public class JwtUtil {
                     .parseClaimsJws(token);
             return TokenStatus.AUTHENTICATED;
         } catch (ExpiredJwtException | IllegalArgumentException e) {
+            log.info("유효시간이 다 되었습니다.");
             return TokenStatus.EXPIRED;
         } catch (JwtException e) {
             throw new JwtException("유효하지 않은 토큰");
         }
     }
 
-    // 쿠키에서 원하는 토큰을 찾는다!
+    /**
+     * 쿠기 조회해서 원하는 쿠키를 찾음
+     * @param cookies
+     * @param tokenPrefix
+     * @return
+     */
     public String resolveTokenFromCookie(Cookie[] cookies, JwtRule tokenPrefix) {
         if (cookies != null){
             return Arrays.stream(cookies)

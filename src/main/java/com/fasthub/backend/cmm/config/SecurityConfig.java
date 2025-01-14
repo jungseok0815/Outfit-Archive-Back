@@ -51,14 +51,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**","/js/**", "/img/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/user/**").authenticated()
+                        .requestMatchers("/api/user/**").hasRole("USER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> {
                     exception.authenticationEntryPoint(
                             (request, response, authException) -> {
-                                System.out.println("401:::::");
                                 // 인증되지 않은 사용자 접근시 401 반환
                                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
                             }

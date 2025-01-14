@@ -36,18 +36,17 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(LoginDto loginDto, HttpServletRequest request, HttpServletResponse response){
-        authService.login(loginDto, response);
-        return ResponseEntity.status(HttpStatus.OK).body("test");
+    public Result login(LoginDto loginDto, HttpServletRequest request, HttpServletResponse response){
+        return Result.success("로그인 성공",authService.login(loginDto, response));
     }
 
     @PostMapping("/join")
     public Result join(JoinDto joinDto){
         User user = authService.join(joinDto);
         if (user == null){
-            return Result.fail("회원가입 실패");
+            return Result.fail("회원가입 실패", "fail");
         }else{
-           return Result.success("회원가입 성공");
+           return Result.success("회원가입 성공","success");
         }
     }
 
