@@ -37,7 +37,11 @@ public enum ErrorCode {
     PRODUCT_FAIL_DELETE(500,"P004","상품 삭제 실패"),
 
     //JWT
-    NOT_REFRESG_KEY(400, "CP003", "리프레쉬 키 해석 실패");
+    NOT_REFRESG_KEY(400, "CP003", "리프레쉬 키 해석 실패"),
+
+
+    //file
+    FAIR_CREATE_FILE(400,"F001","이미지 파일 생성 실패");
 
     private final int status;
     private final String code;

@@ -3,10 +3,7 @@ package com.fasthub.backend.oper.product.entity;
 import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.enums.UserRole;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +22,12 @@ public class Product {
 
     @Column(name = "PRODUCT_NM", nullable = false)
     private String productNm;
+
+    @Column(name = "PRODUCT_PRICE", nullable = false)
+    private int productPrice;
+
+    @Column(name ="PRODUCT_QUANTITY", nullable = false)
+    private  int productAuantity;
 
     @Column(nullable = false, name = "CATEGORY")
     @Enumerated(EnumType.STRING)

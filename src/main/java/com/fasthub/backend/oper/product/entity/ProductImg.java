@@ -1,9 +1,7 @@
 package com.fasthub.backend.oper.product.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.security.Timestamp;
@@ -19,14 +17,11 @@ public class ProductImg {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, name = "IMG_URL")
-    private String imageUrl;
+    @Column(nullable = false, name = "IMG_Path")
+    private String imgPath;
 
     @Column(nullable = false, name = "IMG_NM")
     private String imgNm;
-
-    @Column(nullable = false, name = "ORIGIN_IMG_NM")
-    private String originImgNm;
 
     @CreationTimestamp
     private Timestamp createDate;
@@ -39,4 +34,12 @@ public class ProductImg {
     protected void setProduct(Product product) {
         this.product = product;
     }
+
+    @Builder
+    public ProductImg(String imgPath, String imgNm, Product product) {
+        this.imgPath = imgPath;
+        this.imgNm = imgNm;
+        this.product = product;
+    }
+
 }
