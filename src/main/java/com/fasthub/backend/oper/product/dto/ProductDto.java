@@ -15,5 +15,7 @@ import java.util.List;
 public class ProductDto {
     private String productNm;
     private ProductCategory productCategory;
+    private int productPrice;
+    private int productAuantity;
     private List<ProductImg> images = new ArrayList<>();
 }
