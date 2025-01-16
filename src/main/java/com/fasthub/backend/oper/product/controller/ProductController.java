@@ -23,9 +23,24 @@ public class ProductController {
 
     private final ProductService productService;
 
+//    @PostMapping("/insert")
+//    public void insert(ProductDto productDto, List<MultipartFile> images){
+//
+//
+//
+//
+//        productService.insert(productDto,images);
+//    }
+
     @PostMapping("/insert")
-    public void insert(ProductDto productDto, List<MultipartFile> images){
-        productService.insert(productDto,images);
+    public void insert(@RequestParam(value="category") String category, @RequestParam(value="productName") String productName, @RequestParam(value="price") String price,
+                       @RequestParam(value="img") MultipartFile img, @RequestParam(value="description") String description){
+        log.info("category : " + category);
+        log.info("productName : " + productName);
+        log.info("price : " + price);
+        log.info("img : " + img);
+        log.info("description : " + description);
+
     }
 
     @GetMapping("/select")
