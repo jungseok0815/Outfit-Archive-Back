@@ -51,7 +51,7 @@ public class AuthService {
                 .userPw(passwordEncoder.encode(joinDto.getUserPwd()))
                 .userAge(joinDto.getUserAge())
                 .userNm(joinDto.getUserNm())
-                .authName(UserRole.ROLE_USER)
+                .authName(UserRole.ADMIN)
                 .build();
         return authRepository.save(usrEntity);
     }
