@@ -18,5 +18,12 @@ public class UserDto extends User {
     private int userAge;
     private UserRole authName;
 
-
+    public UserDto(User user){
+        this.id = user.getId();
+        this.userId = user.getUserId();
+        this.userPwd = user.getUserPw();
+        this.userNm = user.getUserNm();
+        this.userAge = user.getUserAge();
+        this.authName = user.getAuthName();
+    }
 }

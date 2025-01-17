@@ -1,6 +1,6 @@
-package com.fasthub.backend.cmm.exception;
+package com.fasthub.backend.cmm.error.exception;
 
-import com.fasthub.backend.cmm.enums.ErrorCode;
+import com.fasthub.backend.cmm.error.ErrorCode;
 import lombok.Getter;
 
 @Getter
