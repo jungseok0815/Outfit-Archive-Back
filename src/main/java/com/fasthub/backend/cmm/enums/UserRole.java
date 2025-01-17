@@ -10,9 +10,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 public enum UserRole {
     NOT_REGISTERED,
     ROLE_USER,
-    ADMIN;
+    ROLE_ADMIN;
 
     public String getValue() {
         return this.name();
+    }
+    public String getRole(String name){
+        return "ROLE_"+name;
     }
 }

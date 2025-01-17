@@ -31,8 +31,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-
-
     private final AuthService authService;
 
     @PostMapping("/login")
@@ -42,12 +40,8 @@ public class AuthController {
 
     @PostMapping("/join")
     public Result join(JoinDto joinDto){
-        User user = authService.join(joinDto);
-        if (user == null){
-            return Result.fail("회원가입 실패", "fail");
-        }else{
-           return Result.success("회원가입 성공","success");
-        }
+        if (authService.join(joinDto) == null) return Result.fail("회원가입 실패", "fail");
+        else  return Result.success("회원가입 성공","success");
     }
 
     /**

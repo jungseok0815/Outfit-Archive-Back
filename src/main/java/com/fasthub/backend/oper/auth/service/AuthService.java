@@ -1,9 +1,8 @@
 package com.fasthub.backend.oper.auth.service;
 
-import com.fasthub.backend.cmm.enums.ErrorCode;
-import com.fasthub.backend.cmm.enums.JwtRule;
 import com.fasthub.backend.cmm.enums.UserRole;
-import com.fasthub.backend.cmm.exception.BusinessException;
+import com.fasthub.backend.cmm.error.ErrorCode;
+import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.oper.auth.dto.UserDto;
 import com.fasthub.backend.oper.auth.dto.JoinDto;
@@ -13,9 +12,7 @@ import com.fasthub.backend.oper.auth.repository.AuthRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.extern.slf4j.XSlf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,33 +23,32 @@ import java.util.Optional;
 @Slf4j
 public class AuthService {
     private final AuthRepository authRepository;
+    private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public User login(LoginDto loginDto, HttpServletResponse response){
+    public UserDto login(LoginDto loginDto, HttpServletResponse response){
         User usrEntity = User.builder().userId(loginDto.getUserId())
                 .userPw(loginDto.getUserPwd())
                 .build();
         Optional<User> user  = authRepository.findByUserId(usrEntity.getUserId());
 
-        if (user.isEmpty()){
-            throw new BusinessException(ErrorCode.ID_NOT_FOUND);
-        }
-        if (!passwordEncoder.matches(loginDto.getUserPwd(), user.get().getUserPw())){
-            throw new BusinessException(ErrorCode.PWD_NOT_FOUND);
-        }
+        if (user.isEmpty()) throw new BusinessException(ErrorCode.ID_NOT_FOUND);
+        if (!passwordEncoder.matches(loginDto.getUserPwd(), user.get().getUserPw())) throw new BusinessException(ErrorCode.PWD_NOT_FOUND);
+
         jwtService.generateAccessToken(response, user.get());
         jwtService.generateRefreshToken(response, user.get());
-        return user.get();
+
+        return modelMapper.map(user.get() , UserDto.class);
     }
 
-    public User join(JoinDto joinDto){
+    public UserDto join(JoinDto joinDto){
         User usrEntity = User.builder().userId(joinDto.getUserId())
                 .userPw(passwordEncoder.encode(joinDto.getUserPwd()))
                 .userAge(joinDto.getUserAge())
                 .userNm(joinDto.getUserNm())
-                .authName(UserRole.ADMIN)
+                .authName(UserRole.ROLE_USER)
                 .build();
-        return authRepository.save(usrEntity);
+        return modelMapper.map( authRepository.save(usrEntity), UserDto.class);
     }
 }

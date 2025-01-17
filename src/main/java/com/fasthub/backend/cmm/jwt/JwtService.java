@@ -3,7 +3,7 @@ package com.fasthub.backend.cmm.jwt;
 import com.fasthub.backend.cmm.enums.JwtRule;
 import com.fasthub.backend.cmm.enums.TokenStatus;
 import com.fasthub.backend.cmm.enums.UserRole;
-import com.fasthub.backend.cmm.exception.BusinessException;
+import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.oper.auth.dto.CustomUserDetails;
 import com.fasthub.backend.oper.auth.entity.User;
 import com.fasthub.backend.oper.auth.repository.AuthRepository;
@@ -12,22 +12,21 @@ import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Key;
 
-import static com.fasthub.backend.cmm.enums.ErrorCode.NOT_AUTHENTICATED_USER;
-import static com.fasthub.backend.cmm.enums.ErrorCode.NOT_REFRESG_KEY;
+
 import static com.fasthub.backend.cmm.enums.JwtRule.*;
+import static com.fasthub.backend.cmm.error.ErrorCode.*;
+
 
 @Service
 @Slf4j

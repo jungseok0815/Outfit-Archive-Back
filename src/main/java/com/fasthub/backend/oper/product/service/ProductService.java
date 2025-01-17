@@ -1,9 +1,8 @@
 package com.fasthub.backend.oper.product.service;
 
-import com.fasthub.backend.cmm.enums.ErrorCode;
-import com.fasthub.backend.cmm.exception.BusinessException;
+import com.fasthub.backend.cmm.error.ErrorCode;
+import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
-import com.fasthub.backend.cmm.result.Result;
 import com.fasthub.backend.oper.product.dto.ProductDto;
 import com.fasthub.backend.oper.product.entity.Product;
 import com.fasthub.backend.oper.product.entity.ProductImg;
@@ -13,14 +12,9 @@ import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

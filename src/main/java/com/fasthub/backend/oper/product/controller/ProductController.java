@@ -25,10 +25,6 @@ public class ProductController {
 
 //    @PostMapping("/insert")
 //    public void insert(ProductDto productDto, List<MultipartFile> images){
-//
-//
-//
-//
 //        productService.insert(productDto,images);
 //    }
 
@@ -42,19 +38,16 @@ public class ProductController {
         log.info("description : " + description);
 
     }
-
     @GetMapping("/select")
     public Result select(ProductDto productDto, Pageable pageable){
         PageRequest pageRequest = PageRequest.of(0,10, Sort.by("id").ascending());
         return Result.success("success", productService.select(productDto, pageable));
     }
-
     @GetMapping("/list")
     public Result list(ProductDto productDto, Pageable Pageable){
         Pageable pageRequest = PageRequest.of(0,10, Sort.by("id").ascending());
         return Result.success("success", productService.list(productDto,pageRequest));
     }
-
     @PutMapping("/update")
     public void update(ProductDto productDto){
         productService.update(productDto);
