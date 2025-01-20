@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<?> handlerRuntimeException(BusinessException e){
-       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorResponse.builder().status(e.getErrorCode().getStatus())
+       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorResponse.builder().status(e.getErrorCode().getStatus().value())
                .msg(e.getErrorCode().getMessage())
                .code(e.getErrorCode().getCode()).build());
     }

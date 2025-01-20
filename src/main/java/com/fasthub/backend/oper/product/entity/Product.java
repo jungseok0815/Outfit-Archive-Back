@@ -1,19 +1,17 @@
 package com.fasthub.backend.oper.product.entity;
-
 import com.fasthub.backend.cmm.enums.ProductCategory;
-import com.fasthub.backend.cmm.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Getter
 @Builder
-@AllArgsConstructor
-@Entity
-@Table(name = "Product")
-@ToString
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "product")
 @NoArgsConstructor
+@Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +25,7 @@ public class Product {
     private int productPrice;
 
     @Column(name ="PRODUCT_QUANTITY", nullable = false)
-    private  int productAuantity;
+    private int productAuantity;
 
     @Column(nullable = false, name = "CATEGORY")
     @Enumerated(EnumType.STRING)
@@ -36,9 +34,5 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImg> images = new ArrayList<>();
 
-    // 이미지 추가 메서드
-    public void addImage(ProductImg image) {
-        images.add(image);
-        image.setProduct(this);
-    }
+
 }
