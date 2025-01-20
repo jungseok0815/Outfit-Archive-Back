@@ -15,13 +15,11 @@ import java.util.UUID;
 public class ImgHandler {
      public String getFileName(String originfileName){
         String fileName = UUID.randomUUID() + "_" + originfileName;
-        log.info("fileName : " + fileName);
         return fileName;
     }
 
     public String getFilePath(String filePath, String fileName) throws IOException {
-        Path path = Paths.get(filePath,filePath);
-        log.info("path : " + path);
+        Path path = Paths.get(filePath,fileName);
         Files.createDirectories(path.getParent());
          return path.toString();
     }

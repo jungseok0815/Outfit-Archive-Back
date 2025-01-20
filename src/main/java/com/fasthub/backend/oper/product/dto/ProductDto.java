@@ -1,21 +1,19 @@
 package com.fasthub.backend.oper.product.dto;
 
-import com.fasthub.backend.cmm.enums.ProductCategory;
-import com.fasthub.backend.oper.product.entity.ProductImg;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@RequiredArgsConstructor
 @ToString
 public class ProductDto {
+    private Long id;
     private String productNm;
-    private ProductCategory productCategory;
-    private int productPrice;
-    private int productAuantity;
-    private List<ProductImg> images = new ArrayList<>();
+    private Long productPrice;
+    private Long productAuantity;
 }

@@ -3,7 +3,7 @@ spring:
     name: backend
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/FastHub
+    url: jdbc:mysql://localhost:3306/fasthub
     username: root
     password: wjdtjr9401@
   jpa:
@@ -11,9 +11,9 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-        hibernate:
-          ddl-auto: update
-          database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
   servlet:
     multipart:
       enabled: true

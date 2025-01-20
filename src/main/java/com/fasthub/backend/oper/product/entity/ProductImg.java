@@ -9,7 +9,7 @@ import java.security.Timestamp;
 
 @Entity
 @Getter
-@Table
+@Table(name = "ProductImg")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductImg {
 
