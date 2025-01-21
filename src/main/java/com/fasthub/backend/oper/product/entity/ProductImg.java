@@ -9,8 +9,10 @@ import java.security.Timestamp;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "ProductImg")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class ProductImg {
 
     @Id
@@ -23,8 +25,8 @@ public class ProductImg {
     @Column(nullable = false, name = "IMG_NM")
     private String imgNm;
 
-    @CreationTimestamp
-    private Timestamp createDate;
+    @Column(nullable = false, name = "IMG_ORIGIN_NM")
+    private String imgOriginNm;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -35,11 +37,6 @@ public class ProductImg {
         this.product = product;
     }
 
-    @Builder
-    public ProductImg(String imgPath, String imgNm, Product product) {
-        this.imgPath = imgPath;
-        this.imgNm = imgNm;
-        this.product = product;
-    }
+
 
 }

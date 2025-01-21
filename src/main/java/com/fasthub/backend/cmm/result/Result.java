@@ -11,10 +11,23 @@ public class Result {
     private Object data;
     private String error;
 
+    public static Result success(){
+        Result result = new Result();
+        result.setSuccess(true);
+        return result;
+    }
+
     public static Result success(String message){
         Result result = new Result();
         result.setSuccess(true);
         result.setMessage(message);
+        return result;
+    }
+
+    public static Result success(Object data){
+        Result result = new Result();
+        result.setSuccess(true);
+        result.setData(data);
         return result;
     }
 
