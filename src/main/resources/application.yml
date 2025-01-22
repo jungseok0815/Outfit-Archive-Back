@@ -17,6 +17,7 @@ spring:
   servlet:
     multipart:
       enabled: true
+      max-file-size: 10MB
 jwt:
   access-expiration: 5400000
   refresh-expiration: 10800000  # 3hours * 60min * 60sec * 1000 millisecond

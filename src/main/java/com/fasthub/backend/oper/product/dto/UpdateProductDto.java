@@ -6,11 +6,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Getter
 @Setter
-@RequiredArgsConstructor
 @ToString
-public class InsertProductDto {
+public class UpdateProductDto {
+    private Long id;
     private String productNm;
     private String productCode;
     private int productPrice;

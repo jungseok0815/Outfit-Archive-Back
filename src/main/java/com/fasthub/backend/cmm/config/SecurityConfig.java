@@ -50,8 +50,8 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**","/js/**", "/img/**").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/product/select", "/api/product/list","/api/img/get").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/img/**").permitAll()
+                        .requestMatchers("/api/product/select", "/api/product/list").permitAll()
                         .requestMatchers("/api/product/delete", "/api /product/update", "/api/product/insert").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasRole("USER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

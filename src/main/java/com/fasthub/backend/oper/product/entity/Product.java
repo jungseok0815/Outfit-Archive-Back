@@ -24,11 +24,17 @@ public class Product {
     @Column(name = "PRODUCT_NM", nullable = false)
     private String productNm;
 
+    @Column(name = "PRODUCT_CODE", nullable = false)
+    private String productCode;
+
     @Column(name = "PRODUCT_PRICE", nullable = false)
     private int productPrice;
 
     @Column(name ="PRODUCT_QUANTITY", nullable = false)
-    private int productAuantity;
+    private int productQuantity;
+
+    @Column(name = "PRODUCT_BRAND", nullable = false)
+    private String productBrand;
 
     @Column(nullable = false, name = "CATEGORY")
     @Enumerated(EnumType.STRING)
