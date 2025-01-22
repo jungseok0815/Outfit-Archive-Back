@@ -17,17 +17,22 @@ import java.util.List;
 public class ResponseProductDto {
     private Long id;
     private String productNm;
-    private ProductCategory category;
+    private String productCode;
     private int productPrice;
+    private int productQuantity;
+    private String productBrand;
+    private ProductCategory category;
     private List<ProductImg> images;
-    private int productAuantity;
 
-    public ResponseProductDto(Long id, String productNm, ProductCategory category, int productPrice, List<ProductImg> images, int productAuantity) {
+
+    public ResponseProductDto(Long id, String productNm, String productCode, int productPrice, int productQuantity, String productBrand, ProductCategory category, List<ProductImg> images) {
         this.id = id;
         this.productNm = productNm;
-        this.category = category;
+        this.productCode = productCode;
         this.productPrice = productPrice;
+        this.productQuantity = productQuantity;
+        this.productBrand = productBrand;
+        this.category = category;
         this.images = images;
-        this.productAuantity = productAuantity;
     }
 }

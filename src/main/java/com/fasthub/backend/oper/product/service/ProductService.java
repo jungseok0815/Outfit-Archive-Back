@@ -5,8 +5,8 @@ import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
 import com.fasthub.backend.cmm.result.Result;
 import com.fasthub.backend.oper.product.dto.InsertProductDto;
-import com.fasthub.backend.oper.product.dto.ProductDto;
 import com.fasthub.backend.oper.product.dto.ResponseProductDto;
+import com.fasthub.backend.oper.product.dto.UpdateProductDto;
 import com.fasthub.backend.oper.product.entity.Product;
 import com.fasthub.backend.oper.product.entity.ProductImg;
 import com.fasthub.backend.oper.product.repository.ProductImgRepository;
@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -38,10 +37,13 @@ public class ProductService {
 
     public Result insert(InsertProductDto productDto){
         Product product = Product.builder()
-                .productNm(productDto.getProductName())
+                .productNm(productDto.getProductNm())
+                .productCode(productDto.getProductCode())
+                .productPrice(productDto.getProductPrice())
+                .productBrand(productDto.getProductBrand())
+                .productQuantity(productDto.getProductQuantity())
                 .category(productDto.getCategory())
-                .productPrice(2500)
-                .productAuantity(300).build();
+                .build();
         Product productResult =  productRepository.save(product);
 
         if (!productDto.getImage().isEmpty()){
@@ -70,19 +72,32 @@ public class ProductService {
     public Result list(){
         List<ResponseProductDto> result = new ArrayList<>();
         productRepository.findAll().forEach((item) ->{
-            result.add(new ResponseProductDto(item.getId(),
+            result.add(new ResponseProductDto(
+                    item.getId(),
                     item.getProductNm(),
-                    item.getCategory(),
+                    item.getProductCode(),
                     item.getProductPrice(),
-                    item.getImages(),
-                    item.getProductAuantity()
+                    item.getProductQuantity(),
+                    item.getProductBrand(),
+                    item.getCategory(),
+                    item.getImages()
                    ));
         });
         return  Result.success(result);
     }
 
-    public void update(InsertProductDto productDto){
+    public void update(UpdateProductDto productDto){
+        Optional<Product> product = productRepository.findById(productDto.getId());
 
+//        Product product = Product.builder()
+//                .productNm(productDto.getProductNm())
+//                .productCode(productDto.getProductCode())
+//                .productPrice(productDto.getProductPrice())
+//                .productBrand(productDto.getProductBrand())
+//                .productQuantity(productDto.getProductQuantity())
+//                .category(productDto.getCategory())
+//                .build();
+//        Product productResult =  productRepository.(product);
     }
 
     public void delete(InsertProductDto productDto){

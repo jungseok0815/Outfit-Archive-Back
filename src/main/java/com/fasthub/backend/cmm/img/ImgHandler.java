@@ -21,11 +21,7 @@ public class ImgHandler {
     }
 
     public String getFilePath(MultipartFile img, String filePath, String fileName) throws IOException {
-         log.info("filepath : " + filePath);
-         log.info("fileName : " + fileName);
-
         Path path = Paths.get(filePath,fileName);
-        log.info("path : " +path.getParent());
         Files.createDirectories(path.getParent());
         Files.write(path, img.getBytes());
          return path.toString();

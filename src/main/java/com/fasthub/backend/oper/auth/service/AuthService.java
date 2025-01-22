@@ -51,4 +51,6 @@ public class AuthService {
                 .build();
         return modelMapper.map( authRepository.save(usrEntity), UserDto.class);
     }
+
+
 }

@@ -2,7 +2,7 @@ package com.fasthub.backend.oper.product.controller;
 
 import com.fasthub.backend.cmm.result.Result;
 import com.fasthub.backend.oper.product.dto.InsertProductDto;
-import com.fasthub.backend.oper.product.dto.ProductDto;
+import com.fasthub.backend.oper.product.dto.UpdateProductDto;
 import com.fasthub.backend.oper.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +21,10 @@ public class ProductController {
 
     @PostMapping("/insert")
     public Result insert(InsertProductDto productDto){
-      return productService.insert(productDto);
+      log.info("productDto : " + productDto.toString());
+        return productService.insert(productDto);
     }
+
     @GetMapping("/select")
     public Result select(InsertProductDto productDto, Pageable pageable){
         PageRequest pageRequest = PageRequest.of(0,10, Sort.by("id").ascending());
@@ -35,7 +37,7 @@ public class ProductController {
     }
 
     @PutMapping("/update")
-    public void update(InsertProductDto productDto){
+    public void update(UpdateProductDto productDto){
         productService.update(productDto);
     }
 
