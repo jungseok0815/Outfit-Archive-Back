@@ -19,4 +19,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Override
     @EntityGraph(attributePaths = {"images"})
     List<Product> findAll();
+
 }
