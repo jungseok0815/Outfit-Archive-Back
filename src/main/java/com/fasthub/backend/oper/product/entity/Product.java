@@ -40,7 +40,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
+//    cascade = CascadeType.ALL, orphanRemoval = true
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @JsonIgnore // 순환 방지
     private List<ProductImg> images = new ArrayList<>();
 }

@@ -1,7 +1,10 @@
 package com.fasthub.backend.oper.product.dto;
 
 import com.fasthub.backend.cmm.enums.ProductCategory;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -10,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class UpdateProductDto {
+public class ProductDto {
     private Long id;
     private String productNm;
     private String productCode;

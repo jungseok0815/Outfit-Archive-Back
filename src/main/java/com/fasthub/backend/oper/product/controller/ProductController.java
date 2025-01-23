@@ -2,6 +2,7 @@ package com.fasthub.backend.oper.product.controller;
 
 import com.fasthub.backend.cmm.result.Result;
 import com.fasthub.backend.oper.product.dto.InsertProductDto;
+import com.fasthub.backend.oper.product.dto.ProductDto;
 import com.fasthub.backend.oper.product.dto.UpdateProductDto;
 import com.fasthub.backend.oper.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,13 +23,11 @@ public class ProductController {
 
     @PostMapping("/insert")
     public Result insert(InsertProductDto productDto){
-      log.info("productDto : " + productDto.toString());
         return productService.insert(productDto);
     }
 
     @GetMapping("/select")
     public Result select(InsertProductDto productDto, Pageable pageable){
-        PageRequest pageRequest = PageRequest.of(0,10, Sort.by("id").ascending());
         return Result.success("success", productService.select(productDto, pageable));
     }
     @GetMapping("/list")
@@ -36,13 +36,13 @@ public class ProductController {
         return productService.list();
     }
 
-    @PutMapping("/update")
-    public void update(UpdateProductDto productDto){
+    @PutMapping(value = "/update" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void update(ProductDto productDto){
         productService.update(productDto);
     }
 
     @DeleteMapping("/delete")
-    public void delete(InsertProductDto productDto){
+    public void delete(ProductDto productDto){
         productService.delete(productDto);
     }
 
