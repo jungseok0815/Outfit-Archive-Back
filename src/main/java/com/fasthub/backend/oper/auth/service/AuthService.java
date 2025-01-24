@@ -28,6 +28,7 @@ public class AuthService {
     private final JwtService jwtService;
 
     public UserDto login(LoginDto loginDto, HttpServletResponse response){
+        log.info("userInfo : " + loginDto.toString());
         User usrEntity = User.builder().userId(loginDto.getUserId())
                 .userPw(loginDto.getUserPwd())
                 .build();

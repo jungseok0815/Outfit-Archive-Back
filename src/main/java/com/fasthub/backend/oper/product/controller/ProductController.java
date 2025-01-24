@@ -32,6 +32,7 @@ public class ProductController {
     }
     @GetMapping("/list")
     public Result list( Pageable Pageable){
+        log.info("");
 //        Pageable pageRequest = PageRequest.of(0,10, Sort.by("id").ascending());
         return productService.list();
     }
