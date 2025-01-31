@@ -41,7 +41,7 @@ public class Product {
     private ProductCategory category;
 
 //    cascade = CascadeType.ALL, orphanRemoval = true
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY , cascade = CascadeType.REMOVE)
     @JsonIgnore // 순환 방지
     private List<ProductImg> images = new ArrayList<>();
 }
