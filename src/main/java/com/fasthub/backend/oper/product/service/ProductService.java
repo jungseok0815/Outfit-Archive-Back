@@ -121,7 +121,7 @@ public class ProductService {
 
     }
 
-    public void delete(ProductDto productDto){
-        productRepository.deleteById(productDto.getId());
+    public void delete(String id){
+        productRepository.deleteById(Long.valueOf(id));
     }
 }

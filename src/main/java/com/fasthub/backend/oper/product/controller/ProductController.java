@@ -43,8 +43,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete")
-    public void delete(ProductDto productDto){
-        productService.delete(productDto);
+    public void delete(@RequestParam(value="id") String id){
+        productService.delete(id);
     }
 
 }
