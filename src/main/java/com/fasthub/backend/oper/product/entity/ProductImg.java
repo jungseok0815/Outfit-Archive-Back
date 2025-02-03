@@ -1,5 +1,7 @@
 package com.fasthub.backend.oper.product.entity;
 
+import com.fasthub.backend.oper.product.dto.ProductDto;
+import com.fasthub.backend.oper.product.dto.ProductImgDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -36,7 +38,6 @@ public class ProductImg {
     protected void setProduct(Product product) {
         this.product = product;
     }
-
 
 
 }

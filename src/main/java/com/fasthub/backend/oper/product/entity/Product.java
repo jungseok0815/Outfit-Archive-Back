@@ -1,6 +1,7 @@
 package com.fasthub.backend.oper.product.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasthub.backend.cmm.enums.ProductCategory;
+import com.fasthub.backend.oper.product.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @ToString
-
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +44,16 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY , cascade = CascadeType.REMOVE)
     @JsonIgnore // 순환 방지
     private List<ProductImg> images = new ArrayList<>();
+
+    public static Product fromDto(ProductDto productDto) {
+        return Product.builder()
+                .id(productDto.getId())
+                .productCode(productDto.getProductCode())
+                .productNm(productDto.getProductNm())
+                .productPrice(productDto.getProductPrice())
+                .productQuantity(productDto.getProductQuantity())
+                .productBrand(productDto.getProductBrand())
+                .category(productDto.getCategory())
+                .build();
+    }
 }

@@ -31,10 +31,10 @@ public class ProductController {
         return Result.success("success", productService.select(productDto, pageable));
     }
     @GetMapping("/list")
-    public Result list( Pageable Pageable){
-        log.info("");
+    public Result list( @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword){
+        keyword = keyword.isEmpty() ? null : keyword;
 //        Pageable pageRequest = PageRequest.of(0,10, Sort.by("id").ascending());
-        return productService.list();
+        return productService.list(keyword);
     }
 
     @PutMapping(value = "/update" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

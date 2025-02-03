@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -70,36 +71,19 @@ public class ProductService {
         return null;
     }
 
-    public Result list(){
-        List<ResponseProductDto> result = new ArrayList<>();
-        productRepository.findAll().forEach((item) ->{
-            result.add(new ResponseProductDto(
-                    item.getId(),
-                    item.getProductNm(),
-                    item.getProductCode(),
-                    item.getProductPrice(),
-                    item.getProductQuantity(),
-                    item.getProductBrand(),
-                    item.getCategory(),
-                    item.getImages()
-                   ));
-        });
-
+    public Result list(String keyword){
+        List<ResponseProductDto> result = productRepository.findAllByKeyword(keyword)
+                .stream()
+                .map(ResponseProductDto::new)
+                .collect(Collectors.toList());
         return  Result.success(result);
     }
 
     @Transactional
     public void update(ProductDto productDto){
         Optional<Product> product = productRepository.findById(productDto.getId());
-        Product productResult = productRepository.save(Product.builder()
-                .id(productDto.getId())
-                .productNm(productDto.getProductNm())
-                .productCode(productDto.getProductCode())
-                .productBrand(productDto.getProductBrand())
-                .productPrice(productDto.getProductPrice())
-                .productQuantity(productDto.getProductQuantity())
-                .category(productDto.getCategory())
-                .build());
+        Product productResult = productRepository.save(Product.fromDto(productDto));
+
         if (productDto.getImage() != null){
             productImgRepository.deleteByProduct(product.get());
             productDto.getImage().forEach((item) -> {
@@ -117,8 +101,6 @@ public class ProductService {
                 }
             });
         }
-
-
     }
 
     public void delete(String id){
