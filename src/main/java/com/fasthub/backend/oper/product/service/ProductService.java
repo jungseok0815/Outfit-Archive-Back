@@ -4,22 +4,22 @@ import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
 import com.fasthub.backend.cmm.result.Result;
-import com.fasthub.backend.oper.product.dto.InsertProductDto;
-import com.fasthub.backend.oper.product.dto.ProductDto;
-import com.fasthub.backend.oper.product.dto.ResponseProductDto;
-import com.fasthub.backend.oper.product.dto.UpdateProductDto;
+import com.fasthub.backend.oper.product.dto.*;
 import com.fasthub.backend.oper.product.entity.Product;
 import com.fasthub.backend.oper.product.entity.ProductImg;
+import com.fasthub.backend.oper.product.mapper.ProductMapper;
 import com.fasthub.backend.oper.product.repository.ProductImgRepository;
 import com.fasthub.backend.oper.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
@@ -33,77 +33,60 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductImgRepository productImgRepository;
     private final ImgHandler imgHandler;
+    private final ProductMapper productMapper;
     @Value("${file.path-product}")
     private String productFilePath;
 
-
+    @Transactional
     public Result insert(InsertProductDto productDto){
-        Product product = Product.builder()
-                .productNm(productDto.getProductNm())
-                .productCode(productDto.getProductCode())
-                .productPrice(productDto.getProductPrice())
-                .productBrand(productDto.getProductBrand())
-                .productQuantity(productDto.getProductQuantity())
-                .category(productDto.getCategory())
-                .build();
-        Product productResult =  productRepository.save(product);
-
-        if (!productDto.getImage().isEmpty()){
-            productDto.getImage().forEach((item) -> {
-                try {
-                    String fileName = imgHandler.getFileName(item.getOriginalFilename());
-                    String filePath = imgHandler.getFilePath(item,productFilePath,fileName);
-                    productImgRepository.save(ProductImg.builder()
-                            .imgNm(fileName)
-                            .imgPath(filePath)
-                            .imgOriginNm(item.getOriginalFilename())
-                            .product(Objects.requireNonNull(productResult))
-                            .build());
-                } catch (IOException e) {
-                    throw new BusinessException(ErrorCode.FAIR_CREATE_FILE);
-                }
-            });
+        Product productResult =  productRepository.save(productMapper.InsertproductDtoToProduct(productDto));
+        if (productDto.getImage() != null){
+            productDto.getImage().forEach((item) -> productImgRepository.save(createProductImg(item, productResult)));
         }
-        return Result.success();
+        return Result.success("insert ok");
     }
 
-    public String select(InsertProductDto productDto, Pageable pageable){
-        return null;
-    }
-
-    public Result list(String keyword){
-        List<ResponseProductDto> result = productRepository.findAllByKeyword(keyword)
-                .stream()
-                .map(ResponseProductDto::new)
-                .collect(Collectors.toList());
-        return  Result.success(result);
+    public Result list(String keyword, Pageable pageable){
+        Page<Product> productPage = productRepository.findAllByKeyword(keyword,pageable);
+        return Result.success(productPage.map(productMapper::productToProductDto));
     }
 
     @Transactional
-    public void update(ProductDto productDto){
-        Optional<Product> product = productRepository.findById(productDto.getId());
-        Product productResult = productRepository.save(Product.fromDto(productDto));
-
-        if (productDto.getImage() != null){
-            productImgRepository.deleteByProduct(product.get());
-            productDto.getImage().forEach((item) -> {
-                try {
-                    String fileName = imgHandler.getFileName(item.getOriginalFilename());
-                    String filePath = imgHandler.getFilePath(item, productFilePath, fileName);
-                    productImgRepository.save(ProductImg.builder()
-                            .imgNm(fileName)
-                            .imgPath(filePath)
-                            .imgOriginNm(item.getOriginalFilename())
-                            .product(Objects.requireNonNull(productResult))
-                            .build());
-                } catch (IOException e) {
-                    throw new BusinessException(ErrorCode.FAIR_CREATE_FILE);
-                }
-            });
-        }
+    public Result update(UpdateProductDto productDto){
+        productRepository.findById(productDto.getId())
+                .ifPresent(product -> {
+                    Product resultProduct =  productRepository.save(productMapper.productDtoToProduct(productDto));
+                    if (productDto.getImage() != null){
+                        productImgRepository.deleteByProduct(resultProduct);
+                        productDto.getImage().forEach((item) -> productImgRepository.save(createProductImg(item, resultProduct)));
+                    }
+                });
+        return Result.success("update ok");
     }
 
-    public void delete(String id){
+    public Result delete(String id){
         productRepository.deleteById(Long.valueOf(id));
+        return Result.success("delete ok");
+    }
+
+    /**
+     * fileEntity 생성
+     * @param file
+     * @param product
+     * @return
+     */
+    private ProductImg createProductImg(MultipartFile file, Product product){
+        try {
+            String fileName = imgHandler.getFileName(file.getOriginalFilename());
+            String filePath = imgHandler.getFilePath(file, productFilePath, fileName);
+            return  ProductImg.builder()
+                    .imgNm(fileName)
+                    .imgPath(filePath)
+                    .imgOriginNm(file.getOriginalFilename())
+                    .product(Objects.requireNonNull(product))
+                    .build();
+        } catch (IOException e) {
+            throw new BusinessException(ErrorCode.FAIR_CREATE_FILE);
+        }
     }
 }

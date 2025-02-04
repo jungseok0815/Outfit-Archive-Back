@@ -24,16 +24,4 @@ public class ResponseProductDto {
     private String productBrand;
     private ProductCategory category;
     private List<ProductImg> images;
-
-
-    public ResponseProductDto(Product product) {
-        this.id = product.getId();
-        this.productNm = product.getProductNm();
-        this.productCode = product.getProductCode();
-        this.productPrice = product.getProductPrice();
-        this.productQuantity = product.getProductQuantity();
-        this.productBrand = product.getProductBrand();
-        this.category = product.getCategory();
-        this.images = product.getImages();
-    }
 }
