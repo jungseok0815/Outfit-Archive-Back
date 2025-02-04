@@ -22,6 +22,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAll();
 
     @Query("SELECT p FROM Product p WHERE :keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%")
-    List<Product> findAllByKeyword(@Param("keyword") String keyword);
+    Page<Product> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
 }

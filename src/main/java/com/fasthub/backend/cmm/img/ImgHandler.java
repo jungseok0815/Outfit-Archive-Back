@@ -27,12 +27,4 @@ public class ImgHandler {
          return path.toString();
     }
 
-//    public String getBase64Image(String imagePath) {
-//        try {
-//            byte[] imageBytes = Files.readAllBytes(Paths.get(imagePath));
-//            return Base64.getEncoder().encodeToString(imageBytes);
-//        } catch (IOException e) {
-//            return "";
-//        }
-//    }
 }

@@ -5,8 +5,10 @@ import com.fasthub.backend.oper.product.dto.ProductImgDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Timestamp;
+import java.util.Objects;
 
 
 @Entity

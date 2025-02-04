@@ -18,7 +18,6 @@ public class ImgController {
 
     @GetMapping("/get")
     public ResponseEntity<?> returnImage(@RequestParam("imgNm") String imgNm) {
-        log.info("imageName : " + imgNm);
         String path = productFilePath; //이미지가 저장된 위치
         Resource resource = new FileSystemResource(path + imgNm);
         return new ResponseEntity<>(resource, HttpStatus.OK);
