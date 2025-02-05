@@ -41,7 +41,7 @@ public class ProductService {
     public Result insert(InsertProductDto productDto){
         Product productResult =  productRepository.save(productMapper.InsertproductDtoToProduct(productDto));
         if (productDto.getImage() != null){
-            productDto.getImage().forEach((item) -> productImgRepository.save(createProductImg(item, productResult)));
+            productDto.getImage().forEach((item) -> productImgRepository.save(imgHandler.createImg(item, ProductImg::new, productResult)));
         }
         return Result.success("insert ok");
     }
@@ -58,7 +58,7 @@ public class ProductService {
                     Product resultProduct =  productRepository.save(productMapper.productDtoToProduct(productDto));
                     if (productDto.getImage() != null){
                         productImgRepository.deleteByProduct(resultProduct);
-                        productDto.getImage().forEach((item) -> productImgRepository.save(createProductImg(item, resultProduct)));
+                        productDto.getImage().forEach((item) -> productImgRepository.save(imgHandler.createImg(item,ProductImg::new,resultProduct)));
                     }
                 });
         return Result.success("update ok");
@@ -69,24 +69,4 @@ public class ProductService {
         return Result.success("delete ok");
     }
 
-    /**
-     * fileEntity 생성
-     * @param file
-     * @param product
-     * @return
-     */
-    private ProductImg createProductImg(MultipartFile file, Product product){
-        try {
-            String fileName = imgHandler.getFileName(file.getOriginalFilename());
-            String filePath = imgHandler.getFilePath(file, productFilePath, fileName);
-            return  ProductImg.builder()
-                    .imgNm(fileName)
-                    .imgPath(filePath)
-                    .imgOriginNm(file.getOriginalFilename())
-                    .product(Objects.requireNonNull(product))
-                    .build();
-        } catch (IOException e) {
-            throw new BusinessException(ErrorCode.FAIR_CREATE_FILE);
-        }
-    }
 }

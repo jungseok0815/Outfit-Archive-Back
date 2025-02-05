@@ -53,6 +53,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**", "/api/img/**").permitAll()
                         .requestMatchers("/api/product/select", "/api/product/list").permitAll()
                         .requestMatchers("/api/product/delete", "/api /product/update", "/api/product/insert").hasRole("ADMIN")
+                        .requestMatchers("/api/brand/delete", "/api /brand/update", "/api/brand/insert").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasRole("USER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
