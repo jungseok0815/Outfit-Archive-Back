@@ -1,6 +1,5 @@
 package com.fasthub.backend.oper.brand.dto;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,7 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @RequiredArgsConstructor
 @ToString
-public class InsertBrandDto {
+public class UpdateBrandDto {
+    private Long id;
     private String brandNm;
     private String brandNum;
     private String brandLocation;

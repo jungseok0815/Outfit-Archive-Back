@@ -2,12 +2,18 @@ package com.fasthub.backend.oper.brand.entity;
 
 import com.fasthub.backend.oper.product.entity.Product;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Table(name ="Brand")
+@NoArgsConstructor
+@ToString
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +32,9 @@ public class Brand {
     @Column(name = "BRAND_DC")
     private String brandDc;
 
-    @Column(name = "BRAND_IMG")
-    private String brandImg;
+    @OneToOne
+    @JoinColumn(name = "brandimg_id")
+    private BrandImg brandImg;
 
 //    // 1:N 관계 설정
 //    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

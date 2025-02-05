@@ -3,13 +3,16 @@ package com.fasthub.backend.oper.brand.contoller;
 import com.fasthub.backend.cmm.result.Result;
 import com.fasthub.backend.oper.brand.dto.BrandDto;
 import com.fasthub.backend.oper.brand.dto.InsertBrandDto;
+import com.fasthub.backend.oper.brand.dto.UpdateBrandDto;
 import com.fasthub.backend.oper.brand.service.BrandService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/brand")
 @RequiredArgsConstructor
+@Slf4j
 public class BrandContoller {
 
     private final BrandService brandService;
@@ -20,7 +23,7 @@ public class BrandContoller {
     }
 
     @PutMapping("/update")
-    public Result update(BrandDto brandDto){
+    public Result update(UpdateBrandDto brandDto){
         return brandService.update(brandDto);
     }
 
