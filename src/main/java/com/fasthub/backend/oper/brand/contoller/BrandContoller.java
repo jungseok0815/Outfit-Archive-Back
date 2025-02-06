@@ -7,6 +7,9 @@ import com.fasthub.backend.oper.brand.dto.UpdateBrandDto;
 import com.fasthub.backend.oper.brand.service.BrandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +19,12 @@ import org.springframework.web.bind.annotation.*;
 public class BrandContoller {
 
     private final BrandService brandService;
+
+    @GetMapping("/list")
+    public Result list(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                       @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+        return brandService.list(keyword, null);
+    }
 
     @PostMapping("/insert")
     public Result insert(InsertBrandDto insertBrandDto){
@@ -32,8 +41,5 @@ public class BrandContoller {
         return brandService.delete(brandNo);
     }
 
-    @GetMapping("/list")
-    public Result list(){
-        return brandService.list();
-    }
+
 }

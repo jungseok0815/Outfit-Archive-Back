@@ -1,12 +1,15 @@
 package com.fasthub.backend.oper.auth.entity;
 
 import com.fasthub.backend.cmm.enums.UserRole;
+import com.fasthub.backend.oper.order.entity.Order;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -42,5 +45,8 @@ public class User  {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "product")
+    private List<Order> orders = new ArrayList<>();
 }
 

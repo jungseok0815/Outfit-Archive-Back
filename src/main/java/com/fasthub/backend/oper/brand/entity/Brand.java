@@ -32,11 +32,12 @@ public class Brand {
     @Column(name = "BRAND_DC")
     private String brandDc;
 
+    @Setter
     @OneToOne
     @JoinColumn(name = "brandimg_id")
     private BrandImg brandImg;
 
-//    // 1:N 관계 설정
+    //    // 1:N 관계 설정
 //    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Product> products = new ArrayList<>();
 }

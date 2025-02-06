@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 @Slf4j
@@ -35,13 +36,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public Result login(LoginDto loginDto, HttpServletRequest request, HttpServletResponse response){
-        return Result.success("로그인 성공",authService.login(loginDto, response));
+        return authService.login(loginDto, response);
     }
 
     @PostMapping("/join")
     public Result join(JoinDto joinDto){
-        if (authService.join(joinDto) == null) return Result.fail("회원가입 실패", "fail");
-        else  return Result.success("회원가입 성공","success");
+        return authService.join(joinDto);
     }
 
     /**
@@ -52,13 +52,13 @@ public class AuthController {
     public Result vailData(){
         // SecurityContext에서 인증 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        authentication.getName();
-        if (authentication.getName() != "anonymousUser" ) {
+        log.info("authentication : " + authentication.getName());
+        if (!Objects.equals(authentication.getName(), "anonymousUser")) {
+            log.info("authentication principal : " + authentication.getPrincipal());
             CustomUserDetails CustomUserDetails = (CustomUserDetails) authentication.getPrincipal();
             return Result.success("인증 성공", CustomUserDetails);
         }
         return Result.fail("인증 실패" , null);
-
     }
 
 }

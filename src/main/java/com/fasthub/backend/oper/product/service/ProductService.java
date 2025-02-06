@@ -34,8 +34,6 @@ public class ProductService {
     private final ProductImgRepository productImgRepository;
     private final ImgHandler imgHandler;
     private final ProductMapper productMapper;
-    @Value("${file.path-product}")
-    private String productFilePath;
 
     @Transactional
     public Result insert(InsertProductDto productDto){

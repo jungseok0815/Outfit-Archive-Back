@@ -28,11 +28,8 @@ public class ProductController {
     }
 
     @GetMapping("/list")
-    public Result list(
-            @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
-            @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
-    ){
-        keyword = keyword.isEmpty() ? null : keyword;
+    public Result list(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+            @PageableDefault(size = 12 ,sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
         return productService.list(keyword, pageable);
     }
 

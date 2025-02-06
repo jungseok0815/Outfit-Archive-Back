@@ -1,7 +1,7 @@
 package com.fasthub.backend.oper.product.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasthub.backend.cmm.enums.ProductCategory;
-import com.fasthub.backend.oper.brand.entity.Brand;import com.fasthub.backend.oper.product.dto.ProductDto;
+import com.fasthub.backend.oper.order.entity.Order;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -45,4 +45,6 @@ public class Product {
     @JsonIgnore // 순환 방지
     private List<ProductImg> images = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product")
+    private List<Order> orders = new ArrayList<>();
 }
