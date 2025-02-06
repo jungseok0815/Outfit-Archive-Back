@@ -4,10 +4,12 @@ import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.jwt.JwtService;
+import com.fasthub.backend.cmm.result.Result;
 import com.fasthub.backend.oper.auth.dto.UserDto;
 import com.fasthub.backend.oper.auth.dto.JoinDto;
 import com.fasthub.backend.oper.auth.dto.LoginDto;
 import com.fasthub.backend.oper.auth.entity.User;
+import com.fasthub.backend.oper.auth.mapper.AuthMapper;
 import com.fasthub.backend.oper.auth.repository.AuthRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,31 +28,23 @@ public class AuthService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final AuthMapper authMapper;
 
-    public UserDto login(LoginDto loginDto, HttpServletResponse response){
-        log.info("userInfo : " + loginDto.toString());
-        User usrEntity = User.builder().userId(loginDto.getUserId())
-                .userPw(loginDto.getUserPwd())
-                .build();
-        Optional<User> user  = authRepository.findByUserId(usrEntity.getUserId());
-
-        if (user.isEmpty()) throw new BusinessException(ErrorCode.ID_NOT_FOUND);
-        if (!passwordEncoder.matches(loginDto.getUserPwd(), user.get().getUserPw())) throw new BusinessException(ErrorCode.PWD_NOT_FOUND);
-
-        jwtService.generateAccessToken(response, user.get());
-        jwtService.generateRefreshToken(response, user.get());
-
-        return modelMapper.map(user.get() , UserDto.class);
+    public Result login(LoginDto loginDto, HttpServletResponse response){
+        authRepository.findByUserId(loginDto.getUserId()).ifPresentOrElse(user -> {
+            if (!passwordEncoder.matches(loginDto.getUserPwd(), user.getUserPw())) {
+                throw new BusinessException(ErrorCode.PWD_NOT_FOUND);
+            }
+            jwtService.generateAccessToken(response, user);
+            jwtService.generateRefreshToken(response, user);
+        },
+        () -> new BusinessException(ErrorCode.ID_NOT_FOUND));
+        return Result.success("login");
     }
 
-    public UserDto join(JoinDto joinDto){
-        User usrEntity = User.builder().userId(joinDto.getUserId())
-                .userPw(passwordEncoder.encode(joinDto.getUserPwd()))
-                .userAge(joinDto.getUserAge())
-                .userNm(joinDto.getUserNm())
-                .authName(UserRole.ROLE_USER)
-                .build();
-        return modelMapper.map( authRepository.save(usrEntity), UserDto.class);
+    public Result join(JoinDto joinDto){
+        User userEntity = authMapper.userDtoToUserEntity(joinDto);
+        return Result.success("join",authMapper.userEntityToUserDto(authRepository.save(userEntity)));
     }
 
 

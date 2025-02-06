@@ -11,6 +11,7 @@ public enum ErrorCode {
     ID_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "M001","사용자의 아이디를 찾을 수 없습니다."),
     PWD_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR,"M002","사용자의 패스워드를 찾을 수 없습니다."),
     NOT_AUTHENTICATED_USER(HttpStatus.UNAUTHORIZED, "M003", "사용자의 권한이 인증되지 않음"),
+
     //BOARD
     BOARD_FAIL_SELECT(HttpStatus.INTERNAL_SERVER_ERROR,"B001","게시물 검색 실패"),
     BOARD_FAIL_INSERT(HttpStatus.INTERNAL_SERVER_ERROR,"B002","게시물 등록 실패"),

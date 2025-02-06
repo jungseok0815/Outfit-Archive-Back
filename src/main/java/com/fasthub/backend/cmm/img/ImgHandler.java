@@ -50,6 +50,20 @@ public class ImgHandler {
         }
     }
 
+    public <T extends BaseImg<U>, U> T createImg(MultipartFile file, Supplier<T> entitySupplier) {
+        try {
+            String fileName = getFileName(file.getOriginalFilename());
+            String savedFilePath = getFilePath(file, filePath, fileName);
+            T imgEntity = entitySupplier.get();
+            imgEntity.setImgOriginNm(file.getOriginalFilename());
+            imgEntity.setImgPath(savedFilePath);
+            imgEntity.setImgNm(fileName);
+            return imgEntity;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 

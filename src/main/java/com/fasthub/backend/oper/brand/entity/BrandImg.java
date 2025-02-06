@@ -2,14 +2,16 @@ package com.fasthub.backend.oper.brand.entity;
 
 import com.fasthub.backend.cmm.img.BaseImg;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 @Table(name = "Brand_img")
 public class BrandImg implements BaseImg {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "brandimg_id")
-    private Long brandImgId;
+    private Long id;
 
     @Column(nullable = false, name = "IMG_Path")
     private String imgPath;
