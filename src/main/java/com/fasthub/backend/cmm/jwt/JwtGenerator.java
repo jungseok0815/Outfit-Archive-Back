@@ -1,6 +1,6 @@
 package com.fasthub.backend.cmm.jwt;
 
-import com.fasthub.backend.oper.auth.entity.User;
+import com.fasthub.backend.oper.usr.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

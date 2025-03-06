@@ -1,14 +1,12 @@
 package com.fasthub.backend.oper.auth.service;
 
-import com.fasthub.backend.oper.auth.dto.CustomUserDetails;
-import com.fasthub.backend.oper.auth.dto.UserDto;
-import com.fasthub.backend.oper.auth.entity.User;
-import com.fasthub.backend.oper.auth.repository.AuthRepository;
+import com.fasthub.backend.oper.usr.dto.CustomUserDetails;
+import com.fasthub.backend.oper.usr.dto.UserDto;
+import com.fasthub.backend.oper.usr.entity.User;
+import com.fasthub.backend.oper.usr.repository.AuthRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.extern.slf4j.XSlf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

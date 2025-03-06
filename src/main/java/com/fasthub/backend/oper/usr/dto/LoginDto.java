@@ -1,7 +1,6 @@
-package com.fasthub.backend.oper.auth.dto;
+package com.fasthub.backend.oper.usr.dto;
 
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Getter
 @Setter

@@ -42,7 +42,7 @@ public class BrandService {
         brandRepository.findById(updateBrandDto.getId())
                 .ifPresent(brand -> {
                     brandImgRepository.findByBrand(brand).ifPresent(brandImg -> {
-                        BrandImg brandImg1 = brandImgRepository.save();
+//                        BrandImg brandImg1 = brandImgRepository.save();
                         Brand updateBrand = brandMapper.updateBrandDtoToBrand(updateBrandDto);
                         updateBrand.setBrandImg(brandImg);
                         brandRepository.save(updateBrand);

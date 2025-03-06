@@ -4,9 +4,9 @@ import com.fasthub.backend.cmm.enums.JwtRule;
 import com.fasthub.backend.cmm.enums.TokenStatus;
 import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
-import com.fasthub.backend.oper.auth.dto.CustomUserDetails;
-import com.fasthub.backend.oper.auth.entity.User;
-import com.fasthub.backend.oper.auth.repository.AuthRepository;
+import com.fasthub.backend.oper.usr.dto.CustomUserDetails;
+import com.fasthub.backend.oper.usr.entity.User;
+import com.fasthub.backend.oper.usr.repository.AuthRepository;
 import com.fasthub.backend.oper.auth.service.CoustomUserDetailService;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
@@ -128,9 +128,7 @@ public class JwtService {
      */
     public String resolveTokenFromCookie(HttpServletRequest request, JwtRule tokenPrefix) {
         Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
-            log.info("cookies is null");
-        }
+        if (cookies == null) log.info("cookies is null");
         return jwtUtil.resolveTokenFromCookie(cookies, tokenPrefix);
     }
 
@@ -157,7 +155,6 @@ public class JwtService {
 //        boolean isTokenMatched = storedToken.getToken().equals(token);
         return isRefreshValid;
     }
-
 
     /**
      * access token을 통해서 security principal에 유저 상태 및 정보 저장
