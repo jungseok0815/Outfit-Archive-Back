@@ -2,40 +2,21 @@ package com.fasthub.backend.cmm.config;
 
 import com.fasthub.backend.cmm.jwt.JwtAuthFilter;
 import com.fasthub.backend.cmm.jwt.JwtService;
-import com.fasthub.backend.oper.auth.repository.AuthRepository;
-import com.fasthub.backend.oper.auth.service.AuthService;
-import com.fasthub.backend.oper.auth.service.CoustomUserDetailService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
+import com.fasthub.backend.oper.usr.repository.AuthRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.XSlf4j;
-import org.apache.catalina.filters.CorsFilter;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity

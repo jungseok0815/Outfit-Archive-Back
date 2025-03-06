@@ -1,10 +1,8 @@
 package com.fasthub.backend.cmm.jwt;
 
 import com.fasthub.backend.cmm.enums.JwtRule;
-import com.fasthub.backend.oper.auth.entity.User;
-import com.fasthub.backend.oper.auth.repository.AuthRepository;
-import com.fasthub.backend.oper.auth.service.AuthService;
-import com.fasthub.backend.oper.auth.service.CoustomUserDetailService;
+import com.fasthub.backend.oper.usr.entity.User;
+import com.fasthub.backend.oper.usr.repository.AuthRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,8 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -24,6 +20,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final AuthRepository authRepository;
 
+    /**
+     * 특정 url에는 해당 되지 않도록!
+     * @param request
+     * @return
+     * @throws ServletException
+     */
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getServletPath();
+        return  path.startsWith("/api/auth/") || path.startsWith("/api/usr/insert");
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

@@ -1,8 +1,5 @@
-package com.fasthub.backend.oper.auth.dto;
+package com.fasthub.backend.oper.usr.dto;
 
-import com.fasthub.backend.cmm.enums.UserRole;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 
 @Getter

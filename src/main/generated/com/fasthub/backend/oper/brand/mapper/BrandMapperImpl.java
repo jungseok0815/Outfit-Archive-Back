@@ -1,6 +1,7 @@
 package com.fasthub.backend.oper.brand.mapper;
 
 import com.fasthub.backend.oper.brand.dto.InsertBrandDto;
+import com.fasthub.backend.oper.brand.dto.ResponseBrandDto;
 import com.fasthub.backend.oper.brand.dto.UpdateBrandDto;
 import com.fasthub.backend.oper.brand.entity.Brand;
 import com.fasthub.backend.oper.brand.entity.BrandImg;
@@ -10,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-02-06T13:43:30+0900",
+    date = "2025-03-06T13:13:52+0900",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.13 (Amazon.com Inc.)"
 )
 @Component
@@ -49,6 +50,24 @@ public class BrandMapperImpl implements BrandMapper {
         brand.brandImg( multipartFileToBrandImg( updateBrandDto.getBrandImg() ) );
 
         return brand.build();
+    }
+
+    @Override
+    public ResponseBrandDto brandEntityToResponseBrandDto(Brand brand) {
+        if ( brand == null ) {
+            return null;
+        }
+
+        ResponseBrandDto responseBrandDto = new ResponseBrandDto();
+
+        responseBrandDto.setId( brand.getId() );
+        responseBrandDto.setBrandNm( brand.getBrandNm() );
+        responseBrandDto.setBrandNum( brand.getBrandNum() );
+        responseBrandDto.setBrandLocation( brand.getBrandLocation() );
+        responseBrandDto.setBrandDc( brand.getBrandDc() );
+        responseBrandDto.setBrandImg( brand.getBrandImg() );
+
+        return responseBrandDto;
     }
 
     protected BrandImg multipartFileToBrandImg(MultipartFile multipartFile) {

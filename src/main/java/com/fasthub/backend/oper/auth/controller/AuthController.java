@@ -1,29 +1,18 @@
 package com.fasthub.backend.oper.auth.controller;
 
-import com.fasthub.backend.cmm.enums.UserRole;
-import com.fasthub.backend.cmm.jwt.JwtGenerator;
 import com.fasthub.backend.cmm.result.Result;
-import com.fasthub.backend.oper.auth.dto.CustomUserDetails;
-import com.fasthub.backend.oper.auth.dto.JoinDto;
-import com.fasthub.backend.oper.auth.dto.LoginDto;
-import com.fasthub.backend.oper.auth.dto.UserDto;
-import com.fasthub.backend.oper.auth.entity.User;
-import com.fasthub.backend.cmm.jwt.JwtService;
+import com.fasthub.backend.oper.usr.dto.CustomUserDetails;
+import com.fasthub.backend.oper.usr.dto.JoinDto;
+import com.fasthub.backend.oper.usr.dto.LoginDto;
 import com.fasthub.backend.oper.auth.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -37,11 +26,6 @@ public class AuthController {
     @PostMapping("/login")
     public Result login(LoginDto loginDto, HttpServletRequest request, HttpServletResponse response){
         return authService.login(loginDto, response);
-    }
-
-    @PostMapping("/join")
-    public Result join(JoinDto joinDto){
-        return authService.join(joinDto);
     }
 
     /**

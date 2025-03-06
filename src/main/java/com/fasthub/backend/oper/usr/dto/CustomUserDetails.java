@@ -1,4 +1,4 @@
-package com.fasthub.backend.oper.auth.dto;
+package com.fasthub.backend.oper.usr.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

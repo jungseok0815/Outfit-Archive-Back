@@ -1,7 +1,7 @@
 package com.fasthub.backend.oper.product.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasthub.backend.cmm.enums.ProductCategory;
-import com.fasthub.backend.oper.order.entity.Order;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,7 +30,7 @@ public class Product {
     @Column(name = "PRODUCT_PRICE", nullable = false)
     private int productPrice;
 
-    @Column(name ="PRODUCT_QUANTITY", nullable = false)
+    @Column(name = "PRODUCT_QUANTITY", nullable = false)
     private int productQuantity;
 
     @Column(name = "PRODUCT_BRAND", nullable = false)
@@ -40,11 +40,10 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
-//    cascade = CascadeType.ALL, orphanRemoval = true
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY , cascade = CascadeType.REMOVE)
+    //    cascade = CascadeType.ALL, orphanRemoval = true
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnore // 순환 방지
     private List<ProductImg> images = new ArrayList<>();
-
-    @OneToMany(mappedBy = "product")
-    private List<Order> orders = new ArrayList<>();
 }
+
+
