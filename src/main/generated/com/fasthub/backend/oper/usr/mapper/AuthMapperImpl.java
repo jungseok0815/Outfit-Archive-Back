@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-06T13:13:52+0900",
+    date = "2025-03-07T16:36:32+0900",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.13 (Amazon.com Inc.)"
 )
 @Component
@@ -25,6 +25,7 @@ public class AuthMapperImpl implements AuthMapper {
 
         user.userId( userDto.getUserId() );
         user.userNm( userDto.getUserNm() );
+        user.userPwd( userDto.getUserPwd() );
         user.userAge( userDto.getUserAge() );
         if ( userDto.getAuthName() != null ) {
             user.authName( Enum.valueOf( UserRole.class, userDto.getAuthName() ) );
@@ -43,6 +44,7 @@ public class AuthMapperImpl implements AuthMapper {
 
         userDto.setId( user.getId() );
         userDto.setUserId( user.getUserId() );
+        userDto.setUserPwd( user.getUserPwd() );
         userDto.setUserNm( user.getUserNm() );
         userDto.setUserAge( user.getUserAge() );
         userDto.setAuthName( user.getAuthName() );

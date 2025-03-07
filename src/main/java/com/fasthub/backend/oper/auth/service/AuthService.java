@@ -27,12 +27,9 @@ public class AuthService {
     private final JwtService jwtService;
 
     public Result login(LoginDto loginDto, HttpServletResponse response){
-        AtomicReference<User> resData = null;
-        Result result = new Result();
+        AtomicReference<User> resData = new AtomicReference<>();
         authRepository.findByUserId(loginDto.getUserId()).ifPresentOrElse(user -> {
-            if (!passwordEncoder.matches(loginDto.getUserPwd(), user.getUserPw())) {
-                result.setSuccess(false);
-                result.setMessage("비밀번호가");
+            if (!passwordEncoder.matches(loginDto.getUserPwd(), user.getUserPwd())) {;
                 throw new BusinessException(ErrorCode.PWD_NOT_FOUND);
             }
             jwtService.generateAccessToken(response, user);

@@ -21,7 +21,7 @@ public class UserDto  {
     public UserDto(User user){
         this.id = user.getId();
         this.userId = user.getUserId();
-        this.userPwd = user.getUserPw();
+        this.userPwd = user.getUserPwd();
         this.userNm = user.getUserNm();
         this.userAge = user.getUserAge();
         this.authName = user.getAuthName();

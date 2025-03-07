@@ -29,11 +29,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getServletPath();
-        return  path.startsWith("/api/auth/") || path.startsWith("/api/usr/insert");
+        return  path.startsWith("/api/auth/login") || path.startsWith("/api/usr/insert");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         /**
          * 쿠기에서 담겨서 전달되는 token을 가져온다.
          */

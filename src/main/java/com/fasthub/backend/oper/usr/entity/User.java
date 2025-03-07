@@ -28,8 +28,8 @@ public class User  {
     @Column(nullable = false, name = "USER_NM")
     private String userNm;
 
-    @Column(nullable = false, name = "USER_PW")
-    private String userPw;
+    @Column(nullable = false, name = "USER_PWD")
+    private String userPwd;
 
     @Column(nullable = false, name = "USER_AGE")
     private int userAge;

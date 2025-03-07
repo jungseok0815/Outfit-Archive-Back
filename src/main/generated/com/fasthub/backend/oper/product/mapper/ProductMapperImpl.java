@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-06T13:13:51+0900",
+    date = "2025-03-07T16:36:32+0900",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.13 (Amazon.com Inc.)"
 )
 @Component
@@ -30,7 +30,6 @@ public class ProductMapperImpl implements ProductMapper {
         responseProductDto.setProductCode( product.getProductCode() );
         responseProductDto.setProductPrice( product.getProductPrice() );
         responseProductDto.setProductQuantity( product.getProductQuantity() );
-        responseProductDto.setProductBrand( product.getProductBrand() );
         responseProductDto.setCategory( product.getCategory() );
         List<ProductImg> list = product.getImages();
         if ( list != null ) {
@@ -53,7 +52,6 @@ public class ProductMapperImpl implements ProductMapper {
         product.productCode( productDto.getProductCode() );
         product.productPrice( productDto.getProductPrice() );
         product.productQuantity( productDto.getProductQuantity() );
-        product.productBrand( productDto.getProductBrand() );
         product.category( productDto.getCategory() );
 
         return product.build();
@@ -71,7 +69,6 @@ public class ProductMapperImpl implements ProductMapper {
         product.productCode( productDto.getProductCode() );
         product.productPrice( productDto.getProductPrice() );
         product.productQuantity( productDto.getProductQuantity() );
-        product.productBrand( productDto.getProductBrand() );
         product.category( productDto.getCategory() );
 
         return product.build();

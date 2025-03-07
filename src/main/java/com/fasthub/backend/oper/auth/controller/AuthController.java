@@ -28,6 +28,7 @@ public class AuthController {
         return authService.login(loginDto, response);
     }
 
+
     /**
      * 로그인이 되어잇는지 유저 확인
      * @return
@@ -44,5 +45,4 @@ public class AuthController {
         }
         return Result.fail("인증 실패" , null);
     }
-
 }
