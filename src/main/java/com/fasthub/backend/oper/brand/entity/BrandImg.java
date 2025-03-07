@@ -22,7 +22,8 @@ public class BrandImg implements BaseImg {
     @Column(nullable = false, name = "IMG_ORIGIN_NM")
     private String imgOriginNm;
 
-    @OneToOne(mappedBy = "brandImg")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
     @Override

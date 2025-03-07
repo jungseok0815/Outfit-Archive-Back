@@ -33,9 +33,6 @@ public class Product {
     @Column(name = "PRODUCT_QUANTITY", nullable = false)
     private int productQuantity;
 
-    @Column(name = "PRODUCT_BRAND", nullable = false)
-    private String productBrand;
-
     @Column(nullable = false, name = "CATEGORY")
     @Enumerated(EnumType.STRING)
     private ProductCategory category;

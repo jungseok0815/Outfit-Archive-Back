@@ -31,7 +31,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**","/js/**", "/img/**").permitAll()
-                        .requestMatchers("/api/auth/**", "/api/img/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/img/**","/api/usr/insert").permitAll()
                         .requestMatchers("/api/product/select", "/api/product/list").permitAll()
                         .requestMatchers("/api/product/delete", "/api /product/update", "/api/product/insert").hasRole("ADMIN")
                         .requestMatchers("/api/brand/delete", "/api /brand/update", "/api/brand/insert").hasRole("ADMIN")
@@ -43,13 +43,19 @@ public class SecurityConfig {
                     exception.authenticationEntryPoint(
                             (request, response, authException) -> {
                                 // 인증되지 않은 사용자 접근시 401 반환
-                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                                System.out.println("로그인 안함!");
+                                response.setContentType("application/json");
+                                response.setCharacterEncoding("UTF-8");
+                                response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"need login.\"}");
                             }
                     );
                     exception.accessDeniedHandler(
                             (request, response, accessDeniedException) -> {
                                 // 권한이 없는 사용자 접근시 403 반환
-                                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+                                System.out.println("권한이 없음!");
+                                response.setContentType("application/json");
+                                response.setCharacterEncoding("UTF-8");
+                                response.getWriter().write("{\"error\": \"Forbidden\", \"message\": \"not auth.\"}");
                             }
                     );
                 })
@@ -64,8 +70,8 @@ public class SecurityConfig {
                         };
                     c.configurationSource(source);
                 })
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtAuthFilter(jwtService,authRepository), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthFilter(jwtService,authRepository), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
                 http.formLogin(AbstractHttpConfigurer::disable);
                 http.httpBasic(AbstractHttpConfigurer::disable);
         return http.build();
