@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("http://localhost:3002")
                 .allowedMethods("GET","POST","PUT","DELETE")
                 .allowCredentials(true)
                 .maxAge(3000);
@@ -56,7 +56,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthenticationIntercepor())
                 .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/auth/login", "/api/auth/join");
+                .excludePathPatterns("/api/auth/login", "/api/usr/insert");
     }
 
     @Bean
