@@ -24,9 +24,9 @@ public class UsrService {
 
     public Result insert(JoinDto joinDto){
         log.info("joinDto : " + joinDto);
+        System.out.println("jooinDto : " + joinDto.toString());
         joinDto.setUserPwd(passwordEncoder.encode(joinDto.getUserPwd()));
         joinDto.setAuthName(UserRole.ROLE_USER.getRole(joinDto.getAuthName()));
-        log.info("joinDto : "  + joinDto);
 
         User userEntity = authMapper.userDtoToUserEntity(joinDto);
         return Result.success("join",authMapper.userEntityToUserDto(authRepository.save(userEntity)));
