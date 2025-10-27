@@ -2,6 +2,7 @@ package com.fasthub.backend.oper.usr.service;
 
 import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.jwt.JwtService;
+import com.fasthub.backend.cmm.result.Params;
 import com.fasthub.backend.cmm.result.Result;
 import com.fasthub.backend.oper.usr.dto.JoinDto;
 import com.fasthub.backend.oper.usr.entity.User;
@@ -30,5 +31,10 @@ public class UsrService {
 
         User userEntity = authMapper.userDtoToUserEntity(joinDto);
         return Result.success("join",authMapper.userEntityToUserDto(authRepository.save(userEntity)));
+    }
+
+    public Result insert(Params params){
+        log.info("params : " + params.toString());
+        return Result.success("join");
     }
 }
