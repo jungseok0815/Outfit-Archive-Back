@@ -86,10 +86,7 @@ public class CmmController {
         return null;
     }
 
-    public boolean canMatchMethod(Method method, Map<String, Object> jsonMap){
-        Parameter[] params = method.getParameters();
 
-    }
 
     /**
      * 첫 글자만 대문자로 반환
