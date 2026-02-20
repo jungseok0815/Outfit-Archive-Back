@@ -2,8 +2,7 @@ package com.fasthub.backend.cmm.config;
 
 import com.fasthub.backend.cmm.jwt.JwtAuthFilter;
 import com.fasthub.backend.cmm.jwt.JwtService;
-import com.fasthub.backend.oper.usr.repository.AuthRepository;
-import jakarta.servlet.http.HttpServletResponse;
+import com.fasthub.backend.user.usr.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
