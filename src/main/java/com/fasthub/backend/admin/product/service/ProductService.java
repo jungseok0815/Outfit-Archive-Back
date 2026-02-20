@@ -1,17 +1,15 @@
 package com.fasthub.backend.admin.product.service;
 
 import com.fasthub.backend.admin.product.dto.InsertProductDto;
+import com.fasthub.backend.admin.product.dto.ResponseProductDto;
 import com.fasthub.backend.admin.product.dto.UpdateProductDto;
 import com.fasthub.backend.cmm.img.ImgHandler;
-import com.fasthub.backend.cmm.result.Result;
-import com.fasthub.backend.oper.product.dto.*;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.entity.ProductImg;
 import com.fasthub.backend.admin.product.mapper.ProductMapper;
 import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,35 +27,33 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     @Transactional
-    public Result insert(InsertProductDto productDto){
-        Product productResult =  productRepository.save(productMapper.InsertproductDtoToProduct(productDto));
-        if (productDto.getImage() != null){
-            productDto.getImage().forEach((item) -> productImgRepository.save(imgHandler.createImg(item, ProductImg::new, productResult)));
+    public void insert(InsertProductDto productDto) {
+        Product productResult = productRepository.save(productMapper.InsertproductDtoToProduct(productDto));
+        if (productDto.getImage() != null) {
+            productDto.getImage().forEach(item ->
+                    productImgRepository.save(imgHandler.createImg(item, ProductImg::new, productResult)));
         }
-        return Result.success("insert ok");
     }
 
-    public Result list(String keyword, Pageable pageable){
-        Page<Product> productPage = productRepository.findAllByKeyword(keyword,pageable);
-        return Result.success(productPage.map(productMapper::productToProductDto));
+    public Page<ResponseProductDto> list(String keyword, Pageable pageable) {
+        Page<Product> productPage = productRepository.findAllByKeyword(keyword, pageable);
+        return productPage.map(productMapper::productToProductDto);
     }
 
     @Transactional
-    public Result update(UpdateProductDto productDto){
+    public void update(UpdateProductDto productDto) {
         productRepository.findById(productDto.getId())
                 .ifPresent(product -> {
-                    Product resultProduct =  productRepository.save(productMapper.productDtoToProduct(productDto));
-                    if (productDto.getImage() != null){
+                    Product resultProduct = productRepository.save(productMapper.productDtoToProduct(productDto));
+                    if (productDto.getImage() != null) {
                         productImgRepository.deleteByProduct(resultProduct);
-                        productDto.getImage().forEach((item) -> productImgRepository.save(imgHandler.createImg(item,ProductImg::new,resultProduct)));
+                        productDto.getImage().forEach(item ->
+                                productImgRepository.save(imgHandler.createImg(item, ProductImg::new, resultProduct)));
                     }
                 });
-        return Result.success("update ok");
     }
 
-    public Result delete(String id){
+    public void delete(String id) {
         productRepository.deleteById(Long.valueOf(id));
-        return Result.success("delete ok");
     }
-
 }

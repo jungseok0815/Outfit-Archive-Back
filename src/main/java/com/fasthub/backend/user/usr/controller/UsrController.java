@@ -1,11 +1,11 @@
 package com.fasthub.backend.user.usr.controller;
 
-import com.fasthub.backend.cmm.result.Result;
-import com.fasthub.backend.admin.product.dto.UpdateProductDto;
 import com.fasthub.backend.user.usr.dto.JoinDto;
+import com.fasthub.backend.user.usr.dto.UserDto;
 import com.fasthub.backend.user.usr.service.UsrService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,17 +17,23 @@ public class UsrController {
     private final UsrService usrService;
 
     @PostMapping("/insert")
-    public Result insert(@RequestBody JoinDto joinDto){
+    public ResponseEntity<UserDto> insert(@RequestBody JoinDto joinDto) {
         log.info("joinDto : " + joinDto.toString());
-        return usrService.insert(joinDto);
+        return ResponseEntity.status(201).body(usrService.insert(joinDto));
     }
 
     @GetMapping("/list")
-    public void list() {}
+    public ResponseEntity<Void> list() {
+        return ResponseEntity.ok().build();
+    }
 
-    @PutMapping( "/update" )
-    public void update(UpdateProductDto productDto){}
+    @PutMapping("/update")
+    public ResponseEntity<Void> update() {
+        return ResponseEntity.ok().build();
+    }
 
     @DeleteMapping("/delete")
-    public void delete(){}
+    public ResponseEntity<Void> delete() {
+        return ResponseEntity.ok().build();
+    }
 }
