@@ -1,8 +1,8 @@
 package com.fasthub.backend.cmm.jwt;
 
 import com.fasthub.backend.cmm.enums.JwtRule;
-import com.fasthub.backend.oper.usr.entity.User;
-import com.fasthub.backend.oper.usr.repository.AuthRepository;
+import com.fasthub.backend.user.usr.entity.User;
+import com.fasthub.backend.user.usr.repository.AuthRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
