@@ -14,6 +14,6 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     Optional<Brand> findById(Long id);
 
 
-    @Query("SELECT b FROM Brand b WHERE :ketword IS NULL OR :keyword = '' OR b.brandNm LIKE %:keyword")
+    @Query("SELECT b FROM Brand b WHERE :keyword IS NULL OR :keyword = '' OR b.brandNm LIKE %:keyword%")
     Page<Brand> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 }

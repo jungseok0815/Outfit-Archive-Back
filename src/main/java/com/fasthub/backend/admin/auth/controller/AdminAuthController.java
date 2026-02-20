@@ -1,34 +1,31 @@
 package com.fasthub.backend.admin.auth.controller;
 
-import com.fasthub.backend.admin.auth.dto.AdminLoginDto;
 import com.fasthub.backend.admin.auth.dto.AdminJoinDto;
+import com.fasthub.backend.admin.auth.dto.AdminLoginDto;
+import com.fasthub.backend.admin.auth.dto.AdminLoginResponseDto;
 import com.fasthub.backend.admin.auth.service.AdminAuthService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin/auth")
+@RequiredArgsConstructor
 @Slf4j
 public class AdminAuthController {
 
-    @Autowired
-    private AdminAuthService adminAuthService;
+    private final AdminAuthService adminAuthService;
 
     @PostMapping("/login")
-    public void adminLogin(@RequestBody @Valid AdminLoginDto adminLoginDto){
-        log.info("adminLoginDto : {}" , adminLoginDto.toString());
-        adminAuthService.adminLogin(adminLoginDto);
+    public ResponseEntity<AdminLoginResponseDto> adminLogin(@RequestBody @Valid AdminLoginDto adminLoginDto) {
+        return ResponseEntity.ok(adminAuthService.adminLogin(adminLoginDto));
     }
 
     @PostMapping("/join")
-    public void adminJoin(@RequestBody @Valid AdminJoinDto joinLoginDto){
-        log.info("joinLoginDto : {}" , joinLoginDto.toString());
+    public ResponseEntity<Void> adminJoin(@RequestBody @Valid AdminJoinDto joinLoginDto) {
         adminAuthService.adminJoin(joinLoginDto);
+        return ResponseEntity.status(201).build();
     }
-
 }

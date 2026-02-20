@@ -8,9 +8,15 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     // Member
-    ID_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "M001","사용자의 아이디를 찾을 수 없습니다."),
-    PWD_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR,"M002","사용자의 패스워드를 찾을 수 없습니다."),
+    ID_NOT_FOUND(HttpStatus.NOT_FOUND, "M001","사용자의 아이디를 찾을 수 없습니다."),
+    PWD_NOT_FOUND(HttpStatus.UNAUTHORIZED,"M002","사용자의 패스워드가 일치하지 않습니다."),
     NOT_AUTHENTICATED_USER(HttpStatus.UNAUTHORIZED, "M003", "사용자의 권한이 인증되지 않음"),
+
+    // Admin
+    ADMIN_ID_NOT_FOUND(HttpStatus.NOT_FOUND, "A001", "관리자 아이디를 찾을 수 없습니다."),
+    ADMIN_PWD_NOT_MATCH(HttpStatus.UNAUTHORIZED, "A002", "관리자 비밀번호가 일치하지 않습니다."),
+    ADMIN_ALREADY_EXISTS(HttpStatus.CONFLICT, "A003", "이미 존재하는 관리자 아이디입니다."),
+    ADMIN_ACCESS_DENIED(HttpStatus.FORBIDDEN, "A004", "해당 기능에 대한 권한이 없습니다."),
 
     //BOARD
     BOARD_FAIL_SELECT(HttpStatus.INTERNAL_SERVER_ERROR,"B001","게시물 검색 실패"),

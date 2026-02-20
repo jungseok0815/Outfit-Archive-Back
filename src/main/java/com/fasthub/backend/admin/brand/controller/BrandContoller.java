@@ -1,14 +1,16 @@
 package com.fasthub.backend.admin.brand.controller;
 
-import com.fasthub.backend.cmm.result.Result;
 import com.fasthub.backend.admin.brand.dto.InsertBrandDto;
 import com.fasthub.backend.admin.brand.dto.UpdateBrandDto;
+import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.service.BrandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,25 +22,27 @@ public class BrandContoller {
     private final BrandService brandService;
 
     @GetMapping("/list")
-    public Result list(@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
-                       @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
-        return brandService.list(keyword, null);
+    public ResponseEntity<Page<Brand>> list(
+            @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+            @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(brandService.list(keyword, pageable));
     }
 
     @PostMapping("/insert")
-    public Result insert(InsertBrandDto insertBrandDto){
-        return brandService.insert(insertBrandDto);
+    public ResponseEntity<Void> insert(InsertBrandDto insertBrandDto) {
+        brandService.insert(insertBrandDto);
+        return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/update")
-    public Result update(UpdateBrandDto brandDto){
-        return brandService.update(brandDto);
+    public ResponseEntity<Void> update(UpdateBrandDto brandDto) {
+        brandService.update(brandDto);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete")
-    public Result delete(String brandNo){
-        return brandService.delete(brandNo);
+    public ResponseEntity<Void> delete(String brandNo) {
+        brandService.delete(brandNo);
+        return ResponseEntity.ok().build();
     }
-
-
 }
