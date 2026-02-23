@@ -32,7 +32,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**","/js/**", "/img/**").permitAll()
-                        .requestMatchers("/api/auth/**", "/api/img/**", "/api/usr/insert").permitAll()
+                        .requestMatchers("/api/usr/login", "/api/usr/join", "/api/img/**").permitAll()
                         .requestMatchers("/api/admin/auth/login", "/api/admin/auth/join").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/usr/**").hasRole("USER")
