@@ -36,6 +36,11 @@ public enum ErrorCode {
     PRODUCT_FAIL_UPDATE(HttpStatus.INTERNAL_SERVER_ERROR,"P003","상품 업데이트 실패"),
     PRODUCT_FAIL_DELETE(HttpStatus.INTERNAL_SERVER_ERROR,"P004","상품 삭제 실패"),
 
+    //ORDER
+    ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "O001", "구매내역을 찾을 수 없습니다."),
+    ORDER_FAIL_UPDATE(HttpStatus.INTERNAL_SERVER_ERROR, "O002", "구매 상태 변경 실패"),
+    ORDER_FAIL_DELETE(HttpStatus.INTERNAL_SERVER_ERROR, "O003", "구매내역 삭제 실패"),
+
     //JWT
     NOT_REFRESG_KEY(HttpStatus.NOT_FOUND, "CP003", "리프레쉬 키 해석 실패"),
 

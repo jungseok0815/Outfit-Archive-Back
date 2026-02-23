@@ -15,7 +15,7 @@ public class InsertProductDto {
     private String productCode;
     private int productPrice;
     private int productQuantity;
-    private String productBrand;
+    private Long brandId;
     private ProductCategory category;
     private List<MultipartFile> image;
 }

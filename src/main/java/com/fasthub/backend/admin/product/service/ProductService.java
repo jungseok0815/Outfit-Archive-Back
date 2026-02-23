@@ -1,5 +1,7 @@
 package com.fasthub.backend.admin.product.service;
 
+import com.fasthub.backend.admin.brand.entity.Brand;
+import com.fasthub.backend.admin.brand.repository.BrandRepository;
 import com.fasthub.backend.admin.product.dto.InsertProductDto;
 import com.fasthub.backend.admin.product.dto.ResponseProductDto;
 import com.fasthub.backend.admin.product.dto.UpdateProductDto;
@@ -25,12 +27,22 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductImgRepository productImgRepository;
+    private final BrandRepository brandRepository;
     private final ImgHandler imgHandler;
     private final ProductMapper productMapper;
 
     @Transactional
     public void insert(InsertProductDto productDto) {
-        Product product = productRepository.save(productMapper.insertProductDtoToProduct(productDto));
+        Brand brand = brandRepository.findById(productDto.getBrandId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
+        Product product = productRepository.save(Product.builder()
+                .productNm(productDto.getProductNm())
+                .productCode(productDto.getProductCode())
+                .productPrice(productDto.getProductPrice())
+                .productQuantity(productDto.getProductQuantity())
+                .category(productDto.getCategory())
+                .brand(brand)
+                .build());
         if (productDto.getImage() != null) {
             productDto.getImage().forEach(item ->
                     productImgRepository.save(imgHandler.createImg(item, ProductImg::new, product)));
@@ -46,8 +58,10 @@ public class ProductService {
     public void update(UpdateProductDto productDto) {
         Product product = productRepository.findById(productDto.getId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_UPDATE));
+        Brand brand = brandRepository.findById(productDto.getBrandId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
         product.update(productDto.getProductNm(), productDto.getProductCode(),
-                productDto.getProductPrice(), productDto.getProductQuantity(), productDto.getCategory());
+                productDto.getProductPrice(), productDto.getProductQuantity(), productDto.getCategory(), brand);
         if (productDto.getImage() != null) {
             productImgRepository.deleteByProduct(product);
             productDto.getImage().forEach(item ->
