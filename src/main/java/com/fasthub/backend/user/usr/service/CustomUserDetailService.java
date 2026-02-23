@@ -1,4 +1,4 @@
-package com.fasthub.backend.user.auth.service;
+package com.fasthub.backend.user.usr.service;
 
 import com.fasthub.backend.user.usr.dto.CustomUserDetails;
 import com.fasthub.backend.user.usr.dto.UserDto;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @Slf4j
-public class CoustomUserDetailService implements UserDetailsService {
+public class CustomUserDetailService implements UserDetailsService {
 
     private final AuthRepository authRepository;
     private final ModelMapper modelMapper;
@@ -26,11 +26,10 @@ public class CoustomUserDetailService implements UserDetailsService {
         User user = authRepository.findById(Long.valueOf(userId))
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저가 없습니다."));
 
-       log.info("customUserDetailArea : " + user.toString());
+        log.info("customUserDetailArea : " + user.toString());
 
         UserDto dto = modelMapper.map(user, UserDto.class);
 
         return new CustomUserDetails(dto);
-
     }
 }
