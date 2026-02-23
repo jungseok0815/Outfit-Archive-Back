@@ -29,13 +29,26 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleValidException(MethodArgumentNotValidException e) {
         String msg = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        log.error("ValidationException : {}", msg);
+        log.warn("ValidationException : {}", msg);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ErrorResponse.builder()
                         .status(HttpStatus.BAD_REQUEST.value())
                         .code("VALID_FAIL")
                         .msg(msg)
+                        .build());
+    }
+
+    // 예상치 못한 예외
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<ErrorResponse> handleException(Exception e) {
+        log.error("Unexpected Exception : {}", e.getMessage(), e);
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ErrorResponse.builder()
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .code("INTERNAL_ERROR")
+                        .msg("서버 내부 오류가 발생했습니다.")
                         .build());
     }
 }
