@@ -11,9 +11,6 @@ import java.util.Optional;
 
 public interface BrandRepository extends JpaRepository<Brand, Long> {
 
-    Optional<Brand> findById(Long id);
-
-
     @Query("SELECT b FROM Brand b WHERE :keyword IS NULL OR :keyword = '' OR b.brandNm LIKE %:keyword%")
     Page<Brand> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 }
