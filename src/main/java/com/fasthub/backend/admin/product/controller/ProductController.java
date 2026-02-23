@@ -15,15 +15,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/admin/product")
 @RequiredArgsConstructor
 @Slf4j
 public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/insert")
-    public ResponseEntity<Void> insert(InsertProductDto productDto) {
+    @PostMapping(value = "/insert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> insert(@ModelAttribute InsertProductDto productDto) {
         productService.insert(productDto);
         return ResponseEntity.status(201).build();
     }
@@ -36,7 +36,7 @@ public class ProductController {
     }
 
     @PutMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> update(UpdateProductDto productDto) {
+    public ResponseEntity<Void> update(@ModelAttribute UpdateProductDto productDto) {
         productService.update(productDto);
         return ResponseEntity.ok().build();
     }

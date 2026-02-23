@@ -10,11 +10,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
 
-    @Mapping(target = "id", ignore = true)
     ResponseProductDto productToProductDto(Product product);
 
-    Product productDtoToProduct(UpdateProductDto productDto);
-
     @Mapping(target = "id", ignore = true)
-    Product InsertproductDtoToProduct(InsertProductDto productDto);
+    @Mapping(target = "images", ignore = true)
+    Product insertProductDtoToProduct(InsertProductDto productDto);
 }

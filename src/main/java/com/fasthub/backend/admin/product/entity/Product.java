@@ -41,6 +41,14 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnore // 순환 방지
     private List<ProductImg> images = new ArrayList<>();
+
+    public void update(String productNm, String productCode, int productPrice, int productQuantity, ProductCategory category) {
+        this.productNm = productNm;
+        this.productCode = productCode;
+        this.productPrice = productPrice;
+        this.productQuantity = productQuantity;
+        this.category = category;
+    }
 }
 
 
