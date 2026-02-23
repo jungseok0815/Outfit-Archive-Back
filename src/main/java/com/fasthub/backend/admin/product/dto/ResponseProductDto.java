@@ -19,7 +19,8 @@ public class ResponseProductDto {
     private String productCode;
     private int productPrice;
     private int productQuantity;
-    private String productBrand;
+    private Long brandId;
+    private String brandNm;
     private ProductCategory category;
     private List<ProductImg> images;
 }

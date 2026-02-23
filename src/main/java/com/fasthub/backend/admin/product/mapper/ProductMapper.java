@@ -10,9 +10,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
 
+    @Mapping(target = "brandId", source = "brand.id")
+    @Mapping(target = "brandNm", source = "brand.brandNm")
     ResponseProductDto productToProductDto(Product product);
-
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "images", ignore = true)
-    Product insertProductDtoToProduct(InsertProductDto productDto);
 }
