@@ -4,6 +4,7 @@ import com.fasthub.backend.cmm.jwt.JwtAuthFilter;
 import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +21,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfig {
 
     private final JwtService jwtService;
@@ -32,18 +34,16 @@ public class SecurityConfig {
                         .requestMatchers("/css/**","/js/**", "/img/**").permitAll()
                         .requestMatchers("/api/auth/**", "/api/img/**", "/api/usr/insert").permitAll()
                         .requestMatchers("/api/admin/auth/login", "/api/admin/auth/join").permitAll()
-                        .requestMatchers("/api/product/list").permitAll()
-                        .requestMatchers("/api/product/delete", "/api/product/update", "/api/product/insert").hasRole("ADMIN")
-                        .requestMatchers("/api/brand/delete", "/api/brand/update", "/api/brand/insert").hasRole("ADMIN")
-                        .requestMatchers("/api/usr/**").hasRole("USER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/usr/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> {
                     exception.authenticationEntryPoint(
                             (request, response, authException) -> {
                                 // 인증되지 않은 사용자 접근시 401 반환
-                                System.out.println("로그인 안함!");
+                                log.info("로그인 안함!");
+
                                 response.setContentType("application/json");
                                 response.setCharacterEncoding("UTF-8");
                                 response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"need login.\"}");
@@ -52,7 +52,7 @@ public class SecurityConfig {
                     exception.accessDeniedHandler(
                             (request, response, accessDeniedException) -> {
                                 // 권한이 없는 사용자 접근시 403 반환
-                                System.out.println("권한이 없음!");
+                                log.info("권한이 없음!");
                                 response.setContentType("application/json");
                                 response.setCharacterEncoding("UTF-8");
                                 response.getWriter().write("{\"error\": \"Forbidden\", \"message\": \"not auth.\"}");
