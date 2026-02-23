@@ -8,5 +8,4 @@ import java.util.Optional;
 
 public interface BrandImgRepository extends JpaRepository<BrandImg, Long> {
     void deleteByBrand(Brand brand);
-    Optional<BrandImg> findByBrand(Brand brand);
 }

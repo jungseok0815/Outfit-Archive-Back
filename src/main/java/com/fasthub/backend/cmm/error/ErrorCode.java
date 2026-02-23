@@ -24,6 +24,12 @@ public enum ErrorCode {
     BOARD_FAIL_UPDATE(HttpStatus.INTERNAL_SERVER_ERROR,"B003","게시물 업데이트 실패"),
     BOARD_FAIL_DELETE(HttpStatus.INTERNAL_SERVER_ERROR,"B004","게시물 삭제 실패"),
 
+    //BRAND
+    BRAND_NOT_FOUND(HttpStatus.NOT_FOUND, "BR001", "브랜드를 찾을 수 없습니다."),
+    BRAND_FAIL_INSERT(HttpStatus.INTERNAL_SERVER_ERROR, "BR002", "브랜드 등록 실패"),
+    BRAND_FAIL_UPDATE(HttpStatus.INTERNAL_SERVER_ERROR, "BR003", "브랜드 업데이트 실패"),
+    BRAND_FAIL_DELETE(HttpStatus.INTERNAL_SERVER_ERROR, "BR004", "브랜드 삭제 실패"),
+
     //PRODUCT
     PRODUCT_FAIL_SELECT(HttpStatus.INTERNAL_SERVER_ERROR,"P001","상품 검색 실패"),
     PRODUCT_FAIL_INSERT(HttpStatus.INTERNAL_SERVER_ERROR,"P002","상품 등록 실패"),

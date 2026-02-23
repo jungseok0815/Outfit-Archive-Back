@@ -34,4 +34,10 @@ public class Brand {
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BrandImg> images = new ArrayList<>();
 
+    public void update(String brandNm, String brandNum, String brandLocation, String brandDc) {
+        this.brandNm = brandNm;
+        this.brandNum = brandNum;
+        this.brandLocation = brandLocation;
+        this.brandDc = brandDc;
+    }
 }
