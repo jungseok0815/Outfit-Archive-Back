@@ -7,7 +7,8 @@ import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.user.usr.dto.CustomUserDetails;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
-import com.fasthub.backend.user.auth.service.CoustomUserDetailService;
+
+import com.fasthub.backend.user.usr.service.CustomUserDetailService;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class JwtService {
     private final AuthRepository authRepository;
     private final JwtGenerator jwtGenerator;
     private final JwtUtil jwtUtil;
-    private final CoustomUserDetailService coustomUserDetailService;
+    private final CustomUserDetailService coustomUserDetailService;
 
     private final Key ACCESS_SECRET_KEY;
     private final Key REFRESH_SECRET_KEY;
@@ -45,7 +46,7 @@ public class JwtService {
 
 
     public JwtService(
-            CoustomUserDetailService coustomUserDetailService,
+            CustomUserDetailService coustomUserDetailService,
             JwtGenerator jwtGenerator,
             JwtUtil jwtUtil,
             AuthRepository authRepository,
