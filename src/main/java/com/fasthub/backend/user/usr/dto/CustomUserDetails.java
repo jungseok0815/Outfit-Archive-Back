@@ -17,6 +17,10 @@ public class CustomUserDetails implements UserDetails {
 
     private final UserDto userInfoDto;
 
+    public Long getId() {
+        return userInfoDto.getId();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(userInfoDto.getAuthName().getValue()));

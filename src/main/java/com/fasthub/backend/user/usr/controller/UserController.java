@@ -1,15 +1,15 @@
 package com.fasthub.backend.user.usr.controller;
 
-import com.fasthub.backend.user.usr.dto.CustomUserDetails;
-import com.fasthub.backend.user.usr.dto.JoinDto;
-import com.fasthub.backend.user.usr.dto.LoginDto;
-import com.fasthub.backend.user.usr.dto.LoginResponseDto;
-import com.fasthub.backend.user.usr.dto.UserDto;
+import com.fasthub.backend.user.usr.dto.*;
 import com.fasthub.backend.user.usr.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +30,12 @@ public class UserController {
         return ResponseEntity.ok(userService.login(loginDto, response));
     }
 
+    @PostMapping("/join")
+    public ResponseEntity<UserDto> join(@RequestBody JoinDto joinDto) {
+        log.info("joinDto : " + joinDto.toString());
+        return ResponseEntity.status(201).body(userService.join(joinDto));
+    }
+
     @GetMapping("/validate")
     public ResponseEntity<CustomUserDetails> validate() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -41,24 +47,25 @@ public class UserController {
         return ResponseEntity.status(401).build();
     }
 
-    @PostMapping("/join")
-    public ResponseEntity<UserDto> join(@RequestBody JoinDto joinDto) {
-        log.info("joinDto : " + joinDto.toString());
-        return ResponseEntity.status(201).body(userService.join(joinDto));
-    }
-
+    // 유저 목록 조회 (keyword: 이름 검색, pageable: 페이징)
     @GetMapping("/list")
-    public ResponseEntity<Void> list() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Page<ResponseUserDto>> list(
+            @RequestParam(required = false) String keyword,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseEntity.ok(userService.list(keyword, pageable));
     }
 
+    // 유저 정보 수정
     @PutMapping("/update")
-    public ResponseEntity<Void> update() {
+    public ResponseEntity<Void> update(@RequestBody @Valid UpdateUserDto updateUserDto) {
+        userService.update(updateUserDto);
         return ResponseEntity.ok().build();
     }
 
+    // 유저 삭제
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> delete() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> delete(@RequestParam Long id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
