@@ -166,3 +166,94 @@ Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost' (usi
 	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:467)
 	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:46)
 	... 40 common frames omitted
+2026-02-25 10:03:40.819 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2026-02-25 10:03:40.865 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 171764 (C:\jungseok\개인자료\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\개인자료\Outfit-Archive-Back)
+2026-02-25 10:03:40.866 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-25 10:03:41.536 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-25 10:03:41.610 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 68 ms. Found 7 JPA repository interfaces.
+2026-02-25 10:03:41.881 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-02-25 10:03:41.902 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2026-02-25 10:03:42.106 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-25 10:03:42.121 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-25 10:03:42.123 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-25 10:03:42.123 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2026-02-25 10:03:42.193 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-25 10:03:42.193 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1291 ms
+2026-02-25 10:03:42.345 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-25 10:03:42.425 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2026-02-25 10:03:42.466 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-25 10:03:42.718 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-25 10:03:42.745 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-25 10:03:42.976 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@70840a5a
+2026-02-25 10:03:42.979 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-25 10:03:43.023 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-25 10:03:43.039 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-25 10:03:43.947 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-25 10:03:43.999 [main] DEBUG org.hibernate.SQL - 
+    create table admin_member (
+        id bigint not null auto_increment,
+        admin_role enum ('ADMIN','PARTNER','SUPER_ADMIN') not null,
+        auth_name enum ('NOT_REGISTERED','ROLE_ADMIN','ROLE_USER') not null,
+        created_at datetime(6),
+        user_id varchar(255) not null,
+        user_nm varchar(255) not null,
+        user_pwd varchar(255) not null,
+        updated_at datetime(6),
+        primary key (id)
+    ) engine=InnoDB
+2026-02-25 10:03:44.051 [main] DEBUG org.hibernate.SQL - 
+    create table orders (
+        id bigint not null auto_increment,
+        order_date datetime(6),
+        quantity integer not null,
+        recipient_name varchar(255) not null,
+        recipient_phone varchar(255) not null,
+        shipping_address varchar(255) not null,
+        status enum ('CANCELLED','DELIVERED','PAYMENT_COMPLETE','SHIPPING') not null,
+        total_price integer not null,
+        product_id bigint not null,
+        user_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-02-25 10:03:44.067 [main] DEBUG org.hibernate.SQL - 
+    alter table product 
+       add column brand_id bigint
+2026-02-25 10:03:44.106 [main] DEBUG org.hibernate.SQL - 
+    alter table admin_member 
+       drop index UK1cvmb00brhb8c0wyfodlvfa9k
+2026-02-25 10:03:44.115 [main] DEBUG org.hibernate.SQL - 
+    alter table admin_member 
+       add constraint UK1cvmb00brhb8c0wyfodlvfa9k unique (user_id)
+2026-02-25 10:03:44.151 [main] DEBUG org.hibernate.SQL - 
+    alter table orders 
+       add constraint FK787ibr3guwp6xobrpbofnv7le 
+       foreign key (product_id) 
+       references product (id)
+2026-02-25 10:03:44.212 [main] DEBUG org.hibernate.SQL - 
+    alter table orders 
+       add constraint FK1b5nwx42sgj3ls1ltnx1csred 
+       foreign key (user_id) 
+       references member (id)
+2026-02-25 10:03:44.284 [main] DEBUG org.hibernate.SQL - 
+    alter table product 
+       add constraint FKs6cydsualtsrprvlf2bb3lcam 
+       foreign key (brand_id) 
+       references brand (id)
+2026-02-25 10:03:44.358 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-25 10:03:44.658 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-25 10:03:45.130 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-25 10:03:45.144 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
+2026-02-25 10:03:45.262 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 22 mappings in 'requestMappingHandlerMapping'
+2026-02-25 10:03:45.329 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
+2026-02-25 10:03:45.444 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-25 10:03:45.488 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-25 10:03:45.576 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-25 10:03:45.593 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-25 10:03:45.599 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 5.248 seconds (process running for 6.038)
