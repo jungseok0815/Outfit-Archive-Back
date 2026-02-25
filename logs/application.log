@@ -1,193 +1,25 @@
-2026-02-25 08:12:58.620 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2026-02-25 08:12:58.726 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 153000 (C:\jungseok\개인자료\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\개인자료\Outfit-Archive-Back)
-2026-02-25 08:12:58.728 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
-2026-02-25 08:12:59.516 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-02-25 08:12:59.600 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 77 ms. Found 7 JPA repository interfaces.
-2026-02-25 08:12:59.863 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
-2026-02-25 08:12:59.885 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
-2026-02-25 08:13:00.078 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-02-25 08:13:00.091 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-02-25 08:13:00.093 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-02-25 08:13:00.094 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
-2026-02-25 08:13:00.154 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-02-25 08:13:00.154 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1371 ms
-2026-02-25 08:13:00.277 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-02-25 08:13:00.337 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2026-02-25 08:13:00.371 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-02-25 08:13:00.629 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-02-25 08:13:00.659 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-02-25 08:13:01.911 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 1045, SQLState: 28000
-2026-02-25 08:13:01.911 [main] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Access denied for user 'root'@'localhost' (using password: YES)
-2026-02-25 08:13:01.913 [main] WARN  o.h.e.j.e.i.JdbcEnvironmentInitiator - HHH000342: Could not obtain connection to query metadata
-org.hibernate.exception.GenericJDBCException: unable to obtain isolated JDBC connection [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
-	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:63)
-	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
-	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94)
-	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:116)
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:320)
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129)
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81)
-	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
-	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45)
-	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:226)
-	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:194)
-	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:171)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1431)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1502)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1855)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1804)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:289)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
-	at com.fasthub.backend.BackendApplication.main(BackendApplication.java:11)
-Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815)
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:438)
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:241)
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:189)
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137)
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360)
-	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202)
-	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461)
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550)
-	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98)
-	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
-	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:126)
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:467)
-	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:61)
-	... 35 common frames omitted
-2026-02-25 08:13:01.933 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-02-25 08:13:01.944 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (null)']
-	Database driver: undefined/unknown
-	Database version: 8.0
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-02-25 08:13:02.713 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-02-25 08:13:02.731 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-02-25 08:13:03.751 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 1045, SQLState: 28000
-2026-02-25 08:13:03.751 [main] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Access denied for user 'root'@'localhost' (using password: YES)
-2026-02-25 08:13:03.754 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.GenericJDBCException: Unable to open JDBC Connection for DDL execution [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
-2026-02-25 08:13:03.755 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.GenericJDBCException: Unable to open JDBC Connection for DDL execution [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
-2026-02-25 08:13:03.756 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
-2026-02-25 08:13:03.766 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2026-02-25 08:13:03.778 [main] ERROR o.s.boot.SpringApplication - Application run failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.GenericJDBCException: Unable to open JDBC Connection for DDL execution [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:289)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
-	at com.fasthub.backend.BackendApplication.main(BackendApplication.java:11)
-Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.GenericJDBCException: Unable to open JDBC Connection for DDL execution [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:431)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1855)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1804)
-	... 15 common frames omitted
-Caused by: org.hibernate.exception.GenericJDBCException: Unable to open JDBC Connection for DDL execution [Access denied for user 'root'@'localhost' (using password: YES)] [n/a]
-	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:63)
-	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
-	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94)
-	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:74)
-	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:39)
-	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:63)
-	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcDatabaseMetaData(ImprovedExtractionContextImpl.java:70)
-	at org.hibernate.tool.schema.extract.internal.InformationExtractorJdbcDatabaseMetaDataImpl.processTableResultSet(InformationExtractorJdbcDatabaseMetaDataImpl.java:65)
-	at org.hibernate.tool.schema.extract.internal.AbstractInformationExtractorImpl.getTables(AbstractInformationExtractorImpl.java:570)
-	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.getTablesInformation(DatabaseInformationImpl.java:122)
-	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:72)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:233)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:112)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
-	at java.base/java.util.HashMap.forEach(HashMap.java:1421)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
-	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
-	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:324)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:463)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
-	... 19 common frames omitted
-Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost' (using password: YES)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815)
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:438)
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:241)
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:189)
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137)
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360)
-	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202)
-	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461)
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550)
-	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98)
-	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
-	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:126)
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:467)
-	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:46)
-	... 40 common frames omitted
-2026-02-25 10:03:40.819 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2026-02-25 10:03:40.865 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 171764 (C:\jungseok\개인자료\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\개인자료\Outfit-Archive-Back)
-2026-02-25 10:03:40.866 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
-2026-02-25 10:03:41.536 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-02-25 10:03:41.610 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 68 ms. Found 7 JPA repository interfaces.
-2026-02-25 10:03:41.881 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
-2026-02-25 10:03:41.902 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
-2026-02-25 10:03:42.106 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-02-25 10:03:42.121 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-02-25 10:03:42.123 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-02-25 10:03:42.123 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
-2026-02-25 10:03:42.193 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-02-25 10:03:42.193 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1291 ms
-2026-02-25 10:03:42.345 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-02-25 10:03:42.425 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2026-02-25 10:03:42.466 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-02-25 10:03:42.718 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-02-25 10:03:42.745 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-02-25 10:03:42.976 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@70840a5a
-2026-02-25 10:03:42.979 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-02-25 10:03:43.023 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-02-25 10:03:43.039 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2026-02-26 08:19:43.639 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2026-02-26 08:19:43.726 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 162344 (C:\jungseok\개인자료\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\개인자료\Outfit-Archive-Back)
+2026-02-26 08:19:43.728 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-26 08:19:44.624 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-26 08:19:44.713 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 81 ms. Found 9 JPA repository interfaces.
+2026-02-26 08:19:45.028 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-02-26 08:19:45.052 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2026-02-26 08:19:45.288 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-26 08:19:45.298 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-26 08:19:45.299 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-26 08:19:45.299 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2026-02-26 08:19:45.349 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-26 08:19:45.350 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1552 ms
+2026-02-26 08:19:45.499 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-26 08:19:45.569 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2026-02-26 08:19:45.600 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-26 08:19:45.858 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-26 08:19:45.887 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-26 08:19:46.157 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@67593f7b
+2026-02-26 08:19:46.158 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-26 08:19:46.214 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-26 08:19:46.234 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 8.0.40
@@ -195,66 +27,277 @@ Caused by: java.sql.SQLException: Access denied for user 'root'@'localhost' (usi
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-02-25 10:03:43.947 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-02-25 10:03:43.999 [main] DEBUG org.hibernate.SQL - 
-    create table admin_member (
+2026-02-26 08:19:47.227 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-26 08:19:47.304 [main] DEBUG org.hibernate.SQL - 
+    create table post (
         id bigint not null auto_increment,
-        admin_role enum ('ADMIN','PARTNER','SUPER_ADMIN') not null,
-        auth_name enum ('NOT_REGISTERED','ROLE_ADMIN','ROLE_USER') not null,
+        content TEXT not null,
         created_at datetime(6),
+        title varchar(255) not null,
+        updated_at datetime(6),
+        user_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-02-26 08:19:47.358 [main] DEBUG org.hibernate.SQL - 
+    create table post_img (
+        id bigint not null auto_increment,
+        img_nm varchar(255) not null,
+        img_origin_nm varchar(255) not null,
+        img_path varchar(255) not null,
+        post_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-02-26 08:19:47.403 [main] DEBUG org.hibernate.SQL - 
+    alter table post 
+       add constraint FKpbvrk5iujntjh9oevilj6t3go 
+       foreign key (user_id) 
+       references member (id)
+2026-02-26 08:19:47.474 [main] DEBUG org.hibernate.SQL - 
+    alter table post_img 
+       add constraint FK1xffckk49kb41ulrxum2gx3n1 
+       foreign key (post_id) 
+       references post (id)
+2026-02-26 08:19:47.554 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-26 08:19:47.864 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-26 08:19:48.402 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-26 08:19:48.417 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
+2026-02-26 08:19:48.548 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 26 mappings in 'requestMappingHandlerMapping'
+2026-02-26 08:19:48.618 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
+2026-02-26 08:19:48.741 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-26 08:19:48.785 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-26 08:19:48.886 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-26 08:19:48.905 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-26 08:19:48.912 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 6.139 seconds (process running for 6.891)
+2026-02-26 08:24:35.879 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-26 08:24:36.022 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-02-26 08:24:36.025 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-26 08:24:36.027 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-26 08:24:36.034 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-26 08:24:39.204 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2026-02-26 08:24:39.250 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 164652 (C:\jungseok\개인자료\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\개인자료\Outfit-Archive-Back)
+2026-02-26 08:24:39.252 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-26 08:24:39.849 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-26 08:24:39.939 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 83 ms. Found 9 JPA repository interfaces.
+2026-02-26 08:24:40.180 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-02-26 08:24:40.201 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2026-02-26 08:24:40.412 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-26 08:24:40.426 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-26 08:24:40.428 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-26 08:24:40.428 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2026-02-26 08:24:40.483 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-26 08:24:40.485 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1204 ms
+2026-02-26 08:24:40.644 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-26 08:24:40.712 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2026-02-26 08:24:40.743 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-26 08:24:41.047 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-26 08:24:41.079 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-26 08:24:41.381 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@45790cb
+2026-02-26 08:24:41.384 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-26 08:24:41.433 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-26 08:24:41.452 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-26 08:24:42.437 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-26 08:24:42.450 [main] DEBUG org.hibernate.SQL - 
+    alter table brand_img 
+       drop 
+       foreign key FKr65s2lj4rfdb07pnvu5r3kjun
+2026-02-26 08:24:42.476 [main] DEBUG org.hibernate.SQL - 
+    alter table orders 
+       drop 
+       foreign key FK787ibr3guwp6xobrpbofnv7le
+2026-02-26 08:24:42.488 [main] DEBUG org.hibernate.SQL - 
+    alter table orders 
+       drop 
+       foreign key FK1b5nwx42sgj3ls1ltnx1csred
+2026-02-26 08:24:42.497 [main] DEBUG org.hibernate.SQL - 
+    alter table post 
+       drop 
+       foreign key FKpbvrk5iujntjh9oevilj6t3go
+2026-02-26 08:24:42.506 [main] DEBUG org.hibernate.SQL - 
+    alter table post_img 
+       drop 
+       foreign key FK1xffckk49kb41ulrxum2gx3n1
+2026-02-26 08:24:42.514 [main] DEBUG org.hibernate.SQL - 
+    alter table product 
+       drop 
+       foreign key FKs6cydsualtsrprvlf2bb3lcam
+2026-02-26 08:24:42.532 [main] DEBUG org.hibernate.SQL - 
+    alter table product_img 
+       drop 
+       foreign key FKbnvmhern60vx5hlvaa3ba9u8h
+2026-02-26 08:24:42.541 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists admin_member
+2026-02-26 08:24:42.557 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists brand
+2026-02-26 08:24:42.572 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists brand_img
+2026-02-26 08:24:42.585 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists member
+2026-02-26 08:24:42.599 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists orders
+2026-02-26 08:24:42.661 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists post
+2026-02-26 08:24:42.673 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists post_img
+2026-02-26 08:24:42.685 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists product
+2026-02-26 08:24:42.700 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists product_img
+2026-02-26 08:24:42.719 [main] DEBUG org.hibernate.SQL - 
+    create table admin_member (
+        created_at datetime(6),
+        id bigint not null auto_increment,
+        updated_at datetime(6),
         user_id varchar(255) not null,
         user_nm varchar(255) not null,
         user_pwd varchar(255) not null,
-        updated_at datetime(6),
+        admin_role enum ('ADMIN','PARTNER','SUPER_ADMIN') not null,
+        auth_name enum ('NOT_REGISTERED','ROLE_ADMIN','ROLE_USER') not null,
         primary key (id)
     ) engine=InnoDB
-2026-02-25 10:03:44.051 [main] DEBUG org.hibernate.SQL - 
+2026-02-26 08:24:42.757 [main] DEBUG org.hibernate.SQL - 
+    create table brand (
+        id bigint not null auto_increment,
+        brand_dc varchar(255),
+        brand_location varchar(255),
+        brand_nm varchar(255) not null,
+        brand_num varchar(255),
+        primary key (id)
+    ) engine=InnoDB
+2026-02-26 08:24:42.779 [main] DEBUG org.hibernate.SQL - 
+    create table brand_img (
+        brand_id bigint not null,
+        brandimg_id bigint not null auto_increment,
+        img_nm varchar(255) not null,
+        img_origin_nm varchar(255) not null,
+        img_path varchar(255) not null,
+        primary key (brandimg_id)
+    ) engine=InnoDB
+2026-02-26 08:24:42.795 [main] DEBUG org.hibernate.SQL - 
+    create table member (
+        user_age integer not null,
+        created_at datetime(6),
+        id bigint not null auto_increment,
+        updated_at datetime(6),
+        user_id varchar(255) not null,
+        user_nm varchar(255) not null,
+        user_pwd varchar(255) not null,
+        auth_name enum ('NOT_REGISTERED','ROLE_ADMIN','ROLE_USER') not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-02-26 08:24:42.810 [main] DEBUG org.hibernate.SQL - 
     create table orders (
+        quantity integer not null,
+        total_price integer not null,
         id bigint not null auto_increment,
         order_date datetime(6),
-        quantity integer not null,
+        product_id bigint not null,
+        user_id bigint not null,
         recipient_name varchar(255) not null,
         recipient_phone varchar(255) not null,
         shipping_address varchar(255) not null,
         status enum ('CANCELLED','DELIVERED','PAYMENT_COMPLETE','SHIPPING') not null,
-        total_price integer not null,
-        product_id bigint not null,
-        user_id bigint not null,
         primary key (id)
     ) engine=InnoDB
-2026-02-25 10:03:44.067 [main] DEBUG org.hibernate.SQL - 
-    alter table product 
-       add column brand_id bigint
-2026-02-25 10:03:44.106 [main] DEBUG org.hibernate.SQL - 
-    alter table admin_member 
-       drop index UK1cvmb00brhb8c0wyfodlvfa9k
-2026-02-25 10:03:44.115 [main] DEBUG org.hibernate.SQL - 
+2026-02-26 08:24:42.826 [main] DEBUG org.hibernate.SQL - 
+    create table post (
+        created_at datetime(6),
+        id bigint not null auto_increment,
+        updated_at datetime(6),
+        user_id bigint not null,
+        content TEXT not null,
+        title varchar(255) not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-02-26 08:24:42.841 [main] DEBUG org.hibernate.SQL - 
+    create table post_img (
+        id bigint not null auto_increment,
+        post_id bigint not null,
+        img_nm varchar(255) not null,
+        img_origin_nm varchar(255) not null,
+        img_path varchar(255) not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-02-26 08:24:42.857 [main] DEBUG org.hibernate.SQL - 
+    create table product (
+        product_price integer not null,
+        product_quantity integer not null,
+        brand_id bigint,
+        id bigint not null auto_increment,
+        product_code varchar(255) not null,
+        product_nm varchar(255) not null,
+        category enum ('BAG','BOTTOM','DRESS','OUTER','SHOES','TOP') not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-02-26 08:24:42.873 [main] DEBUG org.hibernate.SQL - 
+    create table product_img (
+        id bigint not null auto_increment,
+        product_id bigint,
+        img_nm varchar(255) not null,
+        img_origin_nm varchar(255) not null,
+        img_path varchar(255) not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-02-26 08:24:42.890 [main] DEBUG org.hibernate.SQL - 
     alter table admin_member 
        add constraint UK1cvmb00brhb8c0wyfodlvfa9k unique (user_id)
-2026-02-25 10:03:44.151 [main] DEBUG org.hibernate.SQL - 
+2026-02-26 08:24:42.911 [main] DEBUG org.hibernate.SQL - 
+    alter table member 
+       add constraint UKa9bw6sk85ykh4bacjpu0ju5f6 unique (user_id)
+2026-02-26 08:24:42.927 [main] DEBUG org.hibernate.SQL - 
+    alter table brand_img 
+       add constraint FKr65s2lj4rfdb07pnvu5r3kjun 
+       foreign key (brand_id) 
+       references brand (id)
+2026-02-26 08:24:42.991 [main] DEBUG org.hibernate.SQL - 
     alter table orders 
        add constraint FK787ibr3guwp6xobrpbofnv7le 
        foreign key (product_id) 
        references product (id)
-2026-02-25 10:03:44.212 [main] DEBUG org.hibernate.SQL - 
+2026-02-26 08:24:43.051 [main] DEBUG org.hibernate.SQL - 
     alter table orders 
        add constraint FK1b5nwx42sgj3ls1ltnx1csred 
        foreign key (user_id) 
        references member (id)
-2026-02-25 10:03:44.284 [main] DEBUG org.hibernate.SQL - 
+2026-02-26 08:24:43.113 [main] DEBUG org.hibernate.SQL - 
+    alter table post 
+       add constraint FKpbvrk5iujntjh9oevilj6t3go 
+       foreign key (user_id) 
+       references member (id)
+2026-02-26 08:24:43.166 [main] DEBUG org.hibernate.SQL - 
+    alter table post_img 
+       add constraint FK1xffckk49kb41ulrxum2gx3n1 
+       foreign key (post_id) 
+       references post (id)
+2026-02-26 08:24:43.213 [main] DEBUG org.hibernate.SQL - 
     alter table product 
        add constraint FKs6cydsualtsrprvlf2bb3lcam 
        foreign key (brand_id) 
        references brand (id)
-2026-02-25 10:03:44.358 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-02-25 10:03:44.658 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-02-25 10:03:45.130 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-02-25 10:03:45.144 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
-2026-02-25 10:03:45.262 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 22 mappings in 'requestMappingHandlerMapping'
-2026-02-25 10:03:45.329 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
-2026-02-25 10:03:45.444 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-02-25 10:03:45.488 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-02-25 10:03:45.576 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-02-25 10:03:45.593 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-02-25 10:03:45.599 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 5.248 seconds (process running for 6.038)
-2026-02-25 10:48:28.620 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-26 08:24:43.268 [main] DEBUG org.hibernate.SQL - 
+    alter table product_img 
+       add constraint FKbnvmhern60vx5hlvaa3ba9u8h 
+       foreign key (product_id) 
+       references product (id)
+2026-02-26 08:24:43.328 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-26 08:24:43.619 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-26 08:24:44.195 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-26 08:24:44.211 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
+2026-02-26 08:24:44.346 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 26 mappings in 'requestMappingHandlerMapping'
+2026-02-26 08:24:44.430 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
+2026-02-26 08:24:44.526 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-26 08:24:44.562 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-26 08:24:44.662 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-26 08:24:44.676 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-26 08:24:44.682 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 5.982 seconds (process running for 6.456)
+2026-02-26 08:36:05.036 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-26 08:36:05.168 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-02-26 08:36:05.172 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-26 08:36:05.173 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-26 08:36:05.179 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
