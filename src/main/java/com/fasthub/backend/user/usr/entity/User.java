@@ -45,5 +45,10 @@ public class User  {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    public void update(String userNm, int userAge, String encodedPwd) {
+        this.userNm = userNm;
+        this.userAge = userAge;
+        this.userPwd = encodedPwd;
+    }
 }
 

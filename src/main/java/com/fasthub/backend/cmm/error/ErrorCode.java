@@ -11,6 +11,10 @@ public enum ErrorCode {
     ID_NOT_FOUND(HttpStatus.NOT_FOUND, "M001","사용자의 아이디를 찾을 수 없습니다."),
     PWD_NOT_FOUND(HttpStatus.UNAUTHORIZED,"M002","사용자의 패스워드가 일치하지 않습니다."),
     NOT_AUTHENTICATED_USER(HttpStatus.UNAUTHORIZED, "M003", "사용자의 권한이 인증되지 않음"),
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "M004", "사용자를 찾을 수 없습니다."),
+    USER_ALREADY_EXISTS(HttpStatus.CONFLICT, "M005", "이미 존재하는 아이디입니다."),
+    USER_FAIL_UPDATE(HttpStatus.INTERNAL_SERVER_ERROR, "M006", "사용자 정보 수정 실패"),
+    USER_FAIL_DELETE(HttpStatus.INTERNAL_SERVER_ERROR, "M007", "사용자 삭제 실패"),
 
     // Admin
     ADMIN_ID_NOT_FOUND(HttpStatus.NOT_FOUND, "A001", "관리자 아이디를 찾을 수 없습니다."),
