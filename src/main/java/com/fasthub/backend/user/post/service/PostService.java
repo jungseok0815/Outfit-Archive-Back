@@ -8,7 +8,9 @@ import com.fasthub.backend.user.post.dto.ResponsePostDto;
 import com.fasthub.backend.user.post.dto.UpdatePostDto;
 import com.fasthub.backend.user.post.entity.Post;
 import com.fasthub.backend.user.post.entity.PostImg;
+import com.fasthub.backend.user.post.repository.PostCommentRepository;
 import com.fasthub.backend.user.post.repository.PostImgRepository;
+import com.fasthub.backend.user.post.repository.PostLikeRepository;
 import com.fasthub.backend.user.post.repository.PostRepository;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
@@ -27,13 +29,19 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PostImgRepository postImgRepository;
+    private final PostLikeRepository postLikeRepository;
+    private final PostCommentRepository postCommentRepository;
     private final AuthRepository authRepository;
     private final ImgHandler imgHandler;
 
     // 게시글 목록 조회 (제목으로 키워드 검색, 페이징)
     public Page<ResponsePostDto> list(String keyword, Pageable pageable) {
         return postRepository.findAllByKeyword(keyword, pageable)
-                .map(ResponsePostDto::new);
+                .map(post -> new ResponsePostDto(
+                        post,
+                        postLikeRepository.countByPostId(post.getId()),
+                        postCommentRepository.countByPostId(post.getId())
+                ));
     }
 
     // 게시글 등록

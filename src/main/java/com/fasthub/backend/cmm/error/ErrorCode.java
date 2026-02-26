@@ -45,6 +45,13 @@ public enum ErrorCode {
     ORDER_FAIL_UPDATE(HttpStatus.INTERNAL_SERVER_ERROR, "O002", "구매 상태 변경 실패"),
     ORDER_FAIL_DELETE(HttpStatus.INTERNAL_SERVER_ERROR, "O003", "구매내역 삭제 실패"),
 
+    //COMMENT
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "C001", "댓글을 찾을 수 없습니다."),
+    COMMENT_FAIL_INSERT(HttpStatus.INTERNAL_SERVER_ERROR, "C002", "댓글 등록 실패"),
+    COMMENT_FAIL_UPDATE(HttpStatus.INTERNAL_SERVER_ERROR, "C003", "댓글 수정 실패"),
+    COMMENT_FAIL_DELETE(HttpStatus.INTERNAL_SERVER_ERROR, "C004", "댓글 삭제 실패"),
+    COMMENT_UNAUTHORIZED(HttpStatus.FORBIDDEN, "C005", "댓글 수정/삭제 권한이 없습니다."),
+
     //JWT
     NOT_REFRESG_KEY(HttpStatus.NOT_FOUND, "CP003", "리프레쉬 키 해석 실패"),
 

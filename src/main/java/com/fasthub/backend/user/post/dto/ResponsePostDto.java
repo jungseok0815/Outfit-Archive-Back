@@ -17,15 +17,19 @@ public class ResponsePostDto {
     private String content;
     private String userNm;
     private List<PostImg> images;
+    private long likeCount;
+    private long commentCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ResponsePostDto(Post post) {
+    public ResponsePostDto(Post post, long likeCount, long commentCount) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.userNm = post.getUser().getUserNm();
         this.images = post.getImages();
+        this.likeCount = likeCount;
+        this.commentCount = commentCount;
         this.createdAt = post.getCreatedAt();
         this.updatedAt = post.getUpdatedAt();
     }
