@@ -23,6 +23,7 @@ jwt:
   refresh-expiration: 10800000  # 3hours * 60min * 60sec * 1000 millisecond
   access-secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
   refresh-secret: VlwEyVBsYt9V7zq57TeasdfjasdfjascfPQye08f7MGVA9XkHa
+  cookie-secure: false  # 로컬 개발 시 false, 운영 배포 시 true로 변경
 
 file:
   path-product : C:\jungseok\img\
