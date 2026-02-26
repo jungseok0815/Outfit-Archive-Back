@@ -10,6 +10,7 @@ import com.fasthub.backend.admin.product.entity.ProductImg;
 import com.fasthub.backend.admin.product.mapper.ProductMapper;
 import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
+import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
@@ -51,6 +52,11 @@ public class ProductService {
 
     public Page<ResponseProductDto> list(String keyword, Pageable pageable) {
         return productRepository.findAllByKeyword(keyword, pageable)
+                .map(productMapper::productToProductDto);
+    }
+
+    public Page<ResponseProductDto> listForUser(String keyword, ProductCategory category, Pageable pageable) {
+        return productRepository.findAllByKeywordAndCategory(keyword, category, pageable)
                 .map(productMapper::productToProductDto);
     }
 
