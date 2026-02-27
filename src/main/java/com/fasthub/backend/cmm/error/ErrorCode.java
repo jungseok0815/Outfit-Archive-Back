@@ -21,6 +21,8 @@ public enum ErrorCode {
     ADMIN_PWD_NOT_MATCH(HttpStatus.UNAUTHORIZED, "A002", "관리자 비밀번호가 일치하지 않습니다."),
     ADMIN_ALREADY_EXISTS(HttpStatus.CONFLICT, "A003", "이미 존재하는 관리자 아이디입니다."),
     ADMIN_ACCESS_DENIED(HttpStatus.FORBIDDEN, "A004", "해당 기능에 대한 권한이 없습니다."),
+    PARTNER_BRAND_REQUIRED(HttpStatus.BAD_REQUEST, "A005", "PARTNER 등록 시 브랜드는 필수입니다."),
+    SUPER_ADMIN_CANNOT_BE_DELETED(HttpStatus.FORBIDDEN, "A006", "최고관리자는 삭제할 수 없습니다."),
 
     //BOARD
     BOARD_FAIL_SELECT(HttpStatus.INTERNAL_SERVER_ERROR,"B001","게시물 검색 실패"),

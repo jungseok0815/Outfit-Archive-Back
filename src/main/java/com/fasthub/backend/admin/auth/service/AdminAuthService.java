@@ -8,6 +8,7 @@ import com.fasthub.backend.admin.auth.entity.AdminMember;
 import com.fasthub.backend.admin.auth.repository.AdminMemberRepository;
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
+import com.fasthub.backend.cmm.enums.AdminRole;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.jwt.JwtService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -49,8 +50,13 @@ public class AdminAuthService {
 
     @Transactional
     public void adminJoin(AdminJoinDto adminJoinDto) {
+        log.info("adminJoinDto : {}", adminJoinDto.getBrandId());
         if (adminMemberRepository.existsByMemberId(adminJoinDto.getMemberId())) {
             throw new BusinessException(ADMIN_ALREADY_EXISTS);
+        }
+
+        if (adminJoinDto.getAdminRole() == AdminRole.PARTNER && adminJoinDto.getBrandId() == null) {
+            throw new BusinessException(PARTNER_BRAND_REQUIRED);
         }
 
         Brand brand = null;
@@ -82,9 +88,15 @@ public class AdminAuthService {
     }
 
     @Transactional
-    public void delete(String memberId) {
-        AdminMember member = adminMemberRepository.findById(Long.valueOf(memberId))
+    public void deleteAdmin(Long id) {
+        AdminMember member = adminMemberRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ADMIN_ID_NOT_FOUND));
+
+        if (member.getAdminRole() == AdminRole.SUPER_ADMIN) {
+            throw new BusinessException(SUPER_ADMIN_CANNOT_BE_DELETED);
+        }
+
         adminMemberRepository.delete(member);
+        log.info("admin delete success : {}", member.getMemberId());
     }
 }
