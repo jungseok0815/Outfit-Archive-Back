@@ -1,5 +1,6 @@
 package com.fasthub.backend.cmm.config;
 
+import com.fasthub.backend.admin.auth.repository.AdminMemberRepository;
 import com.fasthub.backend.cmm.jwt.JwtAuthFilter;
 import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
@@ -26,6 +27,7 @@ public class SecurityConfig {
 
     private final JwtService jwtService;
     private final AuthRepository authRepository;
+    private final AdminMemberRepository adminMemberRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -70,7 +72,7 @@ public class SecurityConfig {
                         };
                     c.configurationSource(source);
                 })
-                .addFilterBefore(new JwtAuthFilter(jwtService,authRepository), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthFilter(jwtService, authRepository, adminMemberRepository), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
                 http.formLogin(AbstractHttpConfigurer::disable);
                 http.httpBasic(AbstractHttpConfigurer::disable);

@@ -28,8 +28,8 @@ public class AdminMemberInit implements ApplicationRunner {
         }
 
         adminMemberRepository.save(AdminMember.builder()
-                .memberId("superadmin")
-                .memberPwd(passwordEncoder.encode("admin1234"))
+                .memberId("wjdtjr9401@naver.com")
+                .memberPwd(passwordEncoder.encode("kil79518@"))
                 .memberNm("최고관리자")
                 .authName(UserRole.ROLE_ADMIN)
                 .adminRole(AdminRole.SUPER_ADMIN)

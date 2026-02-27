@@ -1,5 +1,7 @@
 package com.fasthub.backend.cmm.jwt;
 
+import com.fasthub.backend.admin.auth.entity.AdminMember;
+import com.fasthub.backend.admin.auth.repository.AdminMemberRepository;
 import com.fasthub.backend.cmm.enums.JwtRule;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
@@ -10,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -22,13 +25,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final AuthRepository authRepository;
+    private final AdminMemberRepository adminMemberRepository;
 
     // 필터를 적용하지 않을 경로 지정
     // 로그인·회원가입은 토큰 없이 접근해야 하므로 제외
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getServletPath();
-        return path.startsWith("/api/usr/login") || path.startsWith("/api/usr/join");
+        return path.startsWith("/api/usr/login") || path.startsWith("/api/usr/join")
+                || path.startsWith("/api/admin/auth/login") || path.startsWith("/api/admin/auth/join");
     }
 
     // 매 요청마다 실행되는 JWT 검증 로직
@@ -60,17 +65,26 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         // Access Token 만료 시 Refresh Token으로 재발급 처리
-        // 1) Refresh Token의 subject(userId)로 DB에서 유저 조회
-        // 2) Refresh Token 유효성 검사
-        // 3) Access + Refresh 토큰 모두 재발급 (Refresh Token Rotation)
-        // 4) 새 Access Token으로 SecurityContext 등록
-        User user = findUserByRefreshToken(refreshToken);
-        if (jwtService.validateRefreshToken(refreshToken, user.getUserId())) {
-            String reissuedAccessToken = jwtService.generateAccessToken(response, user);
-            jwtService.generateRefreshToken(response, user);
-            setAuthenticationToContext(reissuedAccessToken);
-            filterChain.doFilter(request, response);
-            return;
+        // userType 클레임으로 Admin/User 분기 후 각각 재발급 처리
+        String userType = jwtService.getUserTypeFromRefresh(refreshToken);
+        if ("ADMIN".equals(userType)) {
+            AdminMember adminMember = findAdminByRefreshToken(refreshToken);
+            if (jwtService.validateRefreshToken(refreshToken, adminMember.getMemberId())) {
+                String reissuedAccessToken = jwtService.generateAccessToken(response, adminMember);
+                jwtService.generateRefreshToken(response, adminMember);
+                setAuthenticationToContext(reissuedAccessToken);
+                filterChain.doFilter(request, response);
+                return;
+            }
+        } else {
+            User user = findUserByRefreshToken(refreshToken);
+            if (jwtService.validateRefreshToken(refreshToken, user.getUserId())) {
+                String reissuedAccessToken = jwtService.generateAccessToken(response, user);
+                jwtService.generateRefreshToken(response, user);
+                setAuthenticationToContext(reissuedAccessToken);
+                filterChain.doFilter(request, response);
+                return;
+            }
         }
 
         filterChain.doFilter(request, response);
@@ -89,6 +103,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private User findUserByRefreshToken(String refreshToken){
         String identifier = jwtService.getIdentifierFromRefresh(refreshToken);
         return authRepository.findByUserId(identifier).get();
+    }
+
+    // Refresh Token의 subject(memberId 문자열)로 DB에서 관리자를 조회
+    private AdminMember findAdminByRefreshToken(String refreshToken) {
+        String identifier = jwtService.getIdentifierFromRefresh(refreshToken);
+        return adminMemberRepository.findByMemberId(identifier)
+                .orElseThrow(() -> new UsernameNotFoundException("해당하는 관리자가 없습니다."));
     }
 
 

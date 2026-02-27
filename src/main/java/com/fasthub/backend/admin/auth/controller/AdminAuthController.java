@@ -4,6 +4,7 @@ import com.fasthub.backend.admin.auth.dto.AdminJoinDto;
 import com.fasthub.backend.admin.auth.dto.AdminLoginDto;
 import com.fasthub.backend.admin.auth.dto.AdminLoginResponseDto;
 import com.fasthub.backend.admin.auth.service.AdminAuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,10 @@ public class AdminAuthController {
     private final AdminAuthService adminAuthService;
 
     @PostMapping("/login")
-    public ResponseEntity<AdminLoginResponseDto> adminLogin(@RequestBody @Valid AdminLoginDto adminLoginDto) {
-        return ResponseEntity.ok(adminAuthService.adminLogin(adminLoginDto));
+    public ResponseEntity<AdminLoginResponseDto> adminLogin(
+            @RequestBody @Valid AdminLoginDto adminLoginDto,
+            HttpServletResponse response) {
+        return ResponseEntity.ok(adminAuthService.adminLogin(adminLoginDto, response));
     }
 
     @PostMapping("/join")
