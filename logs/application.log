@@ -876,3 +876,2675 @@
 2026-02-27 09:33:19.187 [http-nio-8080-exec-7] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
 2026-02-27 09:33:19.190 [http-nio-8080-exec-1] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
 2026-02-27 09:33:25.065 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-27 09:33:29.949 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2026-02-27 09:33:29.985 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 309320 (C:\jungseok\project\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\project\Outfit-Archive-Back)
+2026-02-27 09:33:29.985 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-27 09:33:30.732 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-27 09:33:30.903 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 157 ms. Found 11 JPA repository interfaces.
+2026-02-27 09:33:31.247 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-02-27 09:33:31.275 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2026-02-27 09:33:31.526 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-27 09:33:31.545 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:33:31.546 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-27 09:33:31.546 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2026-02-27 09:33:31.628 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-27 09:33:31.629 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1613 ms
+2026-02-27 09:33:31.797 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-27 09:33:31.862 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2026-02-27 09:33:31.896 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-27 09:33:32.214 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-27 09:33:32.242 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-27 09:33:32.568 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@65d6640
+2026-02-27 09:33:32.570 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-27 09:33:32.630 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-27 09:33:32.648 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-27 09:33:33.678 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-27 09:33:33.834 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27 09:33:34.072 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-27 09:33:34.727 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-27 09:33:34.737 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Found 2 UserDetailsService beans, with names [adminCustomUserDetailService, customUserDetailService]. Global Authentication Manager will not use a UserDetailsService for username/password login. Consider publishing a single UserDetailsService bean.
+2026-02-27 09:33:34.882 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 34 mappings in 'requestMappingHandlerMapping'
+2026-02-27 09:33:34.957 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
+2026-02-27 09:33:35.068 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-27 09:33:35.109 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-27 09:33:35.201 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:33:35.217 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-27 09:33:35.222 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 5.623 seconds (process running for 6.26)
+2026-02-27 09:33:35.269 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        admin_member am1_0
+2026-02-27 09:33:35.284 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        member u1_0
+2026-02-27 09:33:35.287 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        brand b1_0
+2026-02-27 09:33:35.294 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        product p1_0
+2026-02-27 09:33:35.296 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        orders o1_0
+2026-02-27 09:33:35.299 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        post p1_0
+2026-02-27 09:34:31.070 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-27 09:34:31.070 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-27 09:34:31.070 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2026-02-27 09:34:31.070 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2026-02-27 09:34:31.070 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2026-02-27 09:34:31.072 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@6ed836b3
+2026-02-27 09:34:31.073 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@7caf0725
+2026-02-27 09:34:31.073 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-02-27 09:34:31.073 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-02-27 09:34:31.121 [http-nio-8080-exec-3] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:34:31.121 [http-nio-8080-exec-1] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:34:41.570 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/admin/auth/login", parameters={}
+2026-02-27 09:34:41.573 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.auth.controller.AdminAuthController#adminLogin(AdminLoginDto, HttpServletResponse)
+2026-02-27 09:34:41.726 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AdminLoginDto(memberId=wjdtjr9401@naver.com, memberPwd=kil79518@)]
+2026-02-27 09:34:41.877 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.user_id=?
+2026-02-27 09:34:42.194 [http-nio-8080-exec-2] INFO  c.f.b.a.a.service.AdminAuthService - admin login success : wjdtjr9401@naver.com
+2026-02-27 09:34:42.224 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:34:42.225 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.fasthub.backend.admin.auth.dto.AdminLoginResponseDto@7670adc]
+2026-02-27 09:34:42.236 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:34:42.290 [http-nio-8080-exec-7] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:34:42.290 [http-nio-8080-exec-5] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:34:42.314 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:34:42.316 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:34:42.318 [http-nio-8080-exec-5] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:34:42.318 [http-nio-8080-exec-7] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:34:42.323 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/product/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:34:42.323 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/brand/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:34:42.324 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.product.controller.ProductController#list(String, Pageable)
+2026-02-27 09:34:42.324 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.brand.controller.BrandContoller#list(String, Pageable)
+2026-02-27 09:34:42.365 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        ? is null 
+        or ?='' 
+        or p1_0.product_nm like ? escape '' 
+    order by
+        p1_0.id desc 
+    limit
+        ?
+2026-02-27 09:34:42.365 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        ? is null 
+        or ?='' 
+        or b1_0.brand_nm like ? escape '' 
+    order by
+        b1_0.id desc 
+    limit
+        ?
+2026-02-27 09:34:42.389 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:34:42.392 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:34:42.392 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:34:42.399 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:34:42.399 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:34:42.400 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:34:42.400 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:34:42.402 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:34:42.403 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:34:42.406 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:34:42.407 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:34:42.408 [http-nio-8080-exec-5] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-02-27 09:34:42.412 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:34:42.412 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.product.dto.ResponseProductDto instances]
+2026-02-27 09:34:42.413 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:34:42.413 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.brand.dto.ResponseBrandDto instances]
+2026-02-27 09:34:42.428 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:34:42.428 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:34:47.894 [http-nio-8080-exec-6] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:34:47.908 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:34:47.911 [http-nio-8080-exec-6] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:34:47.915 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/order/list?keyword=&page=0&size=200", parameters={masked}
+2026-02-27 09:34:47.915 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.order.controller.OrderController#list(String, Pageable)
+2026-02-27 09:34:47.932 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        o1_0.id,
+        o1_0.order_date,
+        o1_0.product_id,
+        o1_0.quantity,
+        o1_0.recipient_name,
+        o1_0.recipient_phone,
+        o1_0.shipping_address,
+        o1_0.status,
+        o1_0.total_price,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    join
+        member u1_0 
+            on u1_0.id=o1_0.user_id 
+    where
+        ? is null 
+        or ?='' 
+        or u1_0.user_nm like ? escape '' 
+    order by
+        o1_0.id desc 
+    limit
+        ?
+2026-02-27 09:34:47.937 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:34:47.940 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:47.943 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:34:47.945 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:47.949 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:34:47.950 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:47.952 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:47.954 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:34:47.954 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.order.dto.ResponseOrderDto instances]
+2026-02-27 09:34:47.960 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:34:48.572 [http-nio-8080-exec-8] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:34:48.585 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:34:48.587 [http-nio-8080-exec-8] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:34:48.591 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/order/list?keyword=&page=0&size=1000", parameters={masked}
+2026-02-27 09:34:48.591 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.order.controller.OrderController#list(String, Pageable)
+2026-02-27 09:34:48.595 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        o1_0.id,
+        o1_0.order_date,
+        o1_0.product_id,
+        o1_0.quantity,
+        o1_0.recipient_name,
+        o1_0.recipient_phone,
+        o1_0.shipping_address,
+        o1_0.status,
+        o1_0.total_price,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    join
+        member u1_0 
+            on u1_0.id=o1_0.user_id 
+    where
+        ? is null 
+        or ?='' 
+        or u1_0.user_nm like ? escape '' 
+    order by
+        o1_0.id desc 
+    limit
+        ?
+2026-02-27 09:34:48.599 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:34:48.601 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:48.603 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:34:48.605 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:48.607 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:34:48.608 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:48.611 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:48.614 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:34:48.614 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.order.dto.ResponseOrderDto instances]
+2026-02-27 09:34:48.617 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:34:49.317 [http-nio-8080-exec-10] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:34:49.329 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:34:49.331 [http-nio-8080-exec-10] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:34:49.333 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/order/list?keyword=&page=0&size=200", parameters={masked}
+2026-02-27 09:34:49.334 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.order.controller.OrderController#list(String, Pageable)
+2026-02-27 09:34:49.336 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        o1_0.id,
+        o1_0.order_date,
+        o1_0.product_id,
+        o1_0.quantity,
+        o1_0.recipient_name,
+        o1_0.recipient_phone,
+        o1_0.shipping_address,
+        o1_0.status,
+        o1_0.total_price,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    join
+        member u1_0 
+            on u1_0.id=o1_0.user_id 
+    where
+        ? is null 
+        or ?='' 
+        or u1_0.user_nm like ? escape '' 
+    order by
+        o1_0.id desc 
+    limit
+        ?
+2026-02-27 09:34:49.341 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:34:49.344 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:49.347 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:34:49.349 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:49.353 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:34:49.355 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:49.356 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:34:49.358 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:34:49.358 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.order.dto.ResponseOrderDto instances]
+2026-02-27 09:34:49.359 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:02.269 [http-nio-8080-exec-3] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:02.269 [http-nio-8080-exec-4] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:02.281 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:02.281 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:02.282 [http-nio-8080-exec-4] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:02.282 [http-nio-8080-exec-3] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:02.284 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/product/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:35:02.284 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/brand/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:35:02.285 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.product.controller.ProductController#list(String, Pageable)
+2026-02-27 09:35:02.285 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.brand.controller.BrandContoller#list(String, Pageable)
+2026-02-27 09:35:02.287 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        ? is null 
+        or ?='' 
+        or b1_0.brand_nm like ? escape '' 
+    order by
+        b1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:02.287 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        ? is null 
+        or ?='' 
+        or p1_0.product_nm like ? escape '' 
+    order by
+        p1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:02.289 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:35:02.290 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:35:02.291 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:35:02.291 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:02.292 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:35:02.292 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:35:02.294 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:02.295 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:02.295 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.brand.dto.ResponseBrandDto instances]
+2026-02-27 09:35:02.296 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:02.296 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:02.299 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:35:02.301 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:02.302 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:02.304 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:02.304 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.product.dto.ResponseProductDto instances]
+2026-02-27 09:35:02.307 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:16.336 [http-nio-8080-exec-1] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:16.354 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:16.357 [http-nio-8080-exec-1] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:16.359 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/order/list?keyword=&page=0&size=200", parameters={masked}
+2026-02-27 09:35:16.360 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.order.controller.OrderController#list(String, Pageable)
+2026-02-27 09:35:16.361 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        o1_0.id,
+        o1_0.order_date,
+        o1_0.product_id,
+        o1_0.quantity,
+        o1_0.recipient_name,
+        o1_0.recipient_phone,
+        o1_0.shipping_address,
+        o1_0.status,
+        o1_0.total_price,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    join
+        member u1_0 
+            on u1_0.id=o1_0.user_id 
+    where
+        ? is null 
+        or ?='' 
+        or u1_0.user_nm like ? escape '' 
+    order by
+        o1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:16.369 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:16.372 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:16.376 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:16.379 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:16.382 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:16.384 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:16.388 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:16.391 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:16.391 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.order.dto.ResponseOrderDto instances]
+2026-02-27 09:35:16.398 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:16.862 [http-nio-8080-exec-9] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:16.873 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:16.875 [http-nio-8080-exec-9] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:16.876 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/order/list?keyword=&page=0&size=1000", parameters={masked}
+2026-02-27 09:35:16.877 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.order.controller.OrderController#list(String, Pageable)
+2026-02-27 09:35:16.878 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        o1_0.id,
+        o1_0.order_date,
+        o1_0.product_id,
+        o1_0.quantity,
+        o1_0.recipient_name,
+        o1_0.recipient_phone,
+        o1_0.shipping_address,
+        o1_0.status,
+        o1_0.total_price,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    join
+        member u1_0 
+            on u1_0.id=o1_0.user_id 
+    where
+        ? is null 
+        or ?='' 
+        or u1_0.user_nm like ? escape '' 
+    order by
+        o1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:16.881 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:16.883 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:16.885 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:16.887 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:16.888 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:16.890 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:16.892 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:16.894 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:16.895 [http-nio-8080-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.order.dto.ResponseOrderDto instances]
+2026-02-27 09:35:16.897 [http-nio-8080-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:18.314 [http-nio-8080-exec-2] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:18.318 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:18.319 [http-nio-8080-exec-2] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:18.320 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/order/list?keyword=&page=0&size=200", parameters={masked}
+2026-02-27 09:35:18.320 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.order.controller.OrderController#list(String, Pageable)
+2026-02-27 09:35:18.321 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        o1_0.id,
+        o1_0.order_date,
+        o1_0.product_id,
+        o1_0.quantity,
+        o1_0.recipient_name,
+        o1_0.recipient_phone,
+        o1_0.shipping_address,
+        o1_0.status,
+        o1_0.total_price,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    join
+        member u1_0 
+            on u1_0.id=o1_0.user_id 
+    where
+        ? is null 
+        or ?='' 
+        or u1_0.user_nm like ? escape '' 
+    order by
+        o1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:18.322 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:18.323 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:18.324 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:18.325 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:18.325 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:18.326 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:18.327 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:18.328 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:18.328 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.order.dto.ResponseOrderDto instances]
+2026-02-27 09:35:18.328 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:19.063 [http-nio-8080-exec-5] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:19.063 [http-nio-8080-exec-7] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:19.073 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:19.073 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:19.075 [http-nio-8080-exec-5] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:19.075 [http-nio-8080-exec-7] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:19.077 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/brand/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:35:19.077 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/product/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:35:19.077 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.brand.controller.BrandContoller#list(String, Pageable)
+2026-02-27 09:35:19.077 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.product.controller.ProductController#list(String, Pageable)
+2026-02-27 09:35:19.078 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        ? is null 
+        or ?='' 
+        or p1_0.product_nm like ? escape '' 
+    order by
+        p1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:19.078 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        ? is null 
+        or ?='' 
+        or b1_0.brand_nm like ? escape '' 
+    order by
+        b1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:19.081 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:35:19.081 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:35:19.082 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:35:19.082 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:19.083 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:35:19.083 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:35:19.084 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:19.084 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:19.085 [http-nio-8080-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.brand.dto.ResponseBrandDto instances]
+2026-02-27 09:35:19.085 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:19.086 [http-nio-8080-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:19.087 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:35:19.088 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:19.089 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:19.090 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:19.090 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.product.dto.ResponseProductDto instances]
+2026-02-27 09:35:19.091 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:36.939 [http-nio-8080-exec-6] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:36.950 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:36.952 [http-nio-8080-exec-6] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:36.954 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/order/list?keyword=&page=0&size=200", parameters={masked}
+2026-02-27 09:35:36.955 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.order.controller.OrderController#list(String, Pageable)
+2026-02-27 09:35:36.957 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        o1_0.id,
+        o1_0.order_date,
+        o1_0.product_id,
+        o1_0.quantity,
+        o1_0.recipient_name,
+        o1_0.recipient_phone,
+        o1_0.shipping_address,
+        o1_0.status,
+        o1_0.total_price,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    join
+        member u1_0 
+            on u1_0.id=o1_0.user_id 
+    where
+        ? is null 
+        or ?='' 
+        or u1_0.user_nm like ? escape '' 
+    order by
+        o1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:36.961 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:36.963 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:36.966 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:36.968 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:36.970 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:36.971 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:36.975 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:36.980 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:36.981 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.order.dto.ResponseOrderDto instances]
+2026-02-27 09:35:36.984 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:37.472 [http-nio-8080-exec-8] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:37.483 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:37.486 [http-nio-8080-exec-8] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:37.488 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/order/list?keyword=&page=0&size=1000", parameters={masked}
+2026-02-27 09:35:37.489 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.order.controller.OrderController#list(String, Pageable)
+2026-02-27 09:35:37.491 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        o1_0.id,
+        o1_0.order_date,
+        o1_0.product_id,
+        o1_0.quantity,
+        o1_0.recipient_name,
+        o1_0.recipient_phone,
+        o1_0.shipping_address,
+        o1_0.status,
+        o1_0.total_price,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    join
+        member u1_0 
+            on u1_0.id=o1_0.user_id 
+    where
+        ? is null 
+        or ?='' 
+        or u1_0.user_nm like ? escape '' 
+    order by
+        o1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:37.496 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:37.498 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:37.500 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:37.502 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:37.505 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:37.507 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:37.509 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:37.511 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:37.511 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.order.dto.ResponseOrderDto instances]
+2026-02-27 09:35:37.514 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:37.882 [http-nio-8080-exec-10] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:37.894 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:37.896 [http-nio-8080-exec-10] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:37.898 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/order/list?keyword=&page=0&size=200", parameters={masked}
+2026-02-27 09:35:37.899 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.order.controller.OrderController#list(String, Pageable)
+2026-02-27 09:35:37.901 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        o1_0.id,
+        o1_0.order_date,
+        o1_0.product_id,
+        o1_0.quantity,
+        o1_0.recipient_name,
+        o1_0.recipient_phone,
+        o1_0.shipping_address,
+        o1_0.status,
+        o1_0.total_price,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    join
+        member u1_0 
+            on u1_0.id=o1_0.user_id 
+    where
+        ? is null 
+        or ?='' 
+        or u1_0.user_nm like ? escape '' 
+    order by
+        o1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:37.903 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:37.904 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:37.906 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:37.907 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:37.909 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.auth_name,
+        u1_0.created_at,
+        u1_0.updated_at,
+        u1_0.user_age,
+        u1_0.user_id,
+        u1_0.user_nm,
+        u1_0.user_pwd 
+    from
+        member u1_0 
+    where
+        u1_0.id=?
+2026-02-27 09:35:37.910 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:37.911 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        p1_0.id=?
+2026-02-27 09:35:37.914 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:37.914 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.order.dto.ResponseOrderDto instances]
+2026-02-27 09:35:37.916 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:38.566 [http-nio-8080-exec-4] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:38.566 [http-nio-8080-exec-3] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:35:38.577 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:38.577 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:35:38.578 [http-nio-8080-exec-3] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:38.578 [http-nio-8080-exec-4] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:35:38.580 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/product/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:35:38.580 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/brand/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:35:38.580 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.product.controller.ProductController#list(String, Pageable)
+2026-02-27 09:35:38.580 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.brand.controller.BrandContoller#list(String, Pageable)
+2026-02-27 09:35:38.582 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        ? is null 
+        or ?='' 
+        or p1_0.product_nm like ? escape '' 
+    order by
+        p1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:38.582 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        ? is null 
+        or ?='' 
+        or b1_0.brand_nm like ? escape '' 
+    order by
+        b1_0.id desc 
+    limit
+        ?
+2026-02-27 09:35:38.585 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:35:38.585 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:35:38.586 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:35:38.587 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:38.587 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:35:38.588 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:35:38.588 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:38.589 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.brand.dto.ResponseBrandDto instances]
+2026-02-27 09:35:38.589 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:38.590 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:38.592 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:35:38.593 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:38.594 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:35:38.594 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:35:38.595 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:35:38.595 [http-nio-8080-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.product.dto.ResponseProductDto instances]
+2026-02-27 09:35:38.600 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:48:28.918 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-27 09:48:29.124 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-02-27 09:48:29.162 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27 09:48:29.191 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-27 09:48:29.231 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-27 09:48:35.407 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2026-02-27 09:48:35.460 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 305680 (C:\jungseok\project\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\project\Outfit-Archive-Back)
+2026-02-27 09:48:35.463 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-27 09:48:36.150 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-27 09:48:36.240 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 82 ms. Found 11 JPA repository interfaces.
+2026-02-27 09:48:36.470 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-02-27 09:48:36.498 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2026-02-27 09:48:36.900 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-27 09:48:36.921 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:48:36.924 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-27 09:48:36.924 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2026-02-27 09:48:37.043 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-27 09:48:37.044 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1538 ms
+2026-02-27 09:48:37.240 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-27 09:48:37.313 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2026-02-27 09:48:37.349 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-27 09:48:37.756 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-27 09:48:37.791 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-27 09:48:38.040 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5c9b5e62
+2026-02-27 09:48:38.041 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-27 09:48:38.089 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-27 09:48:38.104 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-27 09:48:39.054 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-27 09:48:39.180 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27 09:48:39.456 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-27 09:48:40.186 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-27 09:48:40.197 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Found 2 UserDetailsService beans, with names [adminCustomUserDetailService, customUserDetailService]. Global Authentication Manager will not use a UserDetailsService for username/password login. Consider publishing a single UserDetailsService bean.
+2026-02-27 09:48:40.334 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 34 mappings in 'requestMappingHandlerMapping'
+2026-02-27 09:48:40.405 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
+2026-02-27 09:48:40.513 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-27 09:48:40.578 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-27 09:48:40.696 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:48:40.717 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-27 09:48:40.723 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 5.757 seconds (process running for 6.357)
+2026-02-27 09:48:40.779 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        admin_member am1_0
+2026-02-27 09:48:40.797 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        member u1_0
+2026-02-27 09:48:40.800 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        brand b1_0
+2026-02-27 09:48:40.808 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        product p1_0
+2026-02-27 09:48:40.810 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        orders o1_0
+2026-02-27 09:48:40.813 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        post p1_0
+2026-02-27 09:49:31.507 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-27 09:49:31.507 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-27 09:49:31.507 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2026-02-27 09:49:31.507 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2026-02-27 09:49:31.507 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2026-02-27 09:49:31.508 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@4dd32cf5
+2026-02-27 09:49:31.508 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@2c9e3083
+2026-02-27 09:49:31.508 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-02-27 09:49:31.508 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-02-27 09:49:31.602 [http-nio-8080-exec-1] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:49:31.602 [http-nio-8080-exec-2] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:49:31.622 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:49:31.622 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:49:31.654 [http-nio-8080-exec-1] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:49:31.654 [http-nio-8080-exec-2] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:49:31.662 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/brand/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:49:31.662 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/product/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:49:31.663 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.product.controller.ProductController#list(String, Pageable)
+2026-02-27 09:49:31.663 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.brand.controller.BrandContoller#list(String, Pageable)
+2026-02-27 09:49:31.711 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        ? is null 
+        or ?='' 
+        or p1_0.product_nm like ? escape '' 
+    order by
+        p1_0.id desc 
+    limit
+        ?
+2026-02-27 09:49:31.711 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        ? is null 
+        or ?='' 
+        or b1_0.brand_nm like ? escape '' 
+    order by
+        b1_0.id desc 
+    limit
+        ?
+2026-02-27 09:49:31.738 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:49:31.740 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:49:31.742 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:49:31.745 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:49:31.745 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:49:31.746 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:49:31.748 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:49:31.749 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:49:31.751 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:49:31.752 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:49:31.753 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:49:31.781 [http-nio-8080-exec-2] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-02-27 09:49:31.785 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:49:31.785 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:49:31.786 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.product.dto.ResponseProductDto instances]
+2026-02-27 09:49:31.786 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.brand.dto.ResponseBrandDto instances]
+2026-02-27 09:49:31.804 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:49:31.804 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:49:37.660 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/admin/auth/login", parameters={}
+2026-02-27 09:49:37.661 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.auth.controller.AdminAuthController#adminLogin(AdminLoginDto, HttpServletResponse)
+2026-02-27 09:49:37.714 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AdminLoginDto(memberId=wjdtjr9401@naver.com, memberPwd=kil79518@)]
+2026-02-27 09:49:37.810 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.user_id=?
+2026-02-27 09:49:37.987 [http-nio-8080-exec-4] INFO  c.f.b.a.a.service.AdminAuthService - adminMember : com.fasthub.backend.admin.auth.entity.AdminMember@6e5866c
+2026-02-27 09:49:38.058 [http-nio-8080-exec-4] INFO  c.f.b.a.a.service.AdminAuthService - admin login success : wjdtjr9401@naver.com
+2026-02-27 09:49:38.064 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:49:38.064 [http-nio-8080-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.fasthub.backend.admin.auth.dto.AdminLoginResponseDto@c19e079]
+2026-02-27 09:49:38.066 [http-nio-8080-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:49:38.086 [http-nio-8080-exec-6] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:49:38.086 [http-nio-8080-exec-5] INFO  c.fasthub.backend.cmm.jwt.JwtService - valiDataResult : AUTHENTICATED
+2026-02-27 09:49:38.101 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:49:38.102 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.id=?
+2026-02-27 09:49:38.104 [http-nio-8080-exec-5] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:49:38.104 [http-nio-8080-exec-6] INFO  c.f.b.a.a.s.AdminCustomUserDetailService - adminCustomUserDetailArea : wjdtjr9401@naver.com
+2026-02-27 09:49:38.107 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/brand/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:49:38.107 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/api/admin/product/list?keyword=&page=0&size=100", parameters={masked}
+2026-02-27 09:49:38.108 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.product.controller.ProductController#list(String, Pageable)
+2026-02-27 09:49:38.108 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.brand.controller.BrandContoller#list(String, Pageable)
+2026-02-27 09:49:38.114 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        ? is null 
+        or ?='' 
+        or b1_0.brand_nm like ? escape '' 
+    order by
+        b1_0.id desc 
+    limit
+        ?
+2026-02-27 09:49:38.114 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        p1_0.id,
+        p1_0.brand_id,
+        p1_0.category,
+        p1_0.product_code,
+        p1_0.product_nm,
+        p1_0.product_price,
+        p1_0.product_quantity 
+    from
+        product p1_0 
+    where
+        ? is null 
+        or ?='' 
+        or p1_0.product_nm like ? escape '' 
+    order by
+        p1_0.id desc 
+    limit
+        ?
+2026-02-27 09:49:38.117 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:49:38.117 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:49:38.118 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:49:38.119 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:49:38.121 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:49:38.121 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.brand_id,
+        i1_0.brandimg_id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        brand_img i1_0 
+    where
+        i1_0.brand_id=?
+2026-02-27 09:49:38.125 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:49:38.126 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:49:38.126 [http-nio-8080-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.brand.dto.ResponseBrandDto instances]
+2026-02-27 09:49:38.129 [http-nio-8080-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:49:38.129 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:49:38.131 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        b1_0.id,
+        b1_0.brand_dc,
+        b1_0.brand_location,
+        b1_0.brand_nm,
+        b1_0.brand_num 
+    from
+        brand b1_0 
+    where
+        b1_0.id=?
+2026-02-27 09:49:38.133 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:49:38.135 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        i1_0.product_id,
+        i1_0.id,
+        i1_0.img_nm,
+        i1_0.img_origin_nm,
+        i1_0.img_path 
+    from
+        product_img i1_0 
+    where
+        i1_0.product_id=?
+2026-02-27 09:49:38.138 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:49:38.139 [http-nio-8080-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Page 1 of 1 containing com.fasthub.backend.admin.product.dto.ResponseProductDto instances]
+2026-02-27 09:49:38.141 [http-nio-8080-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:50:05.719 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-27 09:50:05.861 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-02-27 09:50:05.867 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27 09:50:05.868 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-27 09:50:05.875 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
