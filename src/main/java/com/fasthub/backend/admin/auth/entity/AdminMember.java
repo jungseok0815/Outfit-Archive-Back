@@ -1,5 +1,6 @@
 package com.fasthub.backend.admin.auth.entity;
 
+import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.cmm.enums.AdminRole;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,9 +30,6 @@ public class AdminMember {
     @Column(nullable = false, name = "USER_PWD")
     private String memberPwd;
 
-    @Column(name = "AFFILIATION")
-    private String affiliation;
-
     @Column(nullable = false, name = "ADMIN_ROLE")
     @Enumerated(EnumType.STRING)
     private AdminRole adminRole;
@@ -42,4 +40,8 @@ public class AdminMember {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 }

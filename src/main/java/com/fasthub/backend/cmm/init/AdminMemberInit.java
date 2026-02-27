@@ -30,7 +30,6 @@ public class AdminMemberInit implements ApplicationRunner {
                 .memberId("wjdtjr9401@naver.com")
                 .memberPwd(passwordEncoder.encode("kil79518@"))
                 .memberNm("최고관리자")
-                .affiliation("OA")
                 .adminRole(AdminRole.SUPER_ADMIN)
                 .build());
 
@@ -38,7 +37,6 @@ public class AdminMemberInit implements ApplicationRunner {
                 .memberId("admin1")
                 .memberPwd(passwordEncoder.encode("admin1234"))
                 .memberNm("일반관리자")
-                .affiliation("OA")
                 .adminRole(AdminRole.ADMIN)
                 .build());
 
@@ -46,7 +44,7 @@ public class AdminMemberInit implements ApplicationRunner {
                 .memberId("partner1")
                 .memberPwd(passwordEncoder.encode("admin1234"))
                 .memberNm("협력업체A")
-                .affiliation("협력업체A")
+
                 .adminRole(AdminRole.PARTNER)
                 .build());
 
