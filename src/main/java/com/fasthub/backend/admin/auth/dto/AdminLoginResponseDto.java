@@ -9,12 +9,14 @@ public class AdminLoginResponseDto {
     private final Long id;
     private final String memberId;
     private final String memberNm;
+    private final String affiliation;
     private final AdminRole adminRole;
 
     public AdminLoginResponseDto(AdminMember adminMember) {
         this.id = adminMember.getId();
         this.memberId = adminMember.getMemberId();
         this.memberNm = adminMember.getMemberNm();
+        this.affiliation = adminMember.getAffiliation();
         this.adminRole = adminMember.getAdminRole();
     }
 }

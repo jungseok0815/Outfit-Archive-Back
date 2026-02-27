@@ -7,8 +7,9 @@ import com.fasthub.backend.admin.auth.entity.AdminMember;
 import com.fasthub.backend.admin.auth.repository.AdminMemberRepository;
 import com.fasthub.backend.admin.auth.service.AdminAuthService;
 import com.fasthub.backend.cmm.enums.AdminRole;
-import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.error.ErrorCode;
+import com.fasthub.backend.cmm.jwt.JwtService;
+import jakarta.servlet.http.HttpServletResponse;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -41,12 +42,17 @@ class AdminAuthServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
+    @Mock
+    private JwtService jwtService;
+
+    @Mock
+    private HttpServletResponse response;
+
     private AdminMember buildMember() {
         return AdminMember.builder()
                 .memberId("admin01")
                 .memberPwd("encodedPassword")
                 .memberNm("관리자")
-                .authName(UserRole.ROLE_ADMIN)
                 .adminRole(AdminRole.ADMIN)
                 .build();
     }
@@ -67,7 +73,7 @@ class AdminAuthServiceTest {
             given(adminMemberRepository.findByMemberId("admin01")).willReturn(Optional.of(member));
             given(passwordEncoder.matches("rawPassword", "encodedPassword")).willReturn(true);
 
-            AdminLoginResponseDto result = adminAuthService.adminLogin(dto);
+            AdminLoginResponseDto result = adminAuthService.adminLogin(dto, response);
 
             assertThat(result.getMemberId()).isEqualTo("admin01");
             assertThat(result.getMemberNm()).isEqualTo("관리자");
@@ -81,7 +87,7 @@ class AdminAuthServiceTest {
 
             given(adminMemberRepository.findByMemberId("notExist")).willReturn(Optional.empty());
 
-            assertThatThrownBy(() -> adminAuthService.adminLogin(dto))
+            assertThatThrownBy(() -> adminAuthService.adminLogin(dto, response))
                     .isInstanceOf(BusinessException.class)
                     .hasMessageContaining(ErrorCode.ADMIN_ID_NOT_FOUND.getMessage());
         }
@@ -95,7 +101,7 @@ class AdminAuthServiceTest {
             given(adminMemberRepository.findByMemberId("admin01")).willReturn(Optional.of(member));
             given(passwordEncoder.matches("wrongPassword", "encodedPassword")).willReturn(false);
 
-            assertThatThrownBy(() -> adminAuthService.adminLogin(dto))
+            assertThatThrownBy(() -> adminAuthService.adminLogin(dto, response))
                     .isInstanceOf(BusinessException.class)
                     .hasMessageContaining(ErrorCode.ADMIN_PWD_NOT_MATCH.getMessage());
         }

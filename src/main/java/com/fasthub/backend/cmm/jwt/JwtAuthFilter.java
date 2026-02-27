@@ -33,7 +33,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getServletPath();
         return path.startsWith("/api/usr/login") || path.startsWith("/api/usr/join")
-                || path.startsWith("/api/admin/auth/login") || path.startsWith("/api/admin/auth/join");
+                || path.startsWith("/api/admin/auth/login");
     }
 
     // 매 요청마다 실행되는 JWT 검증 로직

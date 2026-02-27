@@ -1,7 +1,6 @@
 package com.fasthub.backend.admin.auth.entity;
 
 import com.fasthub.backend.cmm.enums.AdminRole;
-import com.fasthub.backend.cmm.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -30,9 +29,8 @@ public class AdminMember {
     @Column(nullable = false, name = "USER_PWD")
     private String memberPwd;
 
-    @Column(nullable = false, name = "AUTH_NAME")
-    @Enumerated(EnumType.STRING)
-    private UserRole authName;
+    @Column(name = "AFFILIATION")
+    private String affiliation;
 
     @Column(nullable = false, name = "ADMIN_ROLE")
     @Enumerated(EnumType.STRING)
