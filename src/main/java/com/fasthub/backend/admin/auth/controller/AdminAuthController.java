@@ -42,4 +42,10 @@ public class AdminAuthController {
     public ResponseEntity<List<AdminMemberResponseDto>> getAdminList() {
         return ResponseEntity.ok(adminAuthService.getAdminList());
     }
+
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
+    @GetMapping("/delete")
+    public ResponseEntity<List<AdminMemberResponseDto>> delete() {
+        return ResponseEntity.ok(adminAuthService.getAdminList());
+    }
 }

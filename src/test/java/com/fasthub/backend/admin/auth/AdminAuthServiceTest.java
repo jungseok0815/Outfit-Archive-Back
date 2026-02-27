@@ -6,6 +6,7 @@ import com.fasthub.backend.admin.auth.dto.AdminLoginResponseDto;
 import com.fasthub.backend.admin.auth.entity.AdminMember;
 import com.fasthub.backend.admin.auth.repository.AdminMemberRepository;
 import com.fasthub.backend.admin.auth.service.AdminAuthService;
+import com.fasthub.backend.admin.brand.repository.BrandRepository;
 import com.fasthub.backend.cmm.enums.AdminRole;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.jwt.JwtService;
@@ -41,6 +42,9 @@ class AdminAuthServiceTest {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private BrandRepository brandRepository;
 
     @Mock
     private JwtService jwtService;
@@ -117,7 +121,7 @@ class AdminAuthServiceTest {
         @Test
         @DisplayName("성공")
         void join_success() {
-            AdminJoinDto dto = new AdminJoinDto("admin01", "password1", "관리자", AdminRole.ADMIN);
+            AdminJoinDto dto = new AdminJoinDto("admin01", "password1", "관리자", AdminRole.ADMIN, null);
 
             given(adminMemberRepository.existsByMemberId("admin01")).willReturn(false);
             given(passwordEncoder.encode("password1")).willReturn("encodedPassword");
@@ -130,7 +134,7 @@ class AdminAuthServiceTest {
         @Test
         @DisplayName("실패 - 중복 아이디")
         void join_fail_duplicateMemberId() {
-            AdminJoinDto dto = new AdminJoinDto("admin01", "password1", "관리자", AdminRole.ADMIN);
+            AdminJoinDto dto = new AdminJoinDto("admin01", "password1", "관리자", AdminRole.ADMIN, null);
 
             given(adminMemberRepository.existsByMemberId("admin01")).willReturn(true);
 

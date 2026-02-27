@@ -26,7 +26,6 @@ public class AdminJoinDto {
     @NotNull(message = "관리자 권한은 필수 입력입니다.")
     private AdminRole adminRole;
 
-    @Size(max = 50)
-    private String affiliation;
+    private Long brandId;
 
 }

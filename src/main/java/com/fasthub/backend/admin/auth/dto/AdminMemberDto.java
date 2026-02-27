@@ -13,7 +13,8 @@ public class AdminMemberDto {
     private String memberId;
     private String memberPwd;
     private String memberNm;
-    private String affiliation;
+    private Long brandId;
+    private String brandNm;
     private AdminRole adminRole;
 
     public AdminMemberDto(AdminMember adminMember) {
@@ -21,7 +22,8 @@ public class AdminMemberDto {
         this.memberId = adminMember.getMemberId();
         this.memberPwd = adminMember.getMemberPwd();
         this.memberNm = adminMember.getMemberNm();
-        this.affiliation = adminMember.getAffiliation();
+        this.brandId = adminMember.getBrand() != null ? adminMember.getBrand().getId() : null;
+        this.brandNm = adminMember.getBrand() != null ? adminMember.getBrand().getBrandNm() : null;
         this.adminRole = adminMember.getAdminRole();
     }
 }
