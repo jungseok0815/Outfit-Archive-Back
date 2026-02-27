@@ -38,14 +38,15 @@ public class AdminAuthController {
     }
 
     @PreAuthorize("hasAuthority('SUPER_ADMIN')")
-    @GetMapping("/members")
+    @GetMapping("/membersList")
     public ResponseEntity<List<AdminMemberResponseDto>> getAdminList() {
         return ResponseEntity.ok(adminAuthService.getAdminList());
     }
 
     @PreAuthorize("hasAuthority('SUPER_ADMIN')")
-    @GetMapping("/delete")
-    public ResponseEntity<List<AdminMemberResponseDto>> delete() {
-        return ResponseEntity.ok(adminAuthService.getAdminList());
+    @DeleteMapping("/members/{id}")
+    public ResponseEntity<Void> deleteAdmin(@PathVariable Long id) {
+        adminAuthService.deleteAdmin(id);
+        return ResponseEntity.noContent().build();
     }
 }
