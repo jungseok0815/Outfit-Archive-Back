@@ -1,25 +1,25 @@
-2026-02-26 08:19:43.639 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2026-02-26 08:19:43.726 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 162344 (C:\jungseok\개인자료\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\개인자료\Outfit-Archive-Back)
-2026-02-26 08:19:43.728 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
-2026-02-26 08:19:44.624 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-02-26 08:19:44.713 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 81 ms. Found 9 JPA repository interfaces.
-2026-02-26 08:19:45.028 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
-2026-02-26 08:19:45.052 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
-2026-02-26 08:19:45.288 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-02-26 08:19:45.298 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-02-26 08:19:45.299 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-02-26 08:19:45.299 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
-2026-02-26 08:19:45.349 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-02-26 08:19:45.350 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1552 ms
-2026-02-26 08:19:45.499 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-02-26 08:19:45.569 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2026-02-26 08:19:45.600 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-02-26 08:19:45.858 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-02-26 08:19:45.887 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-02-26 08:19:46.157 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@67593f7b
-2026-02-26 08:19:46.158 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-02-26 08:19:46.214 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-02-26 08:19:46.234 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2026-02-27 09:03:51.822 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2026-02-27 09:03:51.877 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 302452 (C:\jungseok\project\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\project\Outfit-Archive-Back)
+2026-02-27 09:03:51.877 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-27 09:03:52.641 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-27 09:03:52.726 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 79 ms. Found 11 JPA repository interfaces.
+2026-02-27 09:03:52.996 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-02-27 09:03:53.018 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2026-02-27 09:03:53.217 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-27 09:03:53.227 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:03:53.228 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-27 09:03:53.228 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2026-02-27 09:03:53.282 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-27 09:03:53.282 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1357 ms
+2026-02-27 09:03:53.421 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-27 09:03:53.468 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2026-02-27 09:03:53.504 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-27 09:03:53.751 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-27 09:03:53.782 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-27 09:03:54.165 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@12200670
+2026-02-27 09:03:54.165 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-27 09:03:54.276 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-27 09:03:54.276 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 8.0.40
@@ -27,74 +27,109 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-02-26 08:19:47.227 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-02-26 08:19:47.304 [main] DEBUG org.hibernate.SQL - 
-    create table post (
-        id bigint not null auto_increment,
-        content TEXT not null,
-        created_at datetime(6),
-        title varchar(255) not null,
-        updated_at datetime(6),
-        user_id bigint not null,
-        primary key (id)
-    ) engine=InnoDB
-2026-02-26 08:19:47.358 [main] DEBUG org.hibernate.SQL - 
-    create table post_img (
-        id bigint not null auto_increment,
-        img_nm varchar(255) not null,
-        img_origin_nm varchar(255) not null,
-        img_path varchar(255) not null,
-        post_id bigint not null,
-        primary key (id)
-    ) engine=InnoDB
-2026-02-26 08:19:47.403 [main] DEBUG org.hibernate.SQL - 
-    alter table post 
-       add constraint FKpbvrk5iujntjh9oevilj6t3go 
-       foreign key (user_id) 
-       references member (id)
-2026-02-26 08:19:47.474 [main] DEBUG org.hibernate.SQL - 
-    alter table post_img 
-       add constraint FK1xffckk49kb41ulrxum2gx3n1 
-       foreign key (post_id) 
-       references post (id)
-2026-02-26 08:19:47.554 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 08:19:47.864 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-02-26 08:19:48.402 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-02-26 08:19:48.417 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
-2026-02-26 08:19:48.548 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 26 mappings in 'requestMappingHandlerMapping'
-2026-02-26 08:19:48.618 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
-2026-02-26 08:19:48.741 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-02-26 08:19:48.785 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-02-26 08:19:48.886 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-02-26 08:19:48.905 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-02-26 08:19:48.912 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 6.139 seconds (process running for 6.891)
-2026-02-26 08:24:35.879 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-02-26 08:24:36.022 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-02-26 08:24:36.025 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 08:24:36.027 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-02-26 08:24:36.034 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-02-26 08:24:39.204 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2026-02-26 08:24:39.250 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 164652 (C:\jungseok\개인자료\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\개인자료\Outfit-Archive-Back)
-2026-02-26 08:24:39.252 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
-2026-02-26 08:24:39.849 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-02-26 08:24:39.939 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 83 ms. Found 9 JPA repository interfaces.
-2026-02-26 08:24:40.180 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
-2026-02-26 08:24:40.201 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
-2026-02-26 08:24:40.412 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-02-26 08:24:40.426 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-02-26 08:24:40.428 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-02-26 08:24:40.428 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
-2026-02-26 08:24:40.483 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-02-26 08:24:40.485 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1204 ms
-2026-02-26 08:24:40.644 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-02-26 08:24:40.712 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2026-02-26 08:24:40.743 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-02-26 08:24:41.047 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-02-26 08:24:41.079 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-02-26 08:24:41.381 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@45790cb
-2026-02-26 08:24:41.384 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-02-26 08:24:41.433 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-02-26 08:24:41.452 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2026-02-27 09:03:55.215 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-27 09:03:55.356 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27 09:03:55.608 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-27 09:03:56.263 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-27 09:03:56.279 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
+2026-02-27 09:03:56.437 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 34 mappings in 'requestMappingHandlerMapping'
+2026-02-27 09:03:56.515 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
+2026-02-27 09:03:56.609 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-27 09:03:56.640 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-27 09:03:56.735 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:03:56.751 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-27 09:03:56.766 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 5.487 seconds (process running for 6.24)
+2026-02-27 09:03:56.813 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        admin_member am1_0
+2026-02-27 09:03:56.829 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        member u1_0
+2026-02-27 09:03:56.829 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        brand b1_0
+2026-02-27 09:03:56.845 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        product p1_0
+2026-02-27 09:03:56.845 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        orders o1_0
+2026-02-27 09:03:56.845 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        post p1_0
+2026-02-27 09:05:50.621 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-27 09:05:50.621 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-27 09:05:50.622 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2026-02-27 09:05:50.622 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2026-02-27 09:05:50.622 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2026-02-27 09:05:50.623 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@73d8f219
+2026-02-27 09:05:50.623 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@677f1963
+2026-02-27 09:05:50.623 [http-nio-8080-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-02-27 09:05:50.624 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-02-27 09:05:50.719 [http-nio-8080-exec-1] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:05:50.719 [http-nio-8080-exec-3] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:06:13.250 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/admin/auth/login", parameters={}
+2026-02-27 09:06:13.252 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.auth.controller.AdminAuthController#adminLogin(AdminLoginDto)
+2026-02-27 09:06:13.302 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AdminLoginDto(memberId=wjdtjr9401@naver.com, memberPwd=kil79518@)]
+2026-02-27 09:06:13.351 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.user_id=?
+2026-02-27 09:06:13.363 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Using @ExceptionHandler com.fasthub.backend.cmm.error.GlobalExceptionHandler#handleBusinessException(BusinessException)
+2026-02-27 09:06:13.363 [http-nio-8080-exec-8] ERROR c.f.b.c.error.GlobalExceptionHandler - BusinessException : 관리자 아이디를 찾을 수 없습니다.
+2026-02-27 09:06:13.379 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:06:13.379 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.fasthub.backend.cmm.error.ErrorResponse@f8486ef]
+2026-02-27 09:06:13.385 [http-nio-8080-exec-8] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [com.fasthub.backend.cmm.error.exception.BusinessException: 관리자 아이디를 찾을 수 없습니다.]
+2026-02-27 09:06:13.385 [http-nio-8080-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 404 NOT_FOUND
+2026-02-27 09:07:26.465 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-27 09:07:26.602 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-02-27 09:07:26.609 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27 09:07:26.612 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-27 09:07:26.619 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-27 09:07:29.979 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2026-02-27 09:07:30.059 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 303768 (C:\jungseok\project\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\project\Outfit-Archive-Back)
+2026-02-27 09:07:30.060 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-27 09:07:30.783 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-27 09:07:30.870 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 79 ms. Found 11 JPA repository interfaces.
+2026-02-27 09:07:31.162 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-02-27 09:07:31.187 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2026-02-27 09:07:31.390 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-27 09:07:31.401 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:07:31.403 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-27 09:07:31.403 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2026-02-27 09:07:31.490 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-27 09:07:31.490 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1388 ms
+2026-02-27 09:07:31.700 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-27 09:07:31.771 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2026-02-27 09:07:31.803 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-27 09:07:32.151 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-27 09:07:32.198 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-27 09:07:32.464 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@46fb9581
+2026-02-27 09:07:32.468 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-27 09:07:32.514 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-27 09:07:32.530 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 8.0.40
@@ -102,54 +137,254 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-02-26 08:24:42.437 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-02-26 08:24:42.450 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:07:33.617 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-27 09:07:33.736 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27 09:07:34.008 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-27 09:07:34.706 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-27 09:07:34.720 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
+2026-02-27 09:07:34.825 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 34 mappings in 'requestMappingHandlerMapping'
+2026-02-27 09:07:34.889 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
+2026-02-27 09:07:35.004 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-27 09:07:35.046 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-27 09:07:35.159 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:07:35.178 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-27 09:07:35.185 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 5.693 seconds (process running for 6.26)
+2026-02-27 09:07:35.245 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        admin_member am1_0
+2026-02-27 09:07:35.264 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        member u1_0
+2026-02-27 09:07:35.268 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        brand b1_0
+2026-02-27 09:07:35.274 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        product p1_0
+2026-02-27 09:07:35.276 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        orders o1_0
+2026-02-27 09:07:35.283 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        post p1_0
+2026-02-27 09:08:43.065 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-27 09:08:43.065 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-27 09:08:43.065 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2026-02-27 09:08:43.065 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2026-02-27 09:08:43.065 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2026-02-27 09:08:43.066 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@644acaff
+2026-02-27 09:08:43.067 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@210d1b45
+2026-02-27 09:08:43.067 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-02-27 09:08:43.067 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-02-27 09:08:43.125 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/admin/auth/login", parameters={}
+2026-02-27 09:08:43.126 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.auth.controller.AdminAuthController#adminLogin(AdminLoginDto)
+2026-02-27 09:08:43.175 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AdminLoginDto(memberId=wjdtjr9401@naver.com, memberPwd=kil79518@)]
+2026-02-27 09:08:43.223 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
+    from
+        admin_member am1_0 
+    where
+        am1_0.user_id=?
+2026-02-27 09:08:43.235 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Using @ExceptionHandler com.fasthub.backend.cmm.error.GlobalExceptionHandler#handleBusinessException(BusinessException)
+2026-02-27 09:08:43.235 [http-nio-8080-exec-2] ERROR c.f.b.c.error.GlobalExceptionHandler - BusinessException : 관리자 아이디를 찾을 수 없습니다.
+2026-02-27 09:08:43.247 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:08:43.248 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.fasthub.backend.cmm.error.ErrorResponse@a39cded]
+2026-02-27 09:08:43.254 [http-nio-8080-exec-2] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [com.fasthub.backend.cmm.error.exception.BusinessException: 관리자 아이디를 찾을 수 없습니다.]
+2026-02-27 09:08:43.255 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 404 NOT_FOUND
+2026-02-27 09:08:59.121 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-27 09:09:12.722 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2026-02-27 09:09:12.765 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 296496 (C:\jungseok\project\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\project\Outfit-Archive-Back)
+2026-02-27 09:09:12.766 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-27 09:09:13.345 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-27 09:09:13.435 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 84 ms. Found 11 JPA repository interfaces.
+2026-02-27 09:09:13.695 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-02-27 09:09:13.718 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2026-02-27 09:09:13.914 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-27 09:09:13.929 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:09:13.931 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-27 09:09:13.931 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2026-02-27 09:09:13.996 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-27 09:09:13.996 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1196 ms
+2026-02-27 09:09:14.146 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-27 09:09:14.204 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2026-02-27 09:09:14.233 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-27 09:09:14.473 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-27 09:09:14.498 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-27 09:09:14.754 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4148ce43
+2026-02-27 09:09:14.756 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-27 09:09:14.804 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-27 09:09:14.823 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-27 09:09:15.802 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-27 09:09:15.909 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27 09:09:16.132 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-27 09:09:16.862 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-27 09:09:16.881 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
+2026-02-27 09:09:16.987 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 34 mappings in 'requestMappingHandlerMapping'
+2026-02-27 09:09:17.059 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
+2026-02-27 09:09:17.175 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-27 09:09:17.210 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-27 09:09:17.303 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:09:17.318 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-27 09:09:17.325 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 5.019 seconds (process running for 5.399)
+2026-02-27 09:09:17.375 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        admin_member am1_0
+2026-02-27 09:09:17.394 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        member u1_0
+2026-02-27 09:09:17.398 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        brand b1_0
+2026-02-27 09:09:17.404 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        product p1_0
+2026-02-27 09:09:17.408 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        orders o1_0
+2026-02-27 09:09:17.412 [main] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        post p1_0
+2026-02-27 09:09:37.455 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-27 09:09:37.612 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-02-27 09:09:37.617 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27 09:09:37.618 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-27 09:09:37.628 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-27 09:09:40.077 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2026-02-27 09:09:40.114 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 305580 (C:\jungseok\project\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\project\Outfit-Archive-Back)
+2026-02-27 09:09:40.114 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-27 09:09:40.752 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-27 09:09:40.842 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 83 ms. Found 11 JPA repository interfaces.
+2026-02-27 09:09:41.059 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-02-27 09:09:41.075 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2026-02-27 09:09:41.241 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-27 09:09:41.251 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:09:41.252 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-27 09:09:41.252 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2026-02-27 09:09:41.323 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-27 09:09:41.323 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1178 ms
+2026-02-27 09:09:41.449 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-27 09:09:41.492 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
+2026-02-27 09:09:41.521 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-27 09:09:41.751 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-27 09:09:41.771 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-27 09:09:41.947 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6fcc0a1
+2026-02-27 09:09:41.948 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-27 09:09:42.000 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-27 09:09:42.017 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.40
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-27 09:09:42.923 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-27 09:09:42.936 [main] DEBUG org.hibernate.SQL - 
     alter table brand_img 
        drop 
        foreign key FKr65s2lj4rfdb07pnvu5r3kjun
-2026-02-26 08:24:42.476 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:42.990 [main] DEBUG org.hibernate.SQL - 
     alter table orders 
        drop 
        foreign key FK787ibr3guwp6xobrpbofnv7le
-2026-02-26 08:24:42.488 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.007 [main] DEBUG org.hibernate.SQL - 
     alter table orders 
        drop 
        foreign key FK1b5nwx42sgj3ls1ltnx1csred
-2026-02-26 08:24:42.497 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.025 [main] DEBUG org.hibernate.SQL - 
     alter table post 
        drop 
        foreign key FKpbvrk5iujntjh9oevilj6t3go
-2026-02-26 08:24:42.506 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.050 [main] DEBUG org.hibernate.SQL - 
+    alter table post_comment 
+       drop 
+       foreign key FKna4y825fdc5hw8aow65ijexm0
+2026-02-27 09:09:43.059 [main] DEBUG org.hibernate.SQL - 
+    alter table post_comment 
+       drop 
+       foreign key FK7o80d5m7ktgwn1vr4iiqxib08
+2026-02-27 09:09:43.067 [main] DEBUG org.hibernate.SQL - 
     alter table post_img 
        drop 
        foreign key FK1xffckk49kb41ulrxum2gx3n1
-2026-02-26 08:24:42.514 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.083 [main] DEBUG org.hibernate.SQL - 
+    alter table post_like 
+       drop 
+       foreign key FKj7iy0k7n3d0vkh8o7ibjna884
+2026-02-27 09:09:43.091 [main] DEBUG org.hibernate.SQL - 
+    alter table post_like 
+       drop 
+       foreign key FK74w2g4a04irqq2w0lgquc1r8
+2026-02-27 09:09:43.099 [main] DEBUG org.hibernate.SQL - 
     alter table product 
        drop 
        foreign key FKs6cydsualtsrprvlf2bb3lcam
-2026-02-26 08:24:42.532 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.111 [main] DEBUG org.hibernate.SQL - 
     alter table product_img 
        drop 
        foreign key FKbnvmhern60vx5hlvaa3ba9u8h
-2026-02-26 08:24:42.541 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.119 [main] DEBUG org.hibernate.SQL - 
     drop table if exists admin_member
-2026-02-26 08:24:42.557 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.153 [main] DEBUG org.hibernate.SQL - 
     drop table if exists brand
-2026-02-26 08:24:42.572 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.171 [main] DEBUG org.hibernate.SQL - 
     drop table if exists brand_img
-2026-02-26 08:24:42.585 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.184 [main] DEBUG org.hibernate.SQL - 
     drop table if exists member
-2026-02-26 08:24:42.599 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.198 [main] DEBUG org.hibernate.SQL - 
     drop table if exists orders
-2026-02-26 08:24:42.661 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.212 [main] DEBUG org.hibernate.SQL - 
     drop table if exists post
-2026-02-26 08:24:42.673 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.225 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists post_comment
+2026-02-27 09:09:43.238 [main] DEBUG org.hibernate.SQL - 
     drop table if exists post_img
-2026-02-26 08:24:42.685 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.251 [main] DEBUG org.hibernate.SQL - 
+    drop table if exists post_like
+2026-02-27 09:09:43.265 [main] DEBUG org.hibernate.SQL - 
     drop table if exists product
-2026-02-26 08:24:42.700 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.279 [main] DEBUG org.hibernate.SQL - 
     drop table if exists product_img
-2026-02-26 08:24:42.719 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.294 [main] DEBUG org.hibernate.SQL - 
     create table admin_member (
         created_at datetime(6),
         id bigint not null auto_increment,
@@ -161,7 +396,7 @@
         auth_name enum ('NOT_REGISTERED','ROLE_ADMIN','ROLE_USER') not null,
         primary key (id)
     ) engine=InnoDB
-2026-02-26 08:24:42.757 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.315 [main] DEBUG org.hibernate.SQL - 
     create table brand (
         id bigint not null auto_increment,
         brand_dc varchar(255),
@@ -170,7 +405,7 @@
         brand_num varchar(255),
         primary key (id)
     ) engine=InnoDB
-2026-02-26 08:24:42.779 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.330 [main] DEBUG org.hibernate.SQL - 
     create table brand_img (
         brand_id bigint not null,
         brandimg_id bigint not null auto_increment,
@@ -179,7 +414,7 @@
         img_path varchar(255) not null,
         primary key (brandimg_id)
     ) engine=InnoDB
-2026-02-26 08:24:42.795 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.345 [main] DEBUG org.hibernate.SQL - 
     create table member (
         user_age integer not null,
         created_at datetime(6),
@@ -191,7 +426,7 @@
         auth_name enum ('NOT_REGISTERED','ROLE_ADMIN','ROLE_USER') not null,
         primary key (id)
     ) engine=InnoDB
-2026-02-26 08:24:42.810 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.360 [main] DEBUG org.hibernate.SQL - 
     create table orders (
         quantity integer not null,
         total_price integer not null,
@@ -205,7 +440,7 @@
         status enum ('CANCELLED','DELIVERED','PAYMENT_COMPLETE','SHIPPING') not null,
         primary key (id)
     ) engine=InnoDB
-2026-02-26 08:24:42.826 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.376 [main] DEBUG org.hibernate.SQL - 
     create table post (
         created_at datetime(6),
         id bigint not null auto_increment,
@@ -215,7 +450,17 @@
         title varchar(255) not null,
         primary key (id)
     ) engine=InnoDB
-2026-02-26 08:24:42.841 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.395 [main] DEBUG org.hibernate.SQL - 
+    create table post_comment (
+        created_at datetime(6),
+        id bigint not null auto_increment,
+        post_id bigint not null,
+        updated_at datetime(6),
+        user_id bigint not null,
+        content TEXT not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-02-27 09:09:43.412 [main] DEBUG org.hibernate.SQL - 
     create table post_img (
         id bigint not null auto_increment,
         post_id bigint not null,
@@ -224,7 +469,14 @@
         img_path varchar(255) not null,
         primary key (id)
     ) engine=InnoDB
-2026-02-26 08:24:42.857 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.428 [main] DEBUG org.hibernate.SQL - 
+    create table post_like (
+        id bigint not null auto_increment,
+        post_id bigint not null,
+        user_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-02-27 09:09:43.445 [main] DEBUG org.hibernate.SQL - 
     create table product (
         product_price integer not null,
         product_quantity integer not null,
@@ -235,7 +487,7 @@
         category enum ('BAG','BOTTOM','DRESS','OUTER','SHOES','TOP') not null,
         primary key (id)
     ) engine=InnoDB
-2026-02-26 08:24:42.873 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.469 [main] DEBUG org.hibernate.SQL - 
     create table product_img (
         id bigint not null auto_increment,
         product_id bigint,
@@ -244,191 +496,168 @@
         img_path varchar(255) not null,
         primary key (id)
     ) engine=InnoDB
-2026-02-26 08:24:42.890 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.484 [main] DEBUG org.hibernate.SQL - 
     alter table admin_member 
        add constraint UK1cvmb00brhb8c0wyfodlvfa9k unique (user_id)
-2026-02-26 08:24:42.911 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.499 [main] DEBUG org.hibernate.SQL - 
     alter table member 
        add constraint UKa9bw6sk85ykh4bacjpu0ju5f6 unique (user_id)
-2026-02-26 08:24:42.927 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.511 [main] DEBUG org.hibernate.SQL - 
+    alter table post_like 
+       add constraint UKpmmko3h7yonaqhy5gxvnmdeue unique (user_id, post_id)
+2026-02-27 09:09:43.524 [main] DEBUG org.hibernate.SQL - 
     alter table brand_img 
        add constraint FKr65s2lj4rfdb07pnvu5r3kjun 
        foreign key (brand_id) 
        references brand (id)
-2026-02-26 08:24:42.991 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.579 [main] DEBUG org.hibernate.SQL - 
     alter table orders 
        add constraint FK787ibr3guwp6xobrpbofnv7le 
        foreign key (product_id) 
        references product (id)
-2026-02-26 08:24:43.051 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.639 [main] DEBUG org.hibernate.SQL - 
     alter table orders 
        add constraint FK1b5nwx42sgj3ls1ltnx1csred 
        foreign key (user_id) 
        references member (id)
-2026-02-26 08:24:43.113 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.698 [main] DEBUG org.hibernate.SQL - 
     alter table post 
        add constraint FKpbvrk5iujntjh9oevilj6t3go 
        foreign key (user_id) 
        references member (id)
-2026-02-26 08:24:43.166 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.748 [main] DEBUG org.hibernate.SQL - 
+    alter table post_comment 
+       add constraint FKna4y825fdc5hw8aow65ijexm0 
+       foreign key (post_id) 
+       references post (id)
+2026-02-27 09:09:43.802 [main] DEBUG org.hibernate.SQL - 
+    alter table post_comment 
+       add constraint FK7o80d5m7ktgwn1vr4iiqxib08 
+       foreign key (user_id) 
+       references member (id)
+2026-02-27 09:09:43.856 [main] DEBUG org.hibernate.SQL - 
     alter table post_img 
        add constraint FK1xffckk49kb41ulrxum2gx3n1 
        foreign key (post_id) 
        references post (id)
-2026-02-26 08:24:43.213 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:43.906 [main] DEBUG org.hibernate.SQL - 
+    alter table post_like 
+       add constraint FKj7iy0k7n3d0vkh8o7ibjna884 
+       foreign key (post_id) 
+       references post (id)
+2026-02-27 09:09:43.960 [main] DEBUG org.hibernate.SQL - 
+    alter table post_like 
+       add constraint FK74w2g4a04irqq2w0lgquc1r8 
+       foreign key (user_id) 
+       references member (id)
+2026-02-27 09:09:44.005 [main] DEBUG org.hibernate.SQL - 
     alter table product 
        add constraint FKs6cydsualtsrprvlf2bb3lcam 
        foreign key (brand_id) 
        references brand (id)
-2026-02-26 08:24:43.268 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:44.061 [main] DEBUG org.hibernate.SQL - 
     alter table product_img 
        add constraint FKbnvmhern60vx5hlvaa3ba9u8h 
        foreign key (product_id) 
        references product (id)
-2026-02-26 08:24:43.328 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 08:24:43.619 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-02-26 08:24:44.195 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-02-26 08:24:44.211 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
-2026-02-26 08:24:44.346 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 26 mappings in 'requestMappingHandlerMapping'
-2026-02-26 08:24:44.430 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
-2026-02-26 08:24:44.526 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-02-26 08:24:44.562 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-02-26 08:24:44.662 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-02-26 08:24:44.676 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-02-26 08:24:44.682 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 5.982 seconds (process running for 6.456)
-2026-02-26 08:36:05.036 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-02-26 08:36:05.168 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-02-26 08:36:05.172 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 08:36:05.173 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-02-26 08:36:05.179 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-02-26 08:36:09.118 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2026-02-26 08:36:09.159 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 224964 (C:\jungseok\개인자료\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\개인자료\Outfit-Archive-Back)
-2026-02-26 08:36:09.160 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
-2026-02-26 08:36:09.821 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-02-26 08:36:09.902 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 74 ms. Found 9 JPA repository interfaces.
-2026-02-26 08:36:10.129 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
-2026-02-26 08:36:10.150 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
-2026-02-26 08:36:10.373 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-02-26 08:36:10.390 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-02-26 08:36:10.391 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-02-26 08:36:10.391 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
-2026-02-26 08:36:10.459 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-02-26 08:36:10.460 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1261 ms
-2026-02-26 08:36:10.620 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-02-26 08:36:10.674 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2026-02-26 08:36:10.705 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-02-26 08:36:10.933 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-02-26 08:36:10.960 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-02-26 08:36:11.240 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@29c80149
-2026-02-26 08:36:11.243 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-02-26 08:36:11.288 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-02-26 08:36:11.311 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 8.0.40
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-02-26 08:36:12.139 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-02-26 08:36:12.226 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 08:36:12.440 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-02-26 08:36:12.873 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-02-26 08:36:12.886 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
-2026-02-26 08:36:12.986 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 26 mappings in 'requestMappingHandlerMapping'
-2026-02-26 08:36:13.051 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
-2026-02-26 08:36:13.169 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-02-26 08:36:13.204 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-02-26 08:36:13.290 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-02-26 08:36:13.306 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-02-26 08:36:13.312 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 4.545 seconds (process running for 5.14)
-2026-02-26 08:36:13.363 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:44.132 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27 09:09:44.386 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-27 09:09:45.132 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-27 09:09:45.144 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
+2026-02-27 09:09:45.259 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 34 mappings in 'requestMappingHandlerMapping'
+2026-02-27 09:09:45.351 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
+2026-02-27 09:09:45.457 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-27 09:09:45.491 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-27 09:09:45.608 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-27 09:09:45.625 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-27 09:09:45.633 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 5.962 seconds (process running for 6.442)
+2026-02-27 09:09:45.691 [main] DEBUG org.hibernate.SQL - 
     select
         count(*) 
     from
         admin_member am1_0
-2026-02-26 08:36:13.469 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:45.820 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         admin_member
         (admin_role, auth_name, created_at, user_id, user_nm, user_pwd, updated_at) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.558 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:45.913 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         admin_member
         (admin_role, auth_name, created_at, user_id, user_nm, user_pwd, updated_at) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.635 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:45.984 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         admin_member
         (admin_role, auth_name, created_at, user_id, user_nm, user_pwd, updated_at) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.641 [main] INFO  c.f.backend.cmm.init.AdminMemberInit - [Init] AdminMember 초기 데이터 생성 완료 - 3건
-2026-02-26 08:36:13.642 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:45.988 [main] INFO  c.f.backend.cmm.init.AdminMemberInit - [Init] AdminMember 초기 데이터 생성 완료 - 3건
+2026-02-27 09:09:45.990 [main] DEBUG org.hibernate.SQL - 
     select
         count(*) 
     from
         member u1_0
-2026-02-26 08:36:13.708 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.068 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         member
         (auth_name, created_at, updated_at, user_age, user_id, user_nm, user_pwd) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.777 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.151 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         member
         (auth_name, created_at, updated_at, user_age, user_id, user_nm, user_pwd) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.845 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.221 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         member
         (auth_name, created_at, updated_at, user_age, user_id, user_nm, user_pwd) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.849 [main] INFO  c.fasthub.backend.cmm.init.UserInit - [Init] User 초기 데이터 생성 완료 - 3건
-2026-02-26 08:36:13.851 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.276 [main] INFO  c.fasthub.backend.cmm.init.UserInit - [Init] User 초기 데이터 생성 완료 - 3건
+2026-02-27 09:09:46.279 [main] DEBUG org.hibernate.SQL - 
     select
         count(*) 
     from
         brand b1_0
-2026-02-26 08:36:13.855 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.284 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         brand
         (brand_dc, brand_location, brand_nm, brand_num) 
     values
         (?, ?, ?, ?)
-2026-02-26 08:36:13.859 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.304 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         brand
         (brand_dc, brand_location, brand_nm, brand_num) 
     values
         (?, ?, ?, ?)
-2026-02-26 08:36:13.864 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.312 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         brand
         (brand_dc, brand_location, brand_nm, brand_num) 
     values
         (?, ?, ?, ?)
-2026-02-26 08:36:13.867 [main] INFO  c.fasthub.backend.cmm.init.BrandInit - [Init] Brand 초기 데이터 생성 완료 - 3건
-2026-02-26 08:36:13.868 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.318 [main] INFO  c.fasthub.backend.cmm.init.BrandInit - [Init] Brand 초기 데이터 생성 완료 - 3건
+2026-02-27 09:09:46.320 [main] DEBUG org.hibernate.SQL - 
     select
         count(*) 
     from
         product p1_0
-2026-02-26 08:36:13.879 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.338 [main] DEBUG org.hibernate.SQL - 
     select
         b1_0.id,
         b1_0.brand_dc,
@@ -437,48 +666,48 @@
         b1_0.brand_num 
     from
         brand b1_0
-2026-02-26 08:36:13.894 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.363 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         product
         (brand_id, category, product_code, product_nm, product_price, product_quantity) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.899 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.372 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         product
         (brand_id, category, product_code, product_nm, product_price, product_quantity) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.904 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.379 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         product
         (brand_id, category, product_code, product_nm, product_price, product_quantity) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.907 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.386 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         product
         (brand_id, category, product_code, product_nm, product_price, product_quantity) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.912 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.390 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         product
         (brand_id, category, product_code, product_nm, product_price, product_quantity) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.915 [main] INFO  c.f.backend.cmm.init.ProductInit - [Init] Product 초기 데이터 생성 완료 - 5건
-2026-02-26 08:36:13.917 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.394 [main] INFO  c.f.backend.cmm.init.ProductInit - [Init] Product 초기 데이터 생성 완료 - 5건
+2026-02-27 09:09:46.396 [main] DEBUG org.hibernate.SQL - 
     select
         count(*) 
     from
         orders o1_0
-2026-02-26 08:36:13.921 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.401 [main] DEBUG org.hibernate.SQL - 
     select
         u1_0.id,
         u1_0.auth_name,
@@ -490,7 +719,7 @@
         u1_0.user_pwd 
     from
         member u1_0
-2026-02-26 08:36:13.934 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.415 [main] DEBUG org.hibernate.SQL - 
     select
         p1_0.id,
         p1_0.brand_id,
@@ -509,41 +738,41 @@
     left join
         product_img i1_0 
             on p1_0.id=i1_0.product_id
-2026-02-26 08:36:13.945 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.427 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         orders
         (order_date, product_id, quantity, recipient_name, recipient_phone, shipping_address, status, total_price, user_id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.950 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.431 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         orders
         (order_date, product_id, quantity, recipient_name, recipient_phone, shipping_address, status, total_price, user_id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.954 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.436 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         orders
         (order_date, product_id, quantity, recipient_name, recipient_phone, shipping_address, status, total_price, user_id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.958 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.440 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         orders
         (order_date, product_id, quantity, recipient_name, recipient_phone, shipping_address, status, total_price, user_id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2026-02-26 08:36:13.961 [main] INFO  c.fasthub.backend.cmm.init.OrderInit - [Init] Order 초기 데이터 생성 완료 - 4건
-2026-02-26 08:36:13.963 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.444 [main] INFO  c.fasthub.backend.cmm.init.OrderInit - [Init] Order 초기 데이터 생성 완료 - 4건
+2026-02-27 09:09:46.446 [main] DEBUG org.hibernate.SQL - 
     select
         count(*) 
     from
         post p1_0
-2026-02-26 08:36:13.965 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.448 [main] DEBUG org.hibernate.SQL - 
     select
         u1_0.id,
         u1_0.auth_name,
@@ -555,396 +784,95 @@
         u1_0.user_pwd 
     from
         member u1_0
-2026-02-26 08:36:13.969 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.450 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         post
         (content, created_at, title, updated_at, user_id) 
     values
         (?, ?, ?, ?, ?)
-2026-02-26 08:36:13.974 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.455 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         post
         (content, created_at, title, updated_at, user_id) 
     values
         (?, ?, ?, ?, ?)
-2026-02-26 08:36:13.980 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.458 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         post
         (content, created_at, title, updated_at, user_id) 
     values
         (?, ?, ?, ?, ?)
-2026-02-26 08:36:13.985 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.463 [main] DEBUG org.hibernate.SQL - 
     insert 
     into
         post
         (content, created_at, title, updated_at, user_id) 
     values
         (?, ?, ?, ?, ?)
-2026-02-26 08:36:13.989 [main] INFO  c.fasthub.backend.cmm.init.PostInit - [Init] Post 초기 데이터 생성 완료 - 4건
-2026-02-26 09:05:42.624 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-02-26 09:05:42.624 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-02-26 09:05:42.624 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
-2026-02-26 09:05:42.624 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
-2026-02-26 09:05:42.624 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
-2026-02-26 09:05:42.626 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@79860b25
-2026-02-26 09:05:42.626 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@5c176a0f
-2026-02-26 09:05:42.626 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2026-02-26 09:05:42.626 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
-2026-02-26 09:05:42.665 [http-nio-8080-exec-1] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
-2026-02-26 09:05:43.003 [http-nio-8080-exec-2] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
-2026-02-26 09:05:55.157 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-02-26 10:15:48.858 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2026-02-26 10:15:48.912 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 238160 (C:\jungseok\개인자료\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\개인자료\Outfit-Archive-Back)
-2026-02-26 10:15:48.913 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
-2026-02-26 10:15:49.621 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-02-26 10:15:49.720 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 92 ms. Found 9 JPA repository interfaces.
-2026-02-26 10:15:49.954 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
-2026-02-26 10:15:49.978 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
-2026-02-26 10:15:50.200 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-02-26 10:15:50.211 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-02-26 10:15:50.212 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-02-26 10:15:50.212 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
-2026-02-26 10:15:50.268 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-02-26 10:15:50.268 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1312 ms
-2026-02-26 10:15:50.455 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-02-26 10:15:50.514 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2026-02-26 10:15:50.544 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-02-26 10:15:50.792 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-02-26 10:15:50.816 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-02-26 10:15:51.118 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@186dcb05
-2026-02-26 10:15:51.119 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-02-26 10:15:51.179 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-02-26 10:15:51.192 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 8.0.40
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-02-26 10:15:52.107 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-02-26 10:15:52.238 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 10:15:52.510 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-02-26 10:15:53.020 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-02-26 10:15:53.035 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
-2026-02-26 10:15:53.166 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 27 mappings in 'requestMappingHandlerMapping'
-2026-02-26 10:15:53.244 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
-2026-02-26 10:15:53.353 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-02-26 10:15:53.397 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-02-26 10:15:53.493 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-02-26 10:15:53.498 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
-2026-02-26 10:15:53.499 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 10:15:53.501 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-02-26 10:15:53.507 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-02-26 10:15:53.515 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2026-02-26 10:15:53.531 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-Web server failed to start. Port 8080 was already in use.
-
-Action:
-
-Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
-
-2026-02-26 10:16:05.296 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2026-02-26 10:16:05.334 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 232812 (C:\jungseok\개인자료\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\개인자료\Outfit-Archive-Back)
-2026-02-26 10:16:05.336 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
-2026-02-26 10:16:05.950 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-02-26 10:16:06.053 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 95 ms. Found 9 JPA repository interfaces.
-2026-02-26 10:16:06.297 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
-2026-02-26 10:16:06.313 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
-2026-02-26 10:16:06.495 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-02-26 10:16:06.504 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-02-26 10:16:06.506 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-02-26 10:16:06.506 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
-2026-02-26 10:16:06.561 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-02-26 10:16:06.561 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1193 ms
-2026-02-26 10:16:06.692 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-02-26 10:16:06.736 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2026-02-26 10:16:06.763 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-02-26 10:16:06.959 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-02-26 10:16:06.985 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-02-26 10:16:07.175 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3c6fb501
-2026-02-26 10:16:07.176 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-02-26 10:16:07.214 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-02-26 10:16:07.227 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 8.0.40
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-02-26 10:16:08.023 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-02-26 10:16:08.112 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 10:16:08.339 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-02-26 10:16:08.812 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-02-26 10:16:08.830 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
-2026-02-26 10:16:08.936 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 27 mappings in 'requestMappingHandlerMapping'
-2026-02-26 10:16:09.008 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
-2026-02-26 10:16:09.134 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-02-26 10:16:09.167 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-02-26 10:16:09.252 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-02-26 10:16:09.268 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-02-26 10:16:09.275 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 4.381 seconds (process running for 4.815)
-2026-02-26 10:16:09.331 [main] DEBUG org.hibernate.SQL - 
+2026-02-27 09:09:46.466 [main] INFO  c.fasthub.backend.cmm.init.PostInit - [Init] Post 초기 데이터 생성 완료 - 4건
+2026-02-27 09:10:04.179 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-27 09:10:04.179 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-27 09:10:04.179 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2026-02-27 09:10:04.179 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2026-02-27 09:10:04.179 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2026-02-27 09:10:04.180 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@7066b8e6
+2026-02-27 09:10:04.180 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@3bd05779
+2026-02-27 09:10:04.180 [http-nio-8080-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-02-27 09:10:04.180 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-02-27 09:10:04.224 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/admin/auth/login", parameters={}
+2026-02-27 09:10:04.226 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.auth.controller.AdminAuthController#adminLogin(AdminLoginDto)
+2026-02-27 09:10:04.274 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AdminLoginDto(memberId=wjdtjr9401@naver.com, memberPwd=kil79518@)]
+2026-02-27 09:10:04.311 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
     select
-        count(*) 
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
     from
-        admin_member am1_0
-2026-02-26 10:16:09.350 [main] DEBUG org.hibernate.SQL - 
+        admin_member am1_0 
+    where
+        am1_0.user_id=?
+2026-02-27 09:10:04.393 [http-nio-8080-exec-1] INFO  c.f.b.a.a.service.AdminAuthService - admin login success : wjdtjr9401@naver.com
+2026-02-27 09:10:04.409 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:10:04.410 [http-nio-8080-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.fasthub.backend.admin.auth.dto.AdminLoginResponseDto@4589af8d]
+2026-02-27 09:10:04.419 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:10:04.433 [http-nio-8080-exec-3] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:10:04.433 [http-nio-8080-exec-4] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:16:34.692 [http-nio-8080-exec-9] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:16:35.544 [http-nio-8080-exec-10] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:16:36.219 [http-nio-8080-exec-7] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:16:37.128 [http-nio-8080-exec-1] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:16:37.135 [http-nio-8080-exec-2] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:20:01.850 [http-nio-8080-exec-6] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:20:02.419 [http-nio-8080-exec-5] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:33:18.973 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - POST "/api/admin/auth/login", parameters={}
+2026-02-27 09:33:18.975 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fasthub.backend.admin.auth.controller.AdminAuthController#adminLogin(AdminLoginDto)
+2026-02-27 09:33:19.007 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [AdminLoginDto(memberId=wjdtjr9401@naver.com, memberPwd=kil79518@)]
+2026-02-27 09:33:19.064 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
     select
-        count(*) 
+        am1_0.id,
+        am1_0.admin_role,
+        am1_0.auth_name,
+        am1_0.created_at,
+        am1_0.user_id,
+        am1_0.user_nm,
+        am1_0.user_pwd,
+        am1_0.updated_at 
     from
-        member u1_0
-2026-02-26 10:16:09.353 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        brand b1_0
-2026-02-26 10:16:09.365 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        product p1_0
-2026-02-26 10:16:09.370 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        orders o1_0
-2026-02-26 10:16:09.374 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        post p1_0
-2026-02-26 10:38:12.022 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-02-26 10:38:12.205 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-02-26 10:38:12.225 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 10:38:12.251 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-02-26 10:38:12.288 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-02-26 14:35:14.316 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2026-02-26 14:35:14.409 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 272192 (C:\jungseok\project\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\project\Outfit-Archive-Back)
-2026-02-26 14:35:14.411 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
-2026-02-26 14:35:15.544 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-02-26 14:35:15.677 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 123 ms. Found 11 JPA repository interfaces.
-2026-02-26 14:35:16.040 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
-2026-02-26 14:35:16.071 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
-2026-02-26 14:35:16.490 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-02-26 14:35:16.514 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-02-26 14:35:16.518 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-02-26 14:35:16.519 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
-2026-02-26 14:35:16.617 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-02-26 14:35:16.617 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2156 ms
-2026-02-26 14:35:16.864 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-02-26 14:35:16.969 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2026-02-26 14:35:17.017 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-02-26 14:35:17.434 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-02-26 14:35:17.476 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-02-26 14:35:18.374 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@12200670
-2026-02-26 14:35:18.378 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-02-26 14:35:18.630 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-02-26 14:35:18.712 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 8.0.40
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-02-26 14:35:22.151 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-02-26 14:35:22.420 [main] DEBUG org.hibernate.SQL - 
-    create table post_comment (
-        id bigint not null auto_increment,
-        content TEXT not null,
-        created_at datetime(6),
-        updated_at datetime(6),
-        post_id bigint not null,
-        user_id bigint not null,
-        primary key (id)
-    ) engine=InnoDB
-2026-02-26 14:35:22.612 [main] DEBUG org.hibernate.SQL - 
-    create table post_like (
-        id bigint not null auto_increment,
-        post_id bigint not null,
-        user_id bigint not null,
-        primary key (id)
-    ) engine=InnoDB
-2026-02-26 14:35:22.675 [main] DEBUG org.hibernate.SQL - 
-    alter table post_like 
-       drop index UKpmmko3h7yonaqhy5gxvnmdeue
-2026-02-26 14:35:22.701 [main] DEBUG org.hibernate.SQL - 
-    alter table post_like 
-       add constraint UKpmmko3h7yonaqhy5gxvnmdeue unique (user_id, post_id)
-2026-02-26 14:35:22.806 [main] DEBUG org.hibernate.SQL - 
-    alter table post_comment 
-       add constraint FKna4y825fdc5hw8aow65ijexm0 
-       foreign key (post_id) 
-       references post (id)
-2026-02-26 14:35:22.922 [main] DEBUG org.hibernate.SQL - 
-    alter table post_comment 
-       add constraint FK7o80d5m7ktgwn1vr4iiqxib08 
-       foreign key (user_id) 
-       references member (id)
-2026-02-26 14:35:23.086 [main] DEBUG org.hibernate.SQL - 
-    alter table post_like 
-       add constraint FKj7iy0k7n3d0vkh8o7ibjna884 
-       foreign key (post_id) 
-       references post (id)
-2026-02-26 14:35:23.356 [main] DEBUG org.hibernate.SQL - 
-    alter table post_like 
-       add constraint FK74w2g4a04irqq2w0lgquc1r8 
-       foreign key (user_id) 
-       references member (id)
-2026-02-26 14:35:23.606 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 14:35:24.757 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-02-26 14:35:25.923 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-02-26 14:35:25.941 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
-2026-02-26 14:35:26.151 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 33 mappings in 'requestMappingHandlerMapping'
-2026-02-26 14:35:26.308 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
-2026-02-26 14:35:26.512 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-02-26 14:35:26.604 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-02-26 14:35:26.828 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-02-26 14:35:26.856 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-02-26 14:35:26.867 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 13.384 seconds (process running for 14.538)
-2026-02-26 14:35:26.960 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        admin_member am1_0
-2026-02-26 14:35:26.985 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        member u1_0
-2026-02-26 14:35:26.990 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        brand b1_0
-2026-02-26 14:35:26.998 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        product p1_0
-2026-02-26 14:35:27.002 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        orders o1_0
-2026-02-26 14:35:27.012 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        post p1_0
-2026-02-26 14:36:00.088 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-02-26 14:36:00.088 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-02-26 14:36:00.088 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
-2026-02-26 14:36:00.088 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
-2026-02-26 14:36:00.088 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
-2026-02-26 14:36:00.089 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@5f25b34d
-2026-02-26 14:36:00.089 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@109fa8e2
-2026-02-26 14:36:00.089 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2026-02-26 14:36:00.089 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2026-02-26 14:36:00.136 [http-nio-8080-exec-1] DEBUG o.s.web.cors.DefaultCorsProcessor - Reject: 'http://localhost:3000' origin is not allowed
-2026-02-26 14:36:12.321 [http-nio-8080-exec-2] DEBUG o.s.web.cors.DefaultCorsProcessor - Reject: 'http://localhost:3000' origin is not allowed
-2026-02-26 14:36:54.779 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-02-26 14:36:54.930 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-02-26 14:36:54.935 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 14:36:54.936 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-02-26 14:36:54.944 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2026-02-26 14:36:59.443 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2026-02-26 14:36:59.493 [main] INFO  c.fasthub.backend.BackendApplication - Starting BackendApplication using Java 17.0.13 with PID 272492 (C:\jungseok\project\Outfit-Archive-Back\build\classes\java\main started by USER in C:\jungseok\project\Outfit-Archive-Back)
-2026-02-26 14:36:59.494 [main] INFO  c.fasthub.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
-2026-02-26 14:37:00.202 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-02-26 14:37:00.307 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 96 ms. Found 11 JPA repository interfaces.
-2026-02-26 14:37:00.566 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$SpringCGLIB$$0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [annotationActionEndpointMapping] is declared through a non-static factory method on that class; consider declaring it as static instead.
-2026-02-26 14:37:00.587 [main] INFO  o.s.w.s.a.s.AnnotationActionEndpointMapping - Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
-2026-02-26 14:37:00.797 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2026-02-26 14:37:00.811 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2026-02-26 14:37:00.814 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2026-02-26 14:37:00.814 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.34]
-2026-02-26 14:37:00.872 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2026-02-26 14:37:00.872 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1342 ms
-2026-02-26 14:37:01.060 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-02-26 14:37:01.160 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.4.Final
-2026-02-26 14:37:01.197 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2026-02-26 14:37:01.541 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-02-26 14:37:01.570 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2026-02-26 14:37:01.811 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4cf01c41
-2026-02-26 14:37:01.812 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2026-02-26 14:37:01.855 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-02-26 14:37:01.876 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 8.0.40
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2026-02-26 14:37:02.916 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-02-26 14:37:03.026 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 14:37:03.362 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-02-26 14:37:04.017 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-02-26 14:37:04.035 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailService
-2026-02-26 14:37:04.200 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 33 mappings in 'requestMappingHandlerMapping'
-2026-02-26 14:37:04.303 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**, /img/**, /static/**] in 'resourceHandlerMapping'
-2026-02-26 14:37:04.464 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-02-26 14:37:04.535 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
-2026-02-26 14:37:04.673 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2026-02-26 14:37:04.697 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2026-02-26 14:37:04.707 [main] INFO  c.fasthub.backend.BackendApplication - Started BackendApplication in 6.141 seconds (process running for 6.932)
-2026-02-26 14:37:04.784 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        admin_member am1_0
-2026-02-26 14:37:04.805 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        member u1_0
-2026-02-26 14:37:04.808 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        brand b1_0
-2026-02-26 14:37:04.814 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        product p1_0
-2026-02-26 14:37:04.817 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        orders o1_0
-2026-02-26 14:37:04.821 [main] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        post p1_0
-2026-02-26 14:37:11.260 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-02-26 14:37:11.261 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-02-26 14:37:11.261 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
-2026-02-26 14:37:11.261 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
-2026-02-26 14:37:11.261 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
-2026-02-26 14:37:11.262 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@1c6d908b
-2026-02-26 14:37:11.262 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@753aacf
-2026-02-26 14:37:11.263 [http-nio-8080-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
-2026-02-26 14:37:11.263 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
-2026-02-26 14:37:11.310 [http-nio-8080-exec-1] DEBUG o.s.web.cors.DefaultCorsProcessor - Reject: 'http://localhost:3000' origin is not allowed
-2026-02-26 14:38:40.546 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-02-26 14:38:40.678 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-02-26 14:38:40.681 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-02-26 14:38:40.683 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-02-26 14:38:40.688 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+        admin_member am1_0 
+    where
+        am1_0.user_id=?
+2026-02-27 09:33:19.168 [http-nio-8080-exec-10] INFO  c.f.b.a.a.service.AdminAuthService - admin login success : wjdtjr9401@naver.com
+2026-02-27 09:33:19.172 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2026-02-27 09:33:19.173 [http-nio-8080-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [com.fasthub.backend.admin.auth.dto.AdminLoginResponseDto@6b3edacc]
+2026-02-27 09:33:19.176 [http-nio-8080-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2026-02-27 09:33:19.187 [http-nio-8080-exec-7] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:33:19.190 [http-nio-8080-exec-1] INFO  c.f.b.cmm.config.SecurityConfig - 로그인 안함!
+2026-02-27 09:33:25.065 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete

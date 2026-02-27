@@ -1,5 +1,6 @@
 package com.fasthub.backend.cmm.jwt;
 
+import com.fasthub.backend.admin.auth.entity.AdminMember;
 import com.fasthub.backend.user.usr.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -45,6 +46,36 @@ public class JwtGenerator {
                 .compact();
     }
 
+    // Admin Access Token 생성
+    // subject: adminMember.getId() (DB PK) → 이후 관리자 조회 시 사용
+    // claims: userType="ADMIN", memberId, memberNm → Admin/User 분기 판단에 사용
+    public String generateAccessToken(final Key ACCESS_SECRET, final long ACCESS_EXPIRATION, AdminMember adminMember) {
+        Long now = System.currentTimeMillis();
+        return Jwts.builder()
+                .setHeader(createHeader())
+                .setClaims(createAdminClaims(adminMember))
+                .setSubject(String.valueOf(adminMember.getId()))
+                .setExpiration(new Date(now + ACCESS_EXPIRATION))
+                .signWith(ACCESS_SECRET, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    // Admin Refresh Token 생성
+    // subject: adminMember.getMemberId() (String 아이디) → 만료 시 DB 관리자 조회에 사용
+    // claims: userType="ADMIN" → Refresh 재발급 시 Admin/User 분기 판단에 사용
+    public String generateRefreshToken(final Key REFRESH_SECRET, final long REFRESH_EXPIRATION, AdminMember adminMember) {
+        Long now = System.currentTimeMillis();
+        Claims claims = Jwts.claims();
+        claims.put("userType", "ADMIN");
+        return Jwts.builder()
+                .setHeader(createHeader())
+                .setClaims(claims)
+                .setSubject(adminMember.getMemberId())
+                .setExpiration(new Date(now + REFRESH_EXPIRATION))
+                .signWith(REFRESH_SECRET, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
     // JWT Header 생성
     // typ: 토큰 타입 (JWT)
     // alg: 서명 알고리즘 (HS256 = HMAC-SHA256)
@@ -62,6 +93,16 @@ public class JwtGenerator {
         Claims claims = Jwts.claims();
         claims.put("userId", user.getUserId());
         claims.put("userNm", user.getUserNm());
+        return claims;
+    }
+
+    // Admin JWT Payload(Claims) 생성
+    // userType="ADMIN" claim 포함 → JwtService.getAuthentication()에서 Admin/User 분기 판단에 사용
+    private Map<String, Object> createAdminClaims(AdminMember adminMember) {
+        Claims claims = Jwts.claims();
+        claims.put("userType", "ADMIN");
+        claims.put("memberId", adminMember.getMemberId());
+        claims.put("memberNm", adminMember.getMemberNm());
         return claims;
     }
 }

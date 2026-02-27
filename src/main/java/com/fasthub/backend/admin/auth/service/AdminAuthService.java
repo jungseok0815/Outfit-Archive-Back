@@ -7,6 +7,8 @@ import com.fasthub.backend.admin.auth.entity.AdminMember;
 import com.fasthub.backend.admin.auth.repository.AdminMemberRepository;
 import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
+import com.fasthub.backend.cmm.jwt.JwtService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,14 +23,18 @@ public class AdminAuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final AdminMemberRepository adminMemberRepository;
+    private final JwtService jwtService;
 
-    public AdminLoginResponseDto adminLogin(AdminLoginDto adminLoginDto) {
+    public AdminLoginResponseDto adminLogin(AdminLoginDto adminLoginDto, HttpServletResponse response) {
         AdminMember adminMember = adminMemberRepository.findByMemberId(adminLoginDto.getMemberId())
                 .orElseThrow(() -> new BusinessException(ADMIN_ID_NOT_FOUND));
 
         if (!passwordEncoder.matches(adminLoginDto.getMemberPwd(), adminMember.getMemberPwd())) {
             throw new BusinessException(ADMIN_PWD_NOT_MATCH);
         }
+
+        jwtService.generateAccessToken(response, adminMember);
+        jwtService.generateRefreshToken(response, adminMember);
 
         log.info("admin login success : {}", adminMember.getMemberId());
         return new AdminLoginResponseDto(adminMember);
