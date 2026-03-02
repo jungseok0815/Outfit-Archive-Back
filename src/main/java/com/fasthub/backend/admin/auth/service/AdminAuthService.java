@@ -23,6 +23,7 @@ public class AdminAuthService {
     private final AdminMemberRepository adminMemberRepository;
 
     public AdminLoginResponseDto adminLogin(AdminLoginDto adminLoginDto) {
+        log.info("admin Id : {}" , adminLoginDto.getMemberId());
         AdminMember adminMember = adminMemberRepository.findByMemberId(adminLoginDto.getMemberId())
                 .orElseThrow(() -> new BusinessException(ADMIN_ID_NOT_FOUND));
 

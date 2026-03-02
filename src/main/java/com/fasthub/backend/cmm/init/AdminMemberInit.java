@@ -51,6 +51,14 @@ public class AdminMemberInit implements ApplicationRunner {
                 .adminRole(AdminRole.PARTNER)
                 .build());
 
-        log.info("[Init] AdminMember 초기 데이터 생성 완료 - 3건");
+        adminMemberRepository.save(AdminMember.builder()
+                .memberId("wjdtjr9401@naver.com")
+                .memberPwd(passwordEncoder.encode("kil79518@"))
+                .memberNm("관리자")
+                .authName(UserRole.ROLE_ADMIN)
+                .adminRole(AdminRole.ADMIN)
+                .build());
+
+        log.info("[Init] AdminMember 초기 데이터 생성 완료 - 4건");
     }
 }
