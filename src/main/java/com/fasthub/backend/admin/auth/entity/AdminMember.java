@@ -1,7 +1,7 @@
 package com.fasthub.backend.admin.auth.entity;
 
+import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.cmm.enums.AdminRole;
-import com.fasthub.backend.cmm.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -30,10 +30,6 @@ public class AdminMember {
     @Column(nullable = false, name = "USER_PWD")
     private String memberPwd;
 
-    @Column(nullable = false, name = "AUTH_NAME")
-    @Enumerated(EnumType.STRING)
-    private UserRole authName;
-
     @Column(nullable = false, name = "ADMIN_ROLE")
     @Enumerated(EnumType.STRING)
     private AdminRole adminRole;
@@ -44,4 +40,8 @@ public class AdminMember {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 }

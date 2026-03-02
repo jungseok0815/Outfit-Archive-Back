@@ -1,5 +1,7 @@
 package com.fasthub.backend.cmm.jwt;
 
+import com.fasthub.backend.admin.auth.entity.AdminMember;
+import com.fasthub.backend.admin.auth.service.AdminCustomUserDetailService;
 import com.fasthub.backend.cmm.enums.JwtRule;
 import com.fasthub.backend.cmm.enums.TokenStatus;
 import com.fasthub.backend.cmm.enums.UserRole;
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +43,7 @@ public class JwtService {
     private final JwtGenerator jwtGenerator;
     private final JwtUtil jwtUtil;
     private final CustomUserDetailService customUserDetailService;
+    private final AdminCustomUserDetailService adminCustomUserDetailService;
 
     // application.yml의 시크릿키 문자열을 HMAC-SHA256용 Key 객체로 변환해서 보관
     private final Key ACCESS_SECRET_KEY;
@@ -51,6 +55,7 @@ public class JwtService {
 
     public JwtService(
             CustomUserDetailService customUserDetailService,
+            AdminCustomUserDetailService adminCustomUserDetailService,
             JwtGenerator jwtGenerator,
             JwtUtil jwtUtil,
             AuthRepository authRepository,
@@ -63,6 +68,7 @@ public class JwtService {
 
     ) {
         this.customUserDetailService = customUserDetailService;
+        this.adminCustomUserDetailService = adminCustomUserDetailService;
         this.jwtGenerator = jwtGenerator;
         this.jwtUtil = jwtUtil;
         this.authRepository = authRepository;
@@ -96,6 +102,23 @@ public class JwtService {
     @Transactional
     public String generateRefreshToken(HttpServletResponse response, User requestUser) {
         String refreshToken = jwtGenerator.generateRefreshToken(REFRESH_SECRET_KEY, REFRESH_EXPIRATION, requestUser);
+        ResponseCookie cookie = setTokenToCookie(REFRESH_PREFIX.getValue(), refreshToken, REFRESH_EXPIRATION / 1000);
+        response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
+        return refreshToken;
+    }
+
+    // Admin Access Token 생성 후 HttpOnly 쿠키에 담아 응답 헤더에 추가
+    public String generateAccessToken(HttpServletResponse response, AdminMember adminMember) {
+        String accessToken = jwtGenerator.generateAccessToken(ACCESS_SECRET_KEY, ACCESS_EXPIRATION, adminMember);
+        ResponseCookie cookie = setTokenToCookie(ACCESS_PREFIX.getValue(), accessToken, ACCESS_EXPIRATION / 1000);
+        response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
+        return accessToken;
+    }
+
+    // Admin Refresh Token 생성 후 HttpOnly 쿠키에 담아 응답 헤더에 추가
+    @Transactional
+    public String generateRefreshToken(HttpServletResponse response, AdminMember adminMember) {
+        String refreshToken = jwtGenerator.generateRefreshToken(REFRESH_SECRET_KEY, REFRESH_EXPIRATION, adminMember);
         ResponseCookie cookie = setTokenToCookie(REFRESH_PREFIX.getValue(), refreshToken, REFRESH_EXPIRATION / 1000);
         response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
         return refreshToken;
@@ -141,10 +164,46 @@ public class JwtService {
 
     // Access Token에서 유저 정보를 꺼내 Spring Security 인증 객체 생성
     // → SecurityContextHolder에 등록되어 이후 컨트롤러에서 @AuthenticationPrincipal로 유저 정보 사용 가능
-    // DB 조회가 발생하는 이유: 토큰 검증이 아닌 최신 유저 정보(권한 등) 반영을 위해
+    // userType="ADMIN" claim이 있으면 AdminCustomUserDetailService, 없으면 일반 유저 서비스로 분기
     public Authentication getAuthentication(String token) {
-        CustomUserDetails principal = customUserDetailService.loadUserByUsername(getUserPk(token, ACCESS_SECRET_KEY));
+        String pk = getUserPk(token, ACCESS_SECRET_KEY);
+        String userType = getUserTypeFromToken(token, ACCESS_SECRET_KEY);
+        UserDetails principal;
+        if ("ADMIN".equals(userType)) {
+            principal = adminCustomUserDetailService.loadUserByUsername(pk);
+        } else {
+            principal = customUserDetailService.loadUserByUsername(pk);
+        }
         return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
+    }
+
+    // Refresh Token의 userType claim 추출 → JwtAuthFilter에서 Admin/User Refresh 재발급 분기에 사용
+    // 파싱 실패 시 null 반환 (예외 전파 없음)
+    public String getUserTypeFromRefresh(String refreshToken) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(REFRESH_SECRET_KEY)
+                    .build()
+                    .parseClaimsJws(refreshToken)
+                    .getBody()
+                    .get("userType", String.class);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // 토큰 Claims에서 userType claim 추출 (private 헬퍼)
+    private String getUserTypeFromToken(String token, Key key) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .get("userType", String.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     // 토큰의 Payload에서 subject(유저 DB PK) 추출

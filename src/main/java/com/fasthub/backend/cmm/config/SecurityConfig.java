@@ -1,5 +1,6 @@
 package com.fasthub.backend.cmm.config;
 
+import com.fasthub.backend.admin.auth.repository.AdminMemberRepository;
 import com.fasthub.backend.cmm.jwt.JwtAuthFilter;
 import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,12 +22,14 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 @Slf4j
 public class SecurityConfig {
 
     private final JwtService jwtService;
     private final AuthRepository authRepository;
+    private final AdminMemberRepository adminMemberRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -33,7 +37,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**","/js/**", "/img/**").permitAll()
                         .requestMatchers("/api/usr/login", "/api/usr/join", "/api/img/**").permitAll()
-                        .requestMatchers("/api/admin/auth/login", "/api/admin/auth/join").permitAll()
+                        .requestMatchers("/api/admin/auth/login").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/usr/**").hasRole("USER")
                         .anyRequest().authenticated()
@@ -70,7 +74,7 @@ public class SecurityConfig {
                         };
                     c.configurationSource(source);
                 })
-                .addFilterBefore(new JwtAuthFilter(jwtService,authRepository), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthFilter(jwtService, authRepository, adminMemberRepository), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
                 http.formLogin(AbstractHttpConfigurer::disable);
                 http.httpBasic(AbstractHttpConfigurer::disable);

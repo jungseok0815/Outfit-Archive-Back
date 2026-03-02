@@ -19,19 +19,6 @@ public class WebConfig implements WebMvcConfigurer {
     private String productFilePath;
 
     /**
-     * cors설정
-     * @param registry
-     */
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
-                .allowedMethods("GET","POST","PUT","DELETE")
-                .allowCredentials(true)
-                .maxAge(3000);
-    }
-
-    /**
      * 정적 파일 캐싱 + 파일 경로 등록
      * @param registry
      */

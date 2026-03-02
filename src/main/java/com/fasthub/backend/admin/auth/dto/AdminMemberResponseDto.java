@@ -5,7 +5,7 @@ import com.fasthub.backend.cmm.enums.AdminRole;
 import lombok.Getter;
 
 @Getter
-public class AdminLoginResponseDto {
+public class AdminMemberResponseDto {
     private final Long id;
     private final String memberId;
     private final String memberNm;
@@ -13,7 +13,7 @@ public class AdminLoginResponseDto {
     private final String brandNm;
     private final AdminRole adminRole;
 
-    public AdminLoginResponseDto(AdminMember adminMember) {
+    public AdminMemberResponseDto(AdminMember adminMember) {
         this.id = adminMember.getId();
         this.memberId = adminMember.getMemberId();
         this.memberNm = adminMember.getMemberNm();
