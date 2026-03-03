@@ -35,6 +35,7 @@ public class AdminAuthService {
 
     @Transactional
     public AdminLoginResponseDto adminLogin(AdminLoginDto adminLoginDto, HttpServletResponse response) {
+
         AdminMember adminMember = adminMemberRepository.findByMemberId(adminLoginDto.getMemberId())
                 .orElseThrow(() -> new BusinessException(ADMIN_ID_NOT_FOUND));
 
@@ -45,6 +46,7 @@ public class AdminAuthService {
         jwtService.generateRefreshToken(response, adminMember);
 
         log.info("admin login success : {}", adminMember.getMemberId());
+        log.info("admin login success : {}", adminMember.getAdminRole());
         return new AdminLoginResponseDto(adminMember);
     }
 

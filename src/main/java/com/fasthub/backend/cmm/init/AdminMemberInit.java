@@ -3,6 +3,7 @@ package com.fasthub.backend.cmm.init;
 import com.fasthub.backend.admin.auth.entity.AdminMember;
 import com.fasthub.backend.admin.auth.repository.AdminMemberRepository;
 import com.fasthub.backend.cmm.enums.AdminRole;
+import com.fasthub.backend.cmm.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -44,7 +45,6 @@ public class AdminMemberInit implements ApplicationRunner {
                 .memberId("partner1")
                 .memberPwd(passwordEncoder.encode("admin1234"))
                 .memberNm("협력업체A")
-
                 .adminRole(AdminRole.PARTNER)
                 .build());
 
@@ -52,7 +52,6 @@ public class AdminMemberInit implements ApplicationRunner {
                 .memberId("wjdtjr9401@naver.com")
                 .memberPwd(passwordEncoder.encode("kil79518@"))
                 .memberNm("관리자")
-                .authName(UserRole.ROLE_ADMIN)
                 .adminRole(AdminRole.ADMIN)
                 .build());
 

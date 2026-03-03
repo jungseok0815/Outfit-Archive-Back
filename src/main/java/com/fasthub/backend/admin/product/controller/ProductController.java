@@ -32,6 +32,7 @@ public class ProductController {
     public ResponseEntity<Page<ResponseProductDto>> list(
             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
             @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        log.info("come in product list~~");
         return ResponseEntity.ok(productService.list(keyword, pageable));
     }
 
