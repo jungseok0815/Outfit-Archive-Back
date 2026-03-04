@@ -23,6 +23,14 @@ public class PostController {
 
     private final PostService postService;
 
+    // 로그인 사용자의 게시글 목록 조회
+    @GetMapping("/my")
+    public ResponseEntity<Page<ResponsePostDto>> myList(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PageableDefault(size = 10) Pageable pageable) {
+        return ResponseEntity.ok(postService.myList(userDetails.getId(), pageable));
+    }
+
     // 게시글 목록 조회
     @GetMapping("/list")
     public ResponseEntity<Page<ResponsePostDto>> list(

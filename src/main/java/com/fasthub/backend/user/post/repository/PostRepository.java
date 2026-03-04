@@ -11,4 +11,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p WHERE :keyword IS NULL OR :keyword = '' OR p.title LIKE %:keyword%")
     Page<Post> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
+
+    Page<Post> findByUser_Id(Long userId, Pageable pageable);
 }

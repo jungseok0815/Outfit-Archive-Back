@@ -34,6 +34,16 @@ public class PostService {
     private final AuthRepository authRepository;
     private final ImgHandler imgHandler;
 
+    // 로그인 사용자의 게시글 목록 조회
+    public Page<ResponsePostDto> myList(Long userId, Pageable pageable) {
+        return postRepository.findByUser_Id(userId, pageable)
+                .map(post -> new ResponsePostDto(
+                        post,
+                        postLikeRepository.countByPostId(post.getId()),
+                        postCommentRepository.countByPostId(post.getId())
+                ));
+    }
+
     // 게시글 목록 조회 (제목으로 키워드 검색, 페이징)
     public Page<ResponsePostDto> list(String keyword, Pageable pageable) {
         return postRepository.findAllByKeyword(keyword, pageable)
