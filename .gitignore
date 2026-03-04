@@ -42,6 +42,7 @@ src/main/resources/application-*.yml
 
 ### Logs ###
 logs/
+*.log
 
 ### Gradle ###
 gradle.properties

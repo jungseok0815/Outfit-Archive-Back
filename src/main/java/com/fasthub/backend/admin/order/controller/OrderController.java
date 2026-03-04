@@ -23,8 +23,9 @@ public class OrderController {
     @GetMapping("/list")
     public ResponseEntity<Page<ResponseOrderDto>> list(
             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+            @RequestParam(value = "brandId", required = false) Long brandId,
             @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok(orderService.list(keyword, pageable));
+        return ResponseEntity.ok(orderService.list(keyword, brandId, pageable));
     }
 
     @PutMapping("/status")
