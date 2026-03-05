@@ -18,4 +18,6 @@ public class InsertPostDto {
     private String content;
 
     private List<MultipartFile> images;
+
+    private List<Long> productIds;
 }

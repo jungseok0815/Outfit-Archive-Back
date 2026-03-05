@@ -1,5 +1,7 @@
 package com.fasthub.backend.user.post.dto;
 
+import com.fasthub.backend.admin.product.entity.Product;
+import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.user.post.entity.Post;
 import com.fasthub.backend.user.post.entity.PostImg;
 import lombok.Getter;
@@ -17,6 +19,7 @@ public class ResponsePostDto {
     private String content;
     private String userNm;
     private List<PostImg> images;
+    private List<ProductSummary> products;
     private long likeCount;
     private long commentCount;
     private LocalDateTime createdAt;
@@ -28,9 +31,29 @@ public class ResponsePostDto {
         this.content = post.getContent();
         this.userNm = post.getUser().getUserNm();
         this.images = post.getImages();
+        this.products = post.getPostProducts().stream()
+                .map(pp -> new ProductSummary(pp.getProduct()))
+                .toList();
         this.likeCount = likeCount;
         this.commentCount = commentCount;
         this.createdAt = post.getCreatedAt();
         this.updatedAt = post.getUpdatedAt();
+    }
+
+    @Getter
+    public static class ProductSummary {
+        private final Long id;
+        private final String productNm;
+        private final int productPrice;
+        private final ProductCategory category;
+        private final String brandNm;
+
+        public ProductSummary(Product product) {
+            this.id = product.getId();
+            this.productNm = product.getProductNm();
+            this.productPrice = product.getProductPrice();
+            this.category = product.getCategory();
+            this.brandNm = product.getBrand().getBrandNm();
+        }
     }
 }

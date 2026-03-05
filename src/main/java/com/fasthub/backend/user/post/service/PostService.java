@@ -1,5 +1,7 @@
 package com.fasthub.backend.user.post.service;
 
+import com.fasthub.backend.admin.product.entity.Product;
+import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
@@ -8,9 +10,11 @@ import com.fasthub.backend.user.post.dto.ResponsePostDto;
 import com.fasthub.backend.user.post.dto.UpdatePostDto;
 import com.fasthub.backend.user.post.entity.Post;
 import com.fasthub.backend.user.post.entity.PostImg;
+import com.fasthub.backend.user.post.entity.PostProduct;
 import com.fasthub.backend.user.post.repository.PostCommentRepository;
 import com.fasthub.backend.user.post.repository.PostImgRepository;
 import com.fasthub.backend.user.post.repository.PostLikeRepository;
+import com.fasthub.backend.user.post.repository.PostProductRepository;
 import com.fasthub.backend.user.post.repository.PostRepository;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
@@ -29,9 +33,11 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PostImgRepository postImgRepository;
+    private final PostProductRepository postProductRepository;
     private final PostLikeRepository postLikeRepository;
     private final PostCommentRepository postCommentRepository;
     private final AuthRepository authRepository;
+    private final ProductRepository productRepository;
     private final ImgHandler imgHandler;
 
     // 로그인 사용자의 게시글 목록 조회
@@ -70,6 +76,14 @@ public class PostService {
             dto.getImages().forEach(image ->
                     postImgRepository.save(imgHandler.createImg(image, PostImg::new, post)));
         }
+
+        if (dto.getProductIds() != null) {
+            dto.getProductIds().forEach(productId -> {
+                Product product = productRepository.findById(productId)
+                        .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_SELECT));
+                postProductRepository.save(PostProduct.builder().post(post).product(product).build());
+            });
+        }
     }
 
     // 게시글 수정
@@ -84,6 +98,15 @@ public class PostService {
             postImgRepository.deleteByPost(post);
             dto.getImages().forEach(image ->
                     postImgRepository.save(imgHandler.createImg(image, PostImg::new, post)));
+        }
+
+        if (dto.getProductIds() != null) {
+            postProductRepository.deleteByPost(post);
+            dto.getProductIds().forEach(productId -> {
+                Product product = productRepository.findById(productId)
+                        .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_SELECT));
+                postProductRepository.save(PostProduct.builder().post(post).product(product).build());
+            });
         }
     }
 
