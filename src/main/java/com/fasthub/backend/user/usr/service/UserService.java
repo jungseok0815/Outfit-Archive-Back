@@ -3,8 +3,11 @@ package com.fasthub.backend.user.usr.service;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.enums.UserRole;
+import com.fasthub.backend.cmm.img.ImgHandler;
 import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.user.usr.dto.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.multipart.MultipartFile;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.mapper.AuthMapper;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
@@ -27,6 +30,10 @@ public class UserService {
     private final AuthMapper authMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final ImgHandler imgHandler;
+
+    @Value("${file.path-product}")
+    private String filePath;
 
     public LoginResponseDto login(LoginDto loginDto, HttpServletResponse response) {
         return authRepository.findByUserId(loginDto.getUserId())
@@ -65,6 +72,21 @@ public class UserService {
         User user = authRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
         user.update(dto.getUserNm(), dto.getUserAge(), passwordEncoder.encode(dto.getUserPwd()), dto.getBio());
+    }
+
+    // 프로필 이미지 수정
+    @Transactional
+    public String updateProfileImg(Long id, MultipartFile file) {
+        User user = authRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+        try {
+            String fileName = imgHandler.getFileName(file.getOriginalFilename());
+            imgHandler.getFilePath(file, filePath, fileName);
+            user.updateProfileImg(fileName);
+            return fileName;
+        } catch (Exception e) {
+            throw new RuntimeException("프로필 이미지 저장 실패", e);
+        }
     }
 
     // 유저 삭제

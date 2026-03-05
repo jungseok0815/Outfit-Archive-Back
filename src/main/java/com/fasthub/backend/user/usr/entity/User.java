@@ -41,6 +41,9 @@ public class User  {
     @Column(name = "BIO", length = 200)
     private String bio;
 
+    @Column(name = "PROFILE_IMG_NM")
+    private String profileImgNm;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -53,6 +56,10 @@ public class User  {
         this.userAge = userAge;
         this.userPwd = encodedPwd;
         this.bio = bio;
+    }
+
+    public void updateProfileImg(String profileImgNm) {
+        this.profileImgNm = profileImgNm;
     }
 }
 

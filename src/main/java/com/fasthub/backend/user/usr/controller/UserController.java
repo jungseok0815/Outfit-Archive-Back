@@ -14,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
 import java.util.Objects;
 
 @Slf4j
@@ -60,6 +62,15 @@ public class UserController {
     public ResponseEntity<Void> update(@RequestBody @Valid UpdateUserDto updateUserDto) {
         userService.update(updateUserDto);
         return ResponseEntity.ok().build();
+    }
+
+    // 프로필 이미지 수정
+    @PutMapping("/profile-img")
+    public ResponseEntity<Map<String, String>> updateProfileImg(
+            @RequestParam Long id,
+            @RequestParam MultipartFile profileImg) {
+        String fileName = userService.updateProfileImg(id, profileImg);
+        return ResponseEntity.ok(Map.of("profileImgNm", fileName));
     }
 
     // 유저 삭제
