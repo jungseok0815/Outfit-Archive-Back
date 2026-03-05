@@ -14,6 +14,7 @@ public class ResponseUserDto {
     private String userNm;
     private int userAge;
     private UserRole authName;
+    private String bio;
 
     public ResponseUserDto(User user) {
         this.id = user.getId();
@@ -21,5 +22,6 @@ public class ResponseUserDto {
         this.userNm = user.getUserNm();
         this.userAge = user.getUserAge();
         this.authName = user.getAuthName();
+        this.bio = user.getBio();
     }
 }

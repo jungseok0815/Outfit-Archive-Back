@@ -17,6 +17,7 @@ public class UserDto  {
     private String userNm;
     private int userAge;
     private UserRole authName;
+    private String bio;
 
     public UserDto(User user){
         this.id = user.getId();
@@ -25,5 +26,6 @@ public class UserDto  {
         this.userNm = user.getUserNm();
         this.userAge = user.getUserAge();
         this.authName = user.getAuthName();
+        this.bio = user.getBio();
     }
 }

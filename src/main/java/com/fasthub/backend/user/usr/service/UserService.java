@@ -64,7 +64,7 @@ public class UserService {
     public void update(UpdateUserDto dto) {
         User user = authRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-        user.update(dto.getUserNm(), dto.getUserAge(), passwordEncoder.encode(dto.getUserPwd()));
+        user.update(dto.getUserNm(), dto.getUserAge(), passwordEncoder.encode(dto.getUserPwd()), dto.getBio());
     }
 
     // 유저 삭제

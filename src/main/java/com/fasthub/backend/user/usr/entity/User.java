@@ -38,6 +38,9 @@ public class User  {
     @Enumerated(EnumType.STRING)
     private UserRole authName;
 
+    @Column(name = "BIO", length = 200)
+    private String bio;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -45,10 +48,11 @@ public class User  {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public void update(String userNm, int userAge, String encodedPwd) {
+    public void update(String userNm, int userAge, String encodedPwd, String bio) {
         this.userNm = userNm;
         this.userAge = userAge;
         this.userPwd = encodedPwd;
+        this.bio = bio;
     }
 }
 
