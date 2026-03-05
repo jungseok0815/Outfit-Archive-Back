@@ -57,8 +57,13 @@ public enum ErrorCode {
     //JWT
     NOT_REFRESG_KEY(HttpStatus.NOT_FOUND, "CP003", "리프레쉬 키 해석 실패"),
 
+    //FOLLOW
+    FOLLOW_SELF(HttpStatus.BAD_REQUEST, "F001", "자기 자신을 팔로우할 수 없습니다."),
+    FOLLOW_ALREADY_EXISTS(HttpStatus.CONFLICT, "F002", "이미 팔로우한 사용자입니다."),
+    FOLLOW_NOT_FOUND(HttpStatus.NOT_FOUND, "F003", "팔로우 관계를 찾을 수 없습니다."),
+
     //file
-    FAIR_CREATE_FILE(HttpStatus.NOT_FOUND,"F001","이미지 파일 생성 실패");
+    FAIR_CREATE_FILE(HttpStatus.NOT_FOUND,"F004","이미지 파일 생성 실패");
 
     private final HttpStatus status;
     private final String code;
