@@ -1,6 +1,7 @@
 package com.fasthub.backend.user.post.entity;
 
 import com.fasthub.backend.cmm.img.BaseImg;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class PostImg implements BaseImg<Post> {
     @Column(nullable = false)
     private String imgOriginNm;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
