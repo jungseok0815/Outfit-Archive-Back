@@ -46,6 +46,9 @@ public class Product {
     @JsonIgnore
     private List<ProductImg> images = new ArrayList<>();
 
+    @Column(name = "EMBEDDING", columnDefinition = "TEXT")
+    private String embedding;
+
     public void update(String productNm, String productCode, int productPrice, int productQuantity, ProductCategory category, Brand brand) {
         this.productNm = productNm;
         this.productCode = productCode;
@@ -53,6 +56,10 @@ public class Product {
         this.productQuantity = productQuantity;
         this.category = category;
         this.brand = brand;
+    }
+
+    public void updateEmbedding(String embedding) {
+        this.embedding = embedding;
     }
 }
 
