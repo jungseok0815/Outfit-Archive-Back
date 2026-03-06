@@ -1,0 +1,15 @@
+package com.fasthub.backend.user.order.dto;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+public class InsertUserOrderDto {
+    private Long productId;
+    private int quantity;
+    private String shippingAddress;
+    private String recipientName;
+    private String recipientPhone;
+    private int usePoint;   // 사용할 포인트 (0이면 미사용)
+}
