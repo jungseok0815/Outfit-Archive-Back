@@ -54,6 +54,9 @@ public class Order {
     @Column(nullable = false)
     private String recipientPhone;
 
+    @Column(nullable = false)
+    private int usedPoint;
+
     public void updateStatus(OrderStatus status) {
         this.status = status;
     }

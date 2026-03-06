@@ -3,6 +3,7 @@ package com.fasthub.backend.admin.order.repository;
 import com.fasthub.backend.admin.order.entity.Order;
 import com.fasthub.backend.admin.order.dto.RevenueByBrandDto;
 import com.fasthub.backend.user.recommend.strategy.PopularProductProjection;
+import com.fasthub.backend.user.usr.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,4 +35,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     // 특정 유저의 주문 수 (Cold Start 판별용)
     long countByUserId(Long userId);
+
+    // 사용자 본인 주문 목록
+    Page<Order> findByUser(User user, Pageable pageable);
 }

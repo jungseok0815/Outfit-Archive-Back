@@ -63,7 +63,15 @@ public enum ErrorCode {
     FOLLOW_NOT_FOUND(HttpStatus.NOT_FOUND, "F003", "팔로우 관계를 찾을 수 없습니다."),
 
     //file
-    FAIR_CREATE_FILE(HttpStatus.NOT_FOUND,"F004","이미지 파일 생성 실패");
+    FAIR_CREATE_FILE(HttpStatus.NOT_FOUND,"F004","이미지 파일 생성 실패"),
+
+    //POINT
+    POINT_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "PT001", "포인트 잔액이 부족합니다."),
+    POINT_INVALID_AMOUNT(HttpStatus.BAD_REQUEST, "PT002", "유효하지 않은 포인트 금액입니다."),
+
+    //ORDER (user)
+    ORDER_PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "O004", "주문할 상품을 찾을 수 없습니다."),
+    ORDER_QUANTITY_EXCEEDED(HttpStatus.BAD_REQUEST, "O005", "주문 수량이 재고를 초과합니다.");
 
     private final HttpStatus status;
     private final String code;

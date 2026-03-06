@@ -44,12 +44,27 @@ public class User  {
     @Column(name = "PROFILE_IMG_NM")
     private String profileImgNm;
 
+    @Column(name = "POINT", nullable = false)
+    @Builder.Default
+    private int point = 0;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    public void earnPoint(int amount) {
+        this.point += amount;
+    }
+
+    public void usePoint(int amount) {
+        if (this.point < amount) {
+            throw new IllegalArgumentException("포인트 잔액이 부족합니다.");
+        }
+        this.point -= amount;
+    }
 
     public void update(String userNm, int userAge, String encodedPwd, String bio) {
         this.userNm = userNm;
