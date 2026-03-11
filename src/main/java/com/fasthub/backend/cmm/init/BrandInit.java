@@ -44,6 +44,13 @@ public class BrandInit implements ApplicationRunner {
                 .brandDc("스페인 패스트패션 브랜드")
                 .build());
 
-        log.info("[Init] Brand 초기 데이터 생성 완료 - 3건");
+        brandRepository.save(Brand.builder()
+                .brandNm("COS")
+                .brandNum("02-4567-8901")
+                .brandLocation("서울 성수동")
+                .brandDc("스웨덴 미니멀 프리미엄 패션 브랜드")
+                .build());
+
+        log.info("[Init] Brand 초기 데이터 생성 완료 - 4건");
     }
 }

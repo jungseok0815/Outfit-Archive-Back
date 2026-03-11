@@ -49,6 +49,12 @@ public class UserController {
         return ResponseEntity.status(401).build();
     }
 
+    // 프로필 조회
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<ProfileDto> getProfile(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getProfile(id));
+    }
+
     // 유저 목록 조회 (keyword: 이름 검색, pageable: 페이징)
     @GetMapping("/list")
     public ResponseEntity<Page<ResponseUserDto>> list(

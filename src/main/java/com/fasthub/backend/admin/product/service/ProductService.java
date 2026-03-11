@@ -14,7 +14,7 @@ import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
-import com.fasthub.backend.user.similar.service.EmbeddingService;
+// import com.fasthub.backend.user.similar.service.EmbeddingService;  // AI 임베딩 기능 비활성화
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -32,7 +32,7 @@ public class ProductService {
     private final BrandRepository brandRepository;
     private final ImgHandler imgHandler;
     private final ProductMapper productMapper;
-    private final EmbeddingService embeddingService;
+    // private final EmbeddingService embeddingService;  // AI 임베딩 기능 비활성화
 
     @Transactional
     public void insert(InsertProductDto productDto) {
@@ -51,8 +51,8 @@ public class ProductService {
                     productImgRepository.save(imgHandler.createImg(item, ProductImg::new, product)));
         }
 
-        // 비동기로 이미지 임베딩 생성 (트랜잭션 커밋 후 백그라운드 실행)
-        embeddingService.generateAndSave(product.getId());
+        // 비동기로 이미지 임베딩 생성 (트랜잭션 커밋 후 백그라운드 실행) - AI 임베딩 기능 비활성화
+        // embeddingService.generateAndSave(product.getId());
     }
 
     public Page<ResponseProductDto> list(String keyword, Pageable pageable) {

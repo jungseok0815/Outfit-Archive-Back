@@ -29,6 +29,7 @@ public enum ErrorCode {
     BOARD_FAIL_INSERT(HttpStatus.INTERNAL_SERVER_ERROR,"B002","게시물 등록 실패"),
     BOARD_FAIL_UPDATE(HttpStatus.INTERNAL_SERVER_ERROR,"B003","게시물 업데이트 실패"),
     BOARD_FAIL_DELETE(HttpStatus.INTERNAL_SERVER_ERROR,"B004","게시물 삭제 실패"),
+    BOARD_UNAUTHORIZED(HttpStatus.FORBIDDEN, "B005", "게시글 수정/삭제 권한이 없습니다."),
 
     //BRAND
     BRAND_NOT_FOUND(HttpStatus.NOT_FOUND, "BR001", "브랜드를 찾을 수 없습니다."),

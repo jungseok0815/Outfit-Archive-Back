@@ -5,6 +5,8 @@ import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.img.ImgHandler;
 import com.fasthub.backend.cmm.jwt.JwtService;
+import com.fasthub.backend.user.follow.repository.FollowRepository;
+import com.fasthub.backend.user.post.repository.PostRepository;
 import com.fasthub.backend.user.usr.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +33,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final ImgHandler imgHandler;
+    private final FollowRepository followRepository;
+    private final PostRepository postRepository;
 
     @Value("${file.path-product}")
     private String filePath;
@@ -58,6 +62,16 @@ public class UserService {
         joinDto.setAuthName(UserRole.ROLE_USER.getRole(joinDto.getAuthName()));
         User userEntity = authMapper.userDtoToUserEntity(joinDto);
         return authMapper.userEntityToUserDto(authRepository.save(userEntity));
+    }
+
+    // 프로필 조회
+    public ProfileDto getProfile(Long userId) {
+        User user = authRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+        long followerCount = followRepository.countByFollowingId(userId);
+        long followingCount = followRepository.countByFollowerId(userId);
+        long postCount = postRepository.countByUser_Id(userId);
+        return ProfileDto.of(user, followerCount, followingCount, postCount);
     }
 
     // 유저 목록 조회 (이름으로 키워드 검색, 페이징)

@@ -13,4 +13,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
     Page<Post> findByUser_Id(Long userId, Pageable pageable);
+
+    long countByUser_Id(Long userId);
 }

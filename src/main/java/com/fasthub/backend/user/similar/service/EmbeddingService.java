@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+// @Service  // AI 임베딩 기능 비활성화
 @RequiredArgsConstructor
 @Slf4j
 public class EmbeddingService {

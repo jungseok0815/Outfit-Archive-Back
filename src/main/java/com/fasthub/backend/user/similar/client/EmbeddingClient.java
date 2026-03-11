@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.file.Paths;
 
-@Component
+// @Component  // AI 임베딩 기능 비활성화
 @Slf4j
 public class EmbeddingClient {
 

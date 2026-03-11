@@ -13,6 +13,8 @@ public interface BrandMapper {
     @Mapping(target = "images", ignore = true)
     Brand insertDtoToBrand(InsertBrandDto insertBrandDto);
 
-    @Mapping(target = "brandImg", expression = "java(brand.getImages().isEmpty() ? null : brand.getImages().get(0))")
+    @Mapping(target = "imgPath", expression = "java(brand.getImages().isEmpty() ? null : brand.getImages().get(0).getImgPath())")
+    @Mapping(target = "imgNm", expression = "java(brand.getImages().isEmpty() ? null : brand.getImages().get(0).getImgNm())")
+    @Mapping(target = "imgOriginNm", expression = "java(brand.getImages().isEmpty() ? null : brand.getImages().get(0).getImgOriginNm())")
     ResponseBrandDto brandToResponseDto(Brand brand);
 }

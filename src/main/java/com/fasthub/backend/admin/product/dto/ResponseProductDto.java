@@ -1,7 +1,6 @@
 package com.fasthub.backend.admin.product.dto;
 
 import com.fasthub.backend.cmm.enums.ProductCategory;
-import com.fasthub.backend.admin.product.entity.ProductImg;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -22,5 +21,5 @@ public class ResponseProductDto {
     private Long brandId;
     private String brandNm;
     private ProductCategory category;
-    private List<ProductImg> images;
+    private List<ResponseProductImgDto> images;
 }

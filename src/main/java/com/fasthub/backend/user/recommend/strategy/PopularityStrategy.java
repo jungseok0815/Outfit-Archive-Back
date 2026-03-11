@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component
+// @Component  // AI 추천 기능 비활성화
 @RequiredArgsConstructor
 @Slf4j
 public class PopularityStrategy {

@@ -50,15 +50,19 @@ public class PostController {
 
     // 게시글 수정
     @PutMapping("/update")
-    public ResponseEntity<Void> update(@ModelAttribute @Valid UpdatePostDto dto) {
-        postService.update(dto);
+    public ResponseEntity<Void> update(
+            @ModelAttribute @Valid UpdatePostDto dto,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        postService.update(dto, userDetails.getId());
         return ResponseEntity.ok().build();
     }
 
     // 게시글 삭제
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> delete(@RequestParam Long id) {
-        postService.delete(id);
+    public ResponseEntity<Void> delete(
+            @RequestParam Long id,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        postService.delete(id, userDetails.getId());
         return ResponseEntity.noContent().build();
     }
 }

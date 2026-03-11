@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/usr/recommend")
+// @RestController  // AI 추천 기능 비활성화
+// @RequestMapping("/api/usr/recommend")
 @RequiredArgsConstructor
 @Slf4j
 public class RecommendController {

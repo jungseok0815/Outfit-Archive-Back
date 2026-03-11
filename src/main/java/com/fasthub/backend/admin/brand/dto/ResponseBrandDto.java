@@ -1,6 +1,5 @@
 package com.fasthub.backend.admin.brand.dto;
 
-import com.fasthub.backend.admin.brand.entity.BrandImg;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -16,5 +15,7 @@ public class ResponseBrandDto {
     private String brandNum;
     private String brandLocation;
     private String brandDc;
-    private BrandImg brandImg;
+    private String imgPath;
+    private String imgNm;
+    private String imgOriginNm;
 }

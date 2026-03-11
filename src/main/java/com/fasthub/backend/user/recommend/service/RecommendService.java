@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+// @Service  // AI 추천 기능 비활성화
 @RequiredArgsConstructor
 @Slf4j
-@Transactional(readOnly = true)
+// @Transactional(readOnly = true)
 public class RecommendService {
 
     private final OrderRepository orderRepository;

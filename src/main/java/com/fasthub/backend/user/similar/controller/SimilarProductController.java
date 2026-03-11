@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/usr/product")
+// @RestController  // AI 유사 상품 기능 비활성화
+// @RequestMapping("/api/usr/product")
 @RequiredArgsConstructor
 public class SimilarProductController {
 

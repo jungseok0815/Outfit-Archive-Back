@@ -9,6 +9,7 @@ import com.fasthub.backend.user.follow.repository.FollowRepository;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @Transactional(readOnly = true)
 public class FollowService {
 
@@ -54,15 +56,23 @@ public class FollowService {
     }
 
     public List<FollowUserDto> getFollowers(Long userId) {
-        return followRepository.findFollowersByUserId(userId).stream()
-                .map(u -> new FollowUserDto(u.getId(), u.getUserId(), u.getUserNm()))
+        List<FollowUserDto> followers = followRepository.findFollowersByUserId(userId).stream()
+                .map(u -> new FollowUserDto(u.getId(), u.getUserId(), u.getUserNm(), u.getProfileImgNm()))
                 .toList();
+        log.info("[Follow] 팔로워 목록 userId={}, count={}", userId, followers.size());
+        followers.forEach(f -> log.info("[Follow] 팔로워 id={}, userId={}, userNm={}, profileImgNm={}",
+                f.getId(), f.getUserId(), f.getUserNm(), f.getProfileImgNm()));
+        return followers;
     }
 
     public List<FollowUserDto> getFollowings(Long userId) {
-        return followRepository.findFollowingsByUserId(userId).stream()
-                .map(u -> new FollowUserDto(u.getId(), u.getUserId(), u.getUserNm()))
+        List<FollowUserDto> followings = followRepository.findFollowingsByUserId(userId).stream()
+                .map(u -> new FollowUserDto(u.getId(), u.getUserId(), u.getUserNm(), u.getProfileImgNm()))
                 .toList();
+        log.info("[Follow] 팔로잉 목록 userId={}, count={}", userId, followings.size());
+        followings.forEach(f -> log.info("[Follow] 팔로잉 id={}, userId={}, userNm={}, profileImgNm={}",
+                f.getId(), f.getUserId(), f.getUserNm(), f.getProfileImgNm()));
+        return followings;
     }
 
     public FollowCountDto getFollowCount(Long userId) {

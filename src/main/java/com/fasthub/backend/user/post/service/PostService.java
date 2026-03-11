@@ -88,9 +88,13 @@ public class PostService {
 
     // 게시글 수정
     @Transactional
-    public void update(UpdatePostDto dto) {
+    public void update(UpdatePostDto dto, Long userId) {
         Post post = postRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.BOARD_FAIL_SELECT));
+
+        if (!post.getUser().getId().equals(userId)) {
+            throw new BusinessException(ErrorCode.BOARD_UNAUTHORIZED);
+        }
 
         post.update(dto.getTitle(), dto.getContent());
 
@@ -112,9 +116,14 @@ public class PostService {
 
     // 게시글 삭제
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id, Long userId) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BOARD_FAIL_SELECT));
+
+        if (!post.getUser().getId().equals(userId)) {
+            throw new BusinessException(ErrorCode.BOARD_UNAUTHORIZED);
+        }
+
         postRepository.delete(post);
     }
 }

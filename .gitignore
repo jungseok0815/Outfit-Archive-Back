@@ -46,3 +46,6 @@ logs/
 
 ### Gradle ###
 gradle.properties
+
+### Image Storage ###
+C:/jungseok/img/

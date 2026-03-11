@@ -9,4 +9,5 @@ public class FollowUserDto {
     private Long id;
     private String userId;
     private String userNm;
+    private String profileImgNm;
 }
