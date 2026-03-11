@@ -42,6 +42,7 @@ public class JwtService {
     private final AuthRepository authRepository;
     private final JwtGenerator jwtGenerator;
     private final JwtUtil jwtUtil;
+    private final RefreshTokenService refreshTokenService;
     private final CustomUserDetailService customUserDetailService;
     private final AdminCustomUserDetailService adminCustomUserDetailService;
 
@@ -59,6 +60,7 @@ public class JwtService {
             JwtGenerator jwtGenerator,
             JwtUtil jwtUtil,
             AuthRepository authRepository,
+            RefreshTokenService refreshTokenService,
             PasswordEncoder passwordEncoder,
             @Value("${jwt.access-secret}") String ACCESS_SECRET_KEY,
             @Value("${jwt.refresh-secret}") String REFRESH_SECRET_KEY,
@@ -72,6 +74,7 @@ public class JwtService {
         this.jwtGenerator = jwtGenerator;
         this.jwtUtil = jwtUtil;
         this.authRepository = authRepository;
+        this.refreshTokenService = refreshTokenService;
         // yml의 문자열 시크릿키 → Base64 인코딩 → HMAC Key 객체로 변환
         this.ACCESS_SECRET_KEY = jwtUtil.getSigningKey(ACCESS_SECRET_KEY);
         this.REFRESH_SECRET_KEY = jwtUtil.getSigningKey(REFRESH_SECRET_KEY);
@@ -99,9 +102,11 @@ public class JwtService {
 
     // Refresh Token 생성 후 HttpOnly 쿠키에 담아 응답 헤더에 추가
     // Access Token 만료 시 재발급에 사용 (Refresh Token Rotation: 재발급 시 Refresh Token도 교체)
+    // Redis에 저장 → 재발급 시 이전 토큰 덮어쓰기로 자동 무효화
     @Transactional
     public String generateRefreshToken(HttpServletResponse response, User requestUser) {
         String refreshToken = jwtGenerator.generateRefreshToken(REFRESH_SECRET_KEY, REFRESH_EXPIRATION, requestUser);
+        refreshTokenService.save(requestUser.getUserId(), refreshToken, REFRESH_EXPIRATION);
         ResponseCookie cookie = setTokenToCookie(REFRESH_PREFIX.getValue(), refreshToken, REFRESH_EXPIRATION / 1000);
         response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
         return refreshToken;
@@ -116,9 +121,11 @@ public class JwtService {
     }
 
     // Admin Refresh Token 생성 후 HttpOnly 쿠키에 담아 응답 헤더에 추가
+    // Redis에 저장 → 재발급 시 이전 토큰 덮어쓰기로 자동 무효화
     @Transactional
     public String generateRefreshToken(HttpServletResponse response, AdminMember adminMember) {
         String refreshToken = jwtGenerator.generateRefreshToken(REFRESH_SECRET_KEY, REFRESH_EXPIRATION, adminMember);
+        refreshTokenService.save(adminMember.getMemberId(), refreshToken, REFRESH_EXPIRATION);
         ResponseCookie cookie = setTokenToCookie(REFRESH_PREFIX.getValue(), refreshToken, REFRESH_EXPIRATION / 1000);
         response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
         return refreshToken;
@@ -153,13 +160,13 @@ public class JwtService {
     }
 
     // Refresh Token 유효성 검사
-    // REFRESH_SECRET_KEY로 서명 검증 → Access Token과 별도 키를 사용해 독립적으로 검증
+    // 1) REFRESH_SECRET_KEY로 서명 검증
+    // 2) Redis 저장값과 일치 여부 확인 → 탈취 토큰 또는 이전 토큰 사용 차단
     public boolean validateRefreshToken(String token, String identifier) {
         log.info("refreshToken identifier : " + identifier);
         boolean isRefreshValid = jwtUtil.getTokenStatus(token, REFRESH_SECRET_KEY) == TokenStatus.AUTHENTICATED;
-//        Token storedToken = tokenRepository.findByIdentifier(identifier);
-//        boolean isTokenMatched = storedToken.getToken().equals(token);
-        return isRefreshValid;
+        boolean isTokenMatched = refreshTokenService.isValid(identifier, token);
+        return isRefreshValid && isTokenMatched;
     }
 
     // Access Token에서 유저 정보를 꺼내 Spring Security 인증 객체 생성

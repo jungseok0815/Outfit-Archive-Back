@@ -102,7 +102,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     // Access Token이 만료됐을 때 재발급 대상 유저를 특정하기 위해 사용
     private User findUserByRefreshToken(String refreshToken){
         String identifier = jwtService.getIdentifierFromRefresh(refreshToken);
-        return authRepository.findByUserId(identifier).get();
+        return authRepository.findByUserId(identifier)
+                .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저가 없습니다."));
     }
 
     // Refresh Token의 subject(memberId 문자열)로 DB에서 관리자를 조회
