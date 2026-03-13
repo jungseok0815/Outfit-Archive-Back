@@ -72,7 +72,14 @@ public enum ErrorCode {
 
     //ORDER (user)
     ORDER_PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "O004", "주문할 상품을 찾을 수 없습니다."),
-    ORDER_QUANTITY_EXCEEDED(HttpStatus.BAD_REQUEST, "O005", "주문 수량이 재고를 초과합니다.");
+    ORDER_QUANTITY_EXCEEDED(HttpStatus.BAD_REQUEST, "O005", "주문 수량이 재고를 초과합니다."),
+
+    //REVIEW
+    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "R001", "후기를 찾을 수 없습니다."),
+    REVIEW_ALREADY_EXISTS(HttpStatus.CONFLICT, "R002", "이미 후기를 작성한 주문입니다."),
+    REVIEW_UNAUTHORIZED(HttpStatus.FORBIDDEN, "R003", "후기 작성/수정/삭제 권한이 없습니다."),
+    REVIEW_ORDER_NOT_DELIVERED(HttpStatus.BAD_REQUEST, "R004", "배송 완료된 주문에만 후기를 작성할 수 있습니다."),
+    REVIEW_INVALID_RATING(HttpStatus.BAD_REQUEST, "R005", "평점은 1 ~ 5 사이여야 합니다.");
 
     private final HttpStatus status;
     private final String code;
