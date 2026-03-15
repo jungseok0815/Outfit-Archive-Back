@@ -91,42 +91,38 @@ public class JwtService {
         }
     }
 
-    // Access Token 생성 후 HttpOnly 쿠키에 담아 응답 헤더에 추가
-    // 로그인 성공 시 호출 → 클라이언트가 이후 요청마다 쿠키를 자동으로 전송
+    // User Access Token 생성 후 userAccess 쿠키에 담아 응답 헤더에 추가
     public String generateAccessToken(HttpServletResponse response, User requestUser) {
         String accessToken = jwtGenerator.generateAccessToken(ACCESS_SECRET_KEY, ACCESS_EXPIRATION, requestUser);
-        ResponseCookie cookie = setTokenToCookie(ACCESS_PREFIX.getValue(), accessToken, ACCESS_EXPIRATION / 1000);
+        ResponseCookie cookie = setTokenToCookie(USER_ACCESS_PREFIX.getValue(), accessToken, ACCESS_EXPIRATION / 1000);
         response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
         return accessToken;
     }
 
-    // Refresh Token 생성 후 HttpOnly 쿠키에 담아 응답 헤더에 추가
-    // Access Token 만료 시 재발급에 사용 (Refresh Token Rotation: 재발급 시 Refresh Token도 교체)
-    // Redis에 저장 → 재발급 시 이전 토큰 덮어쓰기로 자동 무효화
+    // User Refresh Token 생성 후 userRefresh 쿠키에 담아 응답 헤더에 추가
     @Transactional
     public String generateRefreshToken(HttpServletResponse response, User requestUser) {
         String refreshToken = jwtGenerator.generateRefreshToken(REFRESH_SECRET_KEY, REFRESH_EXPIRATION, requestUser);
         refreshTokenService.save(requestUser.getUserId(), refreshToken, REFRESH_EXPIRATION);
-        ResponseCookie cookie = setTokenToCookie(REFRESH_PREFIX.getValue(), refreshToken, REFRESH_EXPIRATION / 1000);
+        ResponseCookie cookie = setTokenToCookie(USER_REFRESH_PREFIX.getValue(), refreshToken, REFRESH_EXPIRATION / 1000);
         response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
         return refreshToken;
     }
 
-    // Admin Access Token 생성 후 HttpOnly 쿠키에 담아 응답 헤더에 추가
+    // Admin Access Token 생성 후 adminAccess 쿠키에 담아 응답 헤더에 추가
     public String generateAccessToken(HttpServletResponse response, AdminMember adminMember) {
         String accessToken = jwtGenerator.generateAccessToken(ACCESS_SECRET_KEY, ACCESS_EXPIRATION, adminMember);
-        ResponseCookie cookie = setTokenToCookie(ACCESS_PREFIX.getValue(), accessToken, ACCESS_EXPIRATION / 1000);
+        ResponseCookie cookie = setTokenToCookie(ADMIN_ACCESS_PREFIX.getValue(), accessToken, ACCESS_EXPIRATION / 1000);
         response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
         return accessToken;
     }
 
-    // Admin Refresh Token 생성 후 HttpOnly 쿠키에 담아 응답 헤더에 추가
-    // Redis에 저장 → 재발급 시 이전 토큰 덮어쓰기로 자동 무효화
+    // Admin Refresh Token 생성 후 adminRefresh 쿠키에 담아 응답 헤더에 추가
     @Transactional
     public String generateRefreshToken(HttpServletResponse response, AdminMember adminMember) {
         String refreshToken = jwtGenerator.generateRefreshToken(REFRESH_SECRET_KEY, REFRESH_EXPIRATION, adminMember);
         refreshTokenService.save(adminMember.getMemberId(), refreshToken, REFRESH_EXPIRATION);
-        ResponseCookie cookie = setTokenToCookie(REFRESH_PREFIX.getValue(), refreshToken, REFRESH_EXPIRATION / 1000);
+        ResponseCookie cookie = setTokenToCookie(ADMIN_REFRESH_PREFIX.getValue(), refreshToken, REFRESH_EXPIRATION / 1000);
         response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
         return refreshToken;
     }

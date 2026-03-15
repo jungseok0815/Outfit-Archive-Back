@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +21,7 @@ import java.io.IOException;
 // JWT 인증 필터
 // OncePerRequestFilter: 같은 요청에서 필터가 중복 실행되지 않도록 보장
 // SecurityConfig에서 UsernamePasswordAuthenticationFilter 앞에 등록
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
@@ -37,20 +39,37 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     // 매 요청마다 실행되는 JWT 검증 로직
-    // 1) 쿠키에서 토큰 추출
+    // 경로(/api/admin/** vs /api/usr/**)에 따라 각각 다른 쿠키(adminAccess/adminRefresh, userAccess/userRefresh)를 읽어 검증
+    // 1) 경로 기반으로 알맞은 쿠키 추출
     // 2) Access Token 유효 → SecurityContext 등록
     // 3) Access Token 만료 → Refresh Token으로 재발급 후 SecurityContext 등록
     // 4) 토큰 없음 → 인증 없이 다음 필터로 통과 (이후 Security 권한 설정에서 차단)
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        // 쿠키에서 access / refresh 토큰 추출
-        String accessToken = jwtService.resolveTokenFromCookie(request, JwtRule.ACCESS_PREFIX);
-        String refreshToken = jwtService.resolveTokenFromCookie(request, JwtRule.REFRESH_PREFIX);
+        // 경로로 Admin/User 구분 → 각각 다른 쿠키 이름에서 토큰 추출
+        String path = request.getServletPath();
+        boolean isAdminPath = path.startsWith("/api/admin/");
+        String tokenType = isAdminPath ? "ADMIN" : "USER";
+
+        String accessToken, refreshToken;
+        if (isAdminPath) {
+            accessToken = jwtService.resolveTokenFromCookie(request, JwtRule.ADMIN_ACCESS_PREFIX);
+            refreshToken = jwtService.resolveTokenFromCookie(request, JwtRule.ADMIN_REFRESH_PREFIX);
+        } else {
+            accessToken = jwtService.resolveTokenFromCookie(request, JwtRule.USER_ACCESS_PREFIX);
+            refreshToken = jwtService.resolveTokenFromCookie(request, JwtRule.USER_REFRESH_PREFIX);
+        }
+
+        log.info("[JWT] {} | path={} | accessToken={} | refreshToken={}",
+                tokenType, path,
+                accessToken != null ? "존재" : "없음",
+                refreshToken != null ? "존재" : "없음");
 
         // 토큰이 둘 다 없으면 인증하지 않고 통과
         // → SecurityConfig의 authorizeHttpRequests에서 인증 여부에 따라 차단 처리
         if (accessToken == null && refreshToken == null){
+            log.info("[JWT] {} | 토큰 없음 → 인증 없이 통과", tokenType);
             SecurityContextHolder.getContext().setAuthentication(null);
             filterChain.doFilter(request,response);
             return;
@@ -59,32 +78,38 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         // Access Token 유효성 검사
         // ACCESS_SECRET_KEY로 서명 검증 → 유효하면 SecurityContext에 인증 등록 후 통과
         if (jwtService.validateAccessToken(accessToken)) {
+            log.info("[JWT] {} | AccessToken 유효 → 인증 등록", tokenType);
             setAuthenticationToContext(accessToken);
             filterChain.doFilter(request, response);
             return;
         }
 
+        log.info("[JWT] {} | AccessToken 만료 → RefreshToken으로 재발급 시도", tokenType);
+
         // Access Token 만료 시 Refresh Token으로 재발급 처리
-        // userType 클레임으로 Admin/User 분기 후 각각 재발급 처리
-        String userType = jwtService.getUserTypeFromRefresh(refreshToken);
-        if ("ADMIN".equals(userType)) {
+        // 경로로 이미 Admin/User를 알고 있으므로 쿠키 이름으로 바로 분기
+        if (isAdminPath) {
             AdminMember adminMember = findAdminByRefreshToken(refreshToken);
             if (jwtService.validateRefreshToken(refreshToken, adminMember.getMemberId())) {
+                log.info("[JWT] ADMIN | RefreshToken 유효 → 토큰 재발급 완료 (memberId={})", adminMember.getMemberId());
                 String reissuedAccessToken = jwtService.generateAccessToken(response, adminMember);
                 jwtService.generateRefreshToken(response, adminMember);
                 setAuthenticationToContext(reissuedAccessToken);
                 filterChain.doFilter(request, response);
                 return;
             }
+            log.warn("[JWT] ADMIN | RefreshToken 검증 실패 (memberId={})", adminMember.getMemberId());
         } else {
             User user = findUserByRefreshToken(refreshToken);
             if (jwtService.validateRefreshToken(refreshToken, user.getUserId())) {
+                log.info("[JWT] USER | RefreshToken 유효 → 토큰 재발급 완료 (userId={})", user.getUserId());
                 String reissuedAccessToken = jwtService.generateAccessToken(response, user);
                 jwtService.generateRefreshToken(response, user);
                 setAuthenticationToContext(reissuedAccessToken);
                 filterChain.doFilter(request, response);
                 return;
             }
+            log.warn("[JWT] USER | RefreshToken 검증 실패 (userId={})", user.getUserId());
         }
 
         filterChain.doFilter(request, response);

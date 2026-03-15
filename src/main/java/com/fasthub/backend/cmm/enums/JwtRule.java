@@ -8,8 +8,10 @@ import lombok.RequiredArgsConstructor;
 public enum JwtRule {
     JWT_ISSUE_HEADER("Set-Cookie"),
     JWT_RESOLVE_HEADER("Cookie"),
-    ACCESS_PREFIX("access"),
-    REFRESH_PREFIX("refresh");
+    USER_ACCESS_PREFIX("userAccess"),
+    USER_REFRESH_PREFIX("userRefresh"),
+    ADMIN_ACCESS_PREFIX("adminAccess"),
+    ADMIN_REFRESH_PREFIX("adminRefresh");
 
     private final String value;
 }

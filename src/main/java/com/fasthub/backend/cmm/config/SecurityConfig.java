@@ -1,6 +1,7 @@
 package com.fasthub.backend.cmm.config;
 
 import com.fasthub.backend.admin.auth.repository.AdminMemberRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import com.fasthub.backend.cmm.jwt.JwtAuthFilter;
 import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
@@ -49,7 +50,7 @@ public class SecurityConfig {
                             (request, response, authException) -> {
                                 // 인증되지 않은 사용자 접근시 401 반환
                                 log.info("로그인 안함!");
-
+                                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                                 response.setContentType("application/json");
                                 response.setCharacterEncoding("UTF-8");
                                 response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"need login.\"}");
@@ -59,6 +60,7 @@ public class SecurityConfig {
                             (request, response, accessDeniedException) -> {
                                 // 권한이 없는 사용자 접근시 403 반환
                                 log.info("권한이 없음!");
+                                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                                 response.setContentType("application/json");
                                 response.setCharacterEncoding("UTF-8");
                                 response.getWriter().write("{\"error\": \"Forbidden\", \"message\": \"not auth.\"}");
