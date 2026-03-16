@@ -73,6 +73,7 @@ public enum ErrorCode {
     //ORDER (user)
     ORDER_PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "O004", "주문할 상품을 찾을 수 없습니다."),
     ORDER_QUANTITY_EXCEEDED(HttpStatus.BAD_REQUEST, "O005", "주문 수량이 재고를 초과합니다."),
+    ORDER_CONCURRENT_FAIL(HttpStatus.CONFLICT, "O006", "현재 주문이 많습니다. 잠시 후 다시 시도해주세요."),
 
     //REVIEW
     REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "R001", "후기를 찾을 수 없습니다."),

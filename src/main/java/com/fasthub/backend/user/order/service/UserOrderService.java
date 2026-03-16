@@ -16,10 +16,14 @@ import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -32,69 +36,90 @@ public class UserOrderService {
     private final ProductRepository productRepository;
     private final AuthRepository authRepository;
     private final PointHistoryRepository pointHistoryRepository;
+    private final RedissonClient redissonClient;
 
     @Transactional
     public ResponseUserOrderDto order(Long userId, InsertUserOrderDto dto) {
-        User user = authRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-        Product product = productRepository.findById(dto.getProductId())
-                .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_PRODUCT_NOT_FOUND));
+        String lockKey = "product:lock:" + dto.getProductId();
+        RLock lock = redissonClient.getLock(lockKey);
 
-        // 재고 확인
-        if (product.getProductQuantity() < dto.getQuantity()) {
-            throw new BusinessException(ErrorCode.ORDER_QUANTITY_EXCEEDED);
-        }
-
-        // 포인트 사용 처리
-        int usePoint = dto.getUsePoint();
-        if (usePoint < 0) {
-            throw new BusinessException(ErrorCode.POINT_INVALID_AMOUNT);
-        }
-        if (usePoint > 0) {
-            if (user.getPoint() < usePoint) {
-                throw new BusinessException(ErrorCode.POINT_NOT_ENOUGH);
+        try {
+            // 최대 5초 대기, 락 획득 후 3초 내 자동 해제
+            boolean isLocked = lock.tryLock(5, 3, TimeUnit.SECONDS);
+            if (!isLocked) {
+                throw new BusinessException(ErrorCode.ORDER_CONCURRENT_FAIL);
             }
-            user.usePoint(usePoint);
+
+            User user = authRepository.findById(userId)
+                    .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+            Product product = productRepository.findById(dto.getProductId())
+                    .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_PRODUCT_NOT_FOUND));
+
+            // 재고 확인 및 차감
+            if (product.getProductQuantity() < dto.getQuantity()) {
+                throw new BusinessException(ErrorCode.ORDER_QUANTITY_EXCEEDED);
+            }
+            product.decreaseQuantity(dto.getQuantity());
+
+            // 포인트 사용 처리
+            int usePoint = dto.getUsePoint();
+            if (usePoint < 0) {
+                throw new BusinessException(ErrorCode.POINT_INVALID_AMOUNT);
+            }
+            if (usePoint > 0) {
+                if (user.getPoint() < usePoint) {
+                    throw new BusinessException(ErrorCode.POINT_NOT_ENOUGH);
+                }
+                user.usePoint(usePoint);
+                pointHistoryRepository.save(PointHistory.builder()
+                        .user(user)
+                        .amount(-usePoint)
+                        .balanceAfter(user.getPoint())
+                        .description("포인트 사용 - " + product.getProductNm())
+                        .type(PointType.USE)
+                        .build());
+            }
+
+            int totalPrice = product.getProductPrice() * dto.getQuantity();
+            int actualPayment = totalPrice - usePoint;
+
+            // 포인트 적립 (실제 결제 금액 기준 1%)
+            int earnPoint = (int) (actualPayment * POINT_EARN_RATE);
+            user.earnPoint(earnPoint);
             pointHistoryRepository.save(PointHistory.builder()
                     .user(user)
-                    .amount(-usePoint)
+                    .amount(earnPoint)
                     .balanceAfter(user.getPoint())
-                    .description("포인트 사용 - " + product.getProductNm())
-                    .type(PointType.USE)
+                    .description("구매 적립 - " + product.getProductNm())
+                    .type(PointType.EARN)
                     .build());
+
+            // 주문 생성
+            Order order = orderRepository.save(Order.builder()
+                    .user(user)
+                    .product(product)
+                    .quantity(dto.getQuantity())
+                    .totalPrice(totalPrice)
+                    .usedPoint(usePoint)
+                    .status(OrderStatus.PENDING)
+                    .shippingAddress(dto.getShippingAddress())
+                    .recipientName(dto.getRecipientName())
+                    .recipientPhone(dto.getRecipientPhone())
+                    .build());
+
+            log.info("[Order] 주문 완료 userId={}, productId={}, usePoint={}, earnPoint={}",
+                    userId, dto.getProductId(), usePoint, earnPoint);
+
+            return ResponseUserOrderDto.of(order, earnPoint);
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new BusinessException(ErrorCode.ORDER_CONCURRENT_FAIL);
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         }
-
-        int totalPrice = product.getProductPrice() * dto.getQuantity();
-        int actualPayment = totalPrice - usePoint;
-
-        // 포인트 적립 (실제 결제 금액 기준 1%)
-        int earnPoint = (int) (actualPayment * POINT_EARN_RATE);
-        user.earnPoint(earnPoint);
-        pointHistoryRepository.save(PointHistory.builder()
-                .user(user)
-                .amount(earnPoint)
-                .balanceAfter(user.getPoint())
-                .description("구매 적립 - " + product.getProductNm())
-                .type(PointType.EARN)
-                .build());
-
-        // 주문 생성
-        Order order = orderRepository.save(Order.builder()
-                .user(user)
-                .product(product)
-                .quantity(dto.getQuantity())
-                .totalPrice(totalPrice)
-                .usedPoint(usePoint)
-                .status(OrderStatus.PENDING)
-                .shippingAddress(dto.getShippingAddress())
-                .recipientName(dto.getRecipientName())
-                .recipientPhone(dto.getRecipientPhone())
-                .build());
-
-        log.info("[Order] 주문 완료 userId={}, productId={}, usePoint={}, earnPoint={}",
-                userId, dto.getProductId(), usePoint, earnPoint);
-
-        return ResponseUserOrderDto.of(order, earnPoint);
     }
 
     @Transactional(readOnly = true)

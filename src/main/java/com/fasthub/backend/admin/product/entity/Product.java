@@ -58,6 +58,10 @@ public class Product {
         this.brand = brand;
     }
 
+    public void decreaseQuantity(int quantity) {
+        this.productQuantity -= quantity;
+    }
+
     public void updateEmbedding(String embedding) {
         this.embedding = embedding;
     }
