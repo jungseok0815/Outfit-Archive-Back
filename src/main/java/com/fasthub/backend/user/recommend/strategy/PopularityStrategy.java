@@ -4,26 +4,36 @@ import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
+import com.fasthub.backend.user.review.repository.ReviewRepository;
+import com.fasthub.backend.user.review.repository.ReviewStatsProjection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// @Component  // AI 추천 기능 비활성화
+@Component
 @RequiredArgsConstructor
 @Slf4j
 public class PopularityStrategy {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final ReviewRepository reviewRepository;
 
     private static final int RECENT_DAYS = 30;
     private static final int FALLBACK_DAYS = 90;
+
+    // 점수 가중치: 주문 수(1.0) + 리뷰 수(0.5) + 평균 평점(2.0)
+    // 예) 주문 10건 + 리뷰 4개 + 평점 4.5 → 10 + 2 + 9 = 21점
+    private static final double ORDER_WEIGHT  = 1.0;
+    private static final double REVIEW_WEIGHT = 0.5;
+    private static final double RATING_WEIGHT = 2.0;
 
     public List<RecommendProductDto> recommend(int limit) {
         // 1순위: 최근 30일 인기 상품
@@ -47,15 +57,19 @@ public class PopularityStrategy {
     private List<RecommendProductDto> fetchPopular(int days, int limit, String reason) {
         LocalDateTime since = LocalDateTime.now().minusDays(days);
 
-        // 인기 순위 조회 (productId, orderCount)
+        // 주문 수 기준 후보 풀 조회 (limit * 3: 리뷰 점수 반영 후 재정렬 여유분)
         List<PopularProductProjection> projections =
-                orderRepository.findPopularProductIds(since, PageRequest.of(0, limit));
+                orderRepository.findPopularProductIds(since, PageRequest.of(0, limit * 3));
 
         if (projections.isEmpty()) {
             return List.of();
         }
 
-        // productId → orderCount 맵 생성
+        List<Long> productIds = projections.stream()
+                .map(PopularProductProjection::getProductId)
+                .collect(Collectors.toList());
+
+        // productId → orderCount 맵
         Map<Long, Long> orderCountMap = projections.stream()
                 .collect(Collectors.toMap(
                         PopularProductProjection::getProductId,
@@ -63,19 +77,30 @@ public class PopularityStrategy {
                 ));
 
         // 상품 상세 정보 일괄 조회
-        List<Long> productIds = projections.stream()
-                .map(PopularProductProjection::getProductId)
-                .collect(Collectors.toList());
-
         Map<Long, Product> productMap = productRepository.findAllById(productIds).stream()
                 .collect(Collectors.toMap(Product::getId, p -> p));
 
-        // 인기 순서 유지하면서 DTO 변환
+        // productId → 리뷰 수 / 평균 평점 맵
+        Map<Long, ReviewStatsProjection> reviewStatsMap = reviewRepository
+                .findReviewStatsByProductIds(productIds).stream()
+                .collect(Collectors.toMap(ReviewStatsProjection::getProductId, s -> s));
+
+        // 종합 점수 계산 후 내림차순 정렬, 상위 limit개 반환
+        // score = (주문 수 × 1.0) + (리뷰 수 × 0.5) + (평균 평점 × 2.0)
         return productIds.stream()
                 .filter(productMap::containsKey)
                 .map(id -> {
                     Product product = productMap.get(id);
-                    long count = orderCountMap.getOrDefault(id, 0L);
+                    long orderCnt = orderCountMap.getOrDefault(id, 0L);
+                    ReviewStatsProjection stats = reviewStatsMap.get(id);
+                    long reviewCnt = stats != null ? stats.getReviewCount() : 0L;
+                    double avgRating = stats != null && stats.getAvgRating() != null
+                            ? Math.round(stats.getAvgRating() * 10.0) / 10.0 : 0.0;
+                    double score = (orderCnt * ORDER_WEIGHT)
+                            + (reviewCnt * REVIEW_WEIGHT)
+                            + (avgRating * RATING_WEIGHT);
+                    log.debug("[Recommend] productId={} score={} (order={}, review={}, rating={})",
+                            id, score, orderCnt, reviewCnt, avgRating);
                     return RecommendProductDto.builder()
                             .productId(product.getId())
                             .productNm(product.getProductNm())
@@ -83,10 +108,17 @@ public class PopularityStrategy {
                             .productPrice(product.getProductPrice())
                             .category(product.getCategory())
                             .brandNm(product.getBrand() != null ? product.getBrand().getBrandNm() : null)
-                            .orderCount(count)
+                            .orderCount(orderCnt)
+                            .reviewCount(reviewCnt)
+                            .avgRating(avgRating)
                             .reason(reason)
                             .build();
                 })
+                .sorted(Comparator.comparingDouble(dto ->
+                        -(dto.getOrderCount() * ORDER_WEIGHT
+                        + dto.getReviewCount() * REVIEW_WEIGHT
+                        + dto.getAvgRating() * RATING_WEIGHT)))
+                .limit(limit)
                 .collect(Collectors.toList());
     }
 

@@ -14,8 +14,10 @@ public class RecommendProductDto {
     private int productPrice;
     private ProductCategory category;
     private String brandNm;
-    private long orderCount;  // 추천 근거 수치
-    private String reason;    // 추천 이유 텍스트
+    private long orderCount;   // 기간 내 주문 수
+    private long reviewCount;  // 전체 리뷰 수
+    private double avgRating;  // 평균 평점 (소수점 1자리)
+    private String reason;     // 추천 이유 텍스트
 
     public static RecommendProductDto of(Product product, long orderCount) {
         return RecommendProductDto.builder()
@@ -26,7 +28,9 @@ public class RecommendProductDto {
                 .category(product.getCategory())
                 .brandNm(product.getBrand() != null ? product.getBrand().getBrandNm() : null)
                 .orderCount(orderCount)
-                .reason("최근 30일 인기 상품")
+                .reviewCount(0L)
+                .avgRating(0.0)
+                .reason("최근 등록 상품")
                 .build();
     }
 }

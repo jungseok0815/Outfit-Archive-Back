@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**","/js/**", "/img/**").permitAll()
                         .requestMatchers("/api/usr/login", "/api/usr/join", "/api/img/**").permitAll()
+                        .requestMatchers("/api/recommend/**").permitAll()
                         .requestMatchers("/api/admin/auth/login").permitAll()
                         .requestMatchers("/api/admin/product/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
                         .requestMatchers("/api/admin/order/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")

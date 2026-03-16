@@ -10,22 +10,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-// @Service  // AI 추천 기능 비활성화
+@Service
 @RequiredArgsConstructor
 @Slf4j
-// @Transactional(readOnly = true)
+@Transactional(readOnly = true)
 public class RecommendService {
 
     private final OrderRepository orderRepository;
     private final PopularityStrategy popularityStrategy;
 
     public List<RecommendProductDto> recommend(Long userId, int limit) {
+        // 비로그인 or 구매 이력 없는 사용자 → 인기 상품 추천
+        if (userId == null) {
+            log.info("[Recommend] 비로그인 사용자 → 인기 상품 추천");
+            return popularityStrategy.recommend(limit);
+        }
+
         long orderCount = orderRepository.countByUserId(userId);
         log.info("[Recommend] userId={}, orderCount={}", userId, orderCount);
 
-        // Cold Start: 구매 이력이 없으면 인기 상품 추천
         if (orderCount == 0) {
-            log.info("[Recommend] Cold Start 적용 → 인기 상품 추천");
+            log.info("[Recommend] Cold Start (구매 이력 없음) → 인기 상품 추천");
             return popularityStrategy.recommend(limit);
         }
 

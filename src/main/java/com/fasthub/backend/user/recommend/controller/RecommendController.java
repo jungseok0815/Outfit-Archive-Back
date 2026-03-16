@@ -14,18 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-// @RestController  // AI 추천 기능 비활성화
-// @RequestMapping("/api/usr/recommend")
+@RestController
+@RequestMapping("/api/recommend")
 @RequiredArgsConstructor
 @Slf4j
 public class RecommendController {
 
     private final RecommendService recommendService;
 
+    // 비로그인 사용자도 접근 가능 (SecurityConfig에서 permitAll 설정)
+    // 로그인 사용자는 구매 이력 기반으로 분기, 비로그인은 인기 상품 반환
     @GetMapping("/products")
     public ResponseEntity<List<RecommendProductDto>> recommendProducts(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestParam(defaultValue = "10") int limit) {
-        return ResponseEntity.ok(recommendService.recommend(userDetails.getId(), limit));
+        Long userId = (userDetails != null) ? userDetails.getId() : null;
+        return ResponseEntity.ok(recommendService.recommend(userId, limit));
     }
 }
