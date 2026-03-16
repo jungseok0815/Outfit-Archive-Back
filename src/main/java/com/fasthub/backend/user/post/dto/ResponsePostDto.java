@@ -17,7 +17,9 @@ public class ResponsePostDto {
     private Long id;
     private String title;
     private String content;
+    private Long userId;
     private String userNm;
+    private String profileImgNm;
     private List<PostImg> images;
     private List<ProductSummary> products;
     private long likeCount;
@@ -29,7 +31,9 @@ public class ResponsePostDto {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
+        this.userId = post.getUser().getId();
         this.userNm = post.getUser().getUserNm();
+        this.profileImgNm = post.getUser().getProfileImgNm();
         this.images = post.getImages();
         this.products = post.getPostProducts().stream()
                 .map(pp -> new ProductSummary(pp.getProduct()))
