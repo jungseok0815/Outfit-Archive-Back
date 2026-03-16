@@ -75,6 +75,10 @@ public class FollowService {
         return followings;
     }
 
+    public boolean isFollowing(Long followerId, Long targetId) {
+        return followRepository.existsByFollowerIdAndFollowingId(followerId, targetId);
+    }
+
     public FollowCountDto getFollowCount(Long userId) {
         return new FollowCountDto(
                 followRepository.countByFollowingId(userId),

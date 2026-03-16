@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usr/follow")
@@ -52,5 +53,14 @@ public class FollowController {
     @GetMapping("/{userId}/count")
     public ResponseEntity<FollowCountDto> count(@PathVariable Long userId) {
         return ResponseEntity.ok(followService.getFollowCount(userId));
+    }
+
+    // 팔로우 여부 확인
+    @GetMapping("/{targetId}/status")
+    public ResponseEntity<Map<String, Boolean>> isFollowing(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long targetId) {
+        boolean following = followService.isFollowing(userDetails.getId(), targetId);
+        return ResponseEntity.ok(Map.of("following", following));
     }
 }
