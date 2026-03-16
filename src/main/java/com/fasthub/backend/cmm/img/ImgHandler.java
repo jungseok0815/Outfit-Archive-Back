@@ -8,6 +8,7 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -54,7 +55,12 @@ public class ImgHandler {
             String url = "https://" + bucket + ".s3." + region + ".amazonaws.com/" + fileName;
             log.info("[S3] 업로드 완료: {}", url);
             return url;
+        } catch (S3Exception e) {
+            log.error("[S3] 업로드 실패 - 파일명: {}, 버킷: {}, 상태코드: {}, 원인: {}",
+                    fileName, bucket, e.statusCode(), e.awsErrorDetails().errorMessage());
+            throw new RuntimeException("S3 업로드 실패: " + fileName, e);
         } catch (IOException e) {
+            log.error("[S3] 파일 읽기 실패 - 파일명: {}, 원인: {}", fileName, e.getMessage());
             throw new RuntimeException("S3 업로드 실패: " + fileName, e);
         }
     }
@@ -64,11 +70,17 @@ public class ImgHandler {
     // 기존 코드는 DB 엔티티만 삭제하고 물리 파일 삭제가 없었음 → 이제 S3도 함께 정리
     public void deleteFile(String imgNm) {
         if (imgNm == null || imgNm.isBlank()) return;
-        s3Client.deleteObject(DeleteObjectRequest.builder()
-                .bucket(bucket)
-                .key(imgNm)
-                .build());
-        log.info("[S3] 삭제 완료: {}", imgNm);
+        try {
+            s3Client.deleteObject(DeleteObjectRequest.builder()
+                    .bucket(bucket)
+                    .key(imgNm)
+                    .build());
+            log.info("[S3] 삭제 완료: {}", imgNm);
+        } catch (S3Exception e) {
+            log.error("[S3] 삭제 실패 - 파일명: {}, 버킷: {}, 상태코드: {}, 원인: {}",
+                    imgNm, bucket, e.statusCode(), e.awsErrorDetails().errorMessage());
+            throw new RuntimeException("S3 삭제 실패: " + imgNm, e);
+        }
     }
 
     // 이미지 파일을 S3에 업로드하고 매핑 엔티티(Product, Brand 등)와 연결된 이미지 엔티티 생성
