@@ -48,4 +48,8 @@ logs/
 gradle.properties
 
 ### Image Storage ###
-C:/jungseok/img/
+*.png
+*.jpeg
+*.jpg
+*.gif
+*.webp
