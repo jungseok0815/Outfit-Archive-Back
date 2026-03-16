@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ResponseUserOrderDto {
     private Long orderId;
+    private String tossOrderId;  // 토스 결제창에 전달할 주문번호
     private String productNm;
     private String brandNm;
     private int quantity;
@@ -24,6 +25,7 @@ public class ResponseUserOrderDto {
     public static ResponseUserOrderDto of(Order order, int earnedPoint) {
         return ResponseUserOrderDto.builder()
                 .orderId(order.getId())
+                .tossOrderId(order.getTossOrderId())
                 .productNm(order.getProduct().getProductNm())
                 .brandNm(order.getProduct().getBrand() != null ? order.getProduct().getBrand().getBrandNm() : null)
                 .quantity(order.getQuantity())

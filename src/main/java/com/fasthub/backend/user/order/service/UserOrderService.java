@@ -9,9 +9,6 @@ import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.user.order.dto.InsertUserOrderDto;
 import com.fasthub.backend.user.order.dto.ResponseUserOrderDto;
-import com.fasthub.backend.user.point.entity.PointHistory;
-import com.fasthub.backend.user.point.entity.PointHistory.PointType;
-import com.fasthub.backend.user.point.repository.PointHistoryRepository;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -30,21 +28,18 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class UserOrderService {
 
-    private static final double POINT_EARN_RATE = 0.01; // 결제 금액의 1% 적립
-
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final AuthRepository authRepository;
-    private final PointHistoryRepository pointHistoryRepository;
     private final RedissonClient redissonClient;
 
+    // 주문 준비 - 재고 검증 후 PENDING 주문 생성 (결제 승인 전)
     @Transactional
     public ResponseUserOrderDto order(Long userId, InsertUserOrderDto dto) {
         String lockKey = "product:lock:" + dto.getProductId();
         RLock lock = redissonClient.getLock(lockKey);
 
         try {
-            // 최대 5초 대기, 락 획득 후 3초 내 자동 해제
             boolean isLocked = lock.tryLock(5, 3, TimeUnit.SECONDS);
             if (!isLocked) {
                 throw new BusinessException(ErrorCode.ORDER_CONCURRENT_FAIL);
@@ -55,46 +50,18 @@ public class UserOrderService {
             Product product = productRepository.findById(dto.getProductId())
                     .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_PRODUCT_NOT_FOUND));
 
-            // 재고 확인 및 차감
+            // 재고 검증 (차감은 결제 승인 후)
             if (product.getProductQuantity() < dto.getQuantity()) {
                 throw new BusinessException(ErrorCode.ORDER_QUANTITY_EXCEEDED);
             }
-            product.decreaseQuantity(dto.getQuantity());
 
-            // 포인트 사용 처리
+            // 포인트 잔액 검증 (차감은 결제 승인 후)
             int usePoint = dto.getUsePoint();
-            if (usePoint < 0) {
-                throw new BusinessException(ErrorCode.POINT_INVALID_AMOUNT);
-            }
-            if (usePoint > 0) {
-                if (user.getPoint() < usePoint) {
-                    throw new BusinessException(ErrorCode.POINT_NOT_ENOUGH);
-                }
-                user.usePoint(usePoint);
-                pointHistoryRepository.save(PointHistory.builder()
-                        .user(user)
-                        .amount(-usePoint)
-                        .balanceAfter(user.getPoint())
-                        .description("포인트 사용 - " + product.getProductNm())
-                        .type(PointType.USE)
-                        .build());
-            }
+            if (usePoint < 0) throw new BusinessException(ErrorCode.POINT_INVALID_AMOUNT);
+            if (usePoint > 0 && user.getPoint() < usePoint) throw new BusinessException(ErrorCode.POINT_NOT_ENOUGH);
 
             int totalPrice = product.getProductPrice() * dto.getQuantity();
-            int actualPayment = totalPrice - usePoint;
 
-            // 포인트 적립 (실제 결제 금액 기준 1%)
-            int earnPoint = (int) (actualPayment * POINT_EARN_RATE);
-            user.earnPoint(earnPoint);
-            pointHistoryRepository.save(PointHistory.builder()
-                    .user(user)
-                    .amount(earnPoint)
-                    .balanceAfter(user.getPoint())
-                    .description("구매 적립 - " + product.getProductNm())
-                    .type(PointType.EARN)
-                    .build());
-
-            // 주문 생성
             Order order = orderRepository.save(Order.builder()
                     .user(user)
                     .product(product)
@@ -102,15 +69,14 @@ public class UserOrderService {
                     .totalPrice(totalPrice)
                     .usedPoint(usePoint)
                     .status(OrderStatus.PENDING)
+                    .tossOrderId(UUID.randomUUID().toString())
                     .shippingAddress(dto.getShippingAddress())
                     .recipientName(dto.getRecipientName())
                     .recipientPhone(dto.getRecipientPhone())
                     .build());
 
-            log.info("[Order] 주문 완료 userId={}, productId={}, usePoint={}, earnPoint={}",
-                    userId, dto.getProductId(), usePoint, earnPoint);
-
-            return ResponseUserOrderDto.of(order, earnPoint);
+            log.info("[Order] 주문 준비 userId={}, productId={}, tossOrderId={}", userId, dto.getProductId(), order.getTossOrderId());
+            return ResponseUserOrderDto.of(order, 0);
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

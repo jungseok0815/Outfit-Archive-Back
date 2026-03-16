@@ -74,6 +74,13 @@ public enum ErrorCode {
     ORDER_PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "O004", "주문할 상품을 찾을 수 없습니다."),
     ORDER_QUANTITY_EXCEEDED(HttpStatus.BAD_REQUEST, "O005", "주문 수량이 재고를 초과합니다."),
     ORDER_CONCURRENT_FAIL(HttpStatus.CONFLICT, "O006", "현재 주문이 많습니다. 잠시 후 다시 시도해주세요."),
+    ORDER_ALREADY_PAID(HttpStatus.CONFLICT, "O007", "이미 결제 완료된 주문입니다."),
+
+    //PAYMENT
+    PAYMENT_AMOUNT_MISMATCH(HttpStatus.BAD_REQUEST, "PAY001", "결제 금액이 주문 금액과 일치하지 않습니다."),
+    PAYMENT_CONFIRM_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "PAY002", "결제 승인에 실패했습니다."),
+    PAYMENT_CANCEL_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "PAY003", "결제 취소에 실패했습니다."),
+    PAYMENT_NOT_CANCELABLE(HttpStatus.BAD_REQUEST, "PAY004", "취소 가능한 주문이 아닙니다."),
 
     //REVIEW
     REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "R001", "후기를 찾을 수 없습니다."),

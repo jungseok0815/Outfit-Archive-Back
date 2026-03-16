@@ -57,7 +57,22 @@ public class Order {
     @Column(nullable = false)
     private int usedPoint;
 
+    @Column(unique = true, length = 100)
+    private String tossOrderId;  // 토스에 전달하는 UUID 주문번호
+
+    @Column(length = 200)
+    private String paymentKey;   // 토스 결제 승인 후 받는 키
+
     public void updateStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public void confirmPayment(String paymentKey) {
+        this.paymentKey = paymentKey;
+        this.status = OrderStatus.PAYMENT_COMPLETE;
+    }
+
+    public void cancel() {
+        this.status = OrderStatus.CANCELLED;
     }
 }

@@ -38,4 +38,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     // 사용자 본인 주문 목록
     Page<Order> findByUser(User user, Pageable pageable);
+
+    // 토스 주문번호로 조회
+    java.util.Optional<Order> findByTossOrderId(String tossOrderId);
 }

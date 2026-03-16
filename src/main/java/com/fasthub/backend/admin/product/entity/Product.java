@@ -62,6 +62,10 @@ public class Product {
         this.productQuantity -= quantity;
     }
 
+    public void increaseQuantity(int quantity) {
+        this.productQuantity += quantity;
+    }
+
     public void updateEmbedding(String embedding) {
         this.embedding = embedding;
     }
