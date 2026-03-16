@@ -8,7 +8,6 @@ import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.user.follow.repository.FollowRepository;
 import com.fasthub.backend.user.post.repository.PostRepository;
 import com.fasthub.backend.user.usr.dto.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.mapper.AuthMapper;
@@ -36,8 +35,6 @@ public class UserService {
     private final FollowRepository followRepository;
     private final PostRepository postRepository;
 
-    @Value("${file.path-product}")
-    private String filePath;
 
     public LoginResponseDto login(LoginDto loginDto, HttpServletResponse response) {
         return authRepository.findByUserId(loginDto.getUserId())
@@ -89,18 +86,20 @@ public class UserService {
     }
 
     // 프로필 이미지 수정
+    // 기존: 로컬 디스크에 파일 저장 후 파일명만 DB에 저장
+    // 변경: 기존 S3 이미지 삭제 → 새 이미지 S3 업로드 → S3 URL을 DB에 저장
     @Transactional
     public String updateProfileImg(Long id, MultipartFile file) {
         User user = authRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-        try {
-            String fileName = imgHandler.getFileName(file.getOriginalFilename());
-            imgHandler.getFilePath(file, filePath, fileName);
-            user.updateProfileImg(fileName);
-            return fileName;
-        } catch (Exception e) {
-            throw new RuntimeException("프로필 이미지 저장 실패", e);
+        // 기존 프로필 이미지가 있으면 S3에서 삭제
+        if (user.getProfileImgNm() != null) {
+            imgHandler.deleteFile(user.getProfileImgNm());
         }
+        String fileName = imgHandler.getFileName(file.getOriginalFilename());
+        String s3Url = imgHandler.upload(file, fileName);
+        user.updateProfileImg(s3Url);   // S3 URL을 profileImgNm에 저장
+        return s3Url;
     }
 
     // 유저 삭제

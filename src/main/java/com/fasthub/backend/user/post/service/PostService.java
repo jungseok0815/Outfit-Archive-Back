@@ -99,6 +99,8 @@ public class PostService {
         post.update(dto.getTitle(), dto.getContent());
 
         if (dto.getImages() != null) {
+            // 기존 이미지를 S3에서 먼저 삭제 후 DB 엔티티 제거
+            post.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
             postImgRepository.deleteByPost(post);
             dto.getImages().forEach(image ->
                     postImgRepository.save(imgHandler.createImg(image, PostImg::new, post)));
@@ -124,6 +126,8 @@ public class PostService {
             throw new BusinessException(ErrorCode.BOARD_UNAUTHORIZED);
         }
 
+        // 게시글 삭제 전 S3 이미지 먼저 제거 (CASCADE ALL로 DB 엔티티는 자동 삭제)
+        post.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
         postRepository.delete(post);
     }
 }

@@ -47,6 +47,8 @@ public class BrandService {
         brand.update(updateBrandDto.getBrandNm(), updateBrandDto.getBrandNum(),
                 updateBrandDto.getBrandLocation(), updateBrandDto.getBrandDc());
         if (updateBrandDto.getBrandImg() != null) {
+            // 기존 이미지를 S3에서 먼저 삭제 후 DB 엔티티 제거
+            brand.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
             brandImgRepository.deleteByBrand(brand);
             brandImgRepository.save(imgHandler.createImg(updateBrandDto.getBrandImg(), BrandImg::new, brand));
         }
@@ -56,6 +58,8 @@ public class BrandService {
     public void delete(String brandNo) {
         Brand brand = brandRepository.findById(Long.valueOf(brandNo))
                 .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
+        // 브랜드 삭제 전 S3 이미지 먼저 제거 (CASCADE ALL로 DB 엔티티는 자동 삭제)
+        brand.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
         brandRepository.delete(brand);
     }
 }

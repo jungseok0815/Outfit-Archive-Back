@@ -74,6 +74,9 @@ public class ProductService {
         product.update(productDto.getProductNm(), productDto.getProductCode(),
                 productDto.getProductPrice(), productDto.getProductQuantity(), productDto.getCategory(), brand);
         if (productDto.getImage() != null) {
+            // 기존 이미지를 S3에서 먼저 삭제 후 DB 엔티티 제거
+            productImgRepository.findByProduct(product)
+                    .forEach(img -> imgHandler.deleteFile(img.getImgNm()));
             productImgRepository.deleteByProduct(product);
             productDto.getImage().forEach(item ->
                     productImgRepository.save(imgHandler.createImg(item, ProductImg::new, product)));
@@ -84,6 +87,9 @@ public class ProductService {
     public void delete(String id) {
         Product product = productRepository.findById(Long.valueOf(id))
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_DELETE));
+        // 상품 삭제 전 S3 이미지 먼저 제거 (CASCADE로 DB 엔티티는 자동 삭제)
+        productImgRepository.findByProduct(product)
+                .forEach(img -> imgHandler.deleteFile(img.getImgNm()));
         productRepository.delete(product);
     }
 }
