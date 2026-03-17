@@ -40,6 +40,9 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostProduct> postProducts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostLike> likes = new ArrayList<>();
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
