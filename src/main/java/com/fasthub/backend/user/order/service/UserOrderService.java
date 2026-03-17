@@ -92,7 +92,7 @@ public class UserOrderService {
     public Page<ResponseUserOrderDto> myOrders(Long userId, Pageable pageable) {
         User user = authRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-        return orderRepository.findByUser(user, pageable)
+        return orderRepository.findByUserAndStatusNot(user, OrderStatus.PENDING, pageable)
                 .map(o -> ResponseUserOrderDto.of(o, 0));
     }
 }

@@ -2,6 +2,7 @@ package com.fasthub.backend.admin.order.repository;
 
 import com.fasthub.backend.admin.order.entity.Order;
 import com.fasthub.backend.admin.order.dto.RevenueByBrandDto;
+import com.fasthub.backend.cmm.enums.OrderStatus;
 import com.fasthub.backend.user.recommend.strategy.PopularProductProjection;
 import com.fasthub.backend.user.usr.entity.User;
 import org.springframework.data.domain.Page;
@@ -38,6 +39,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     // 사용자 본인 주문 목록
     Page<Order> findByUser(User user, Pageable pageable);
+
+    // 사용자 본인 주문 목록 (PENDING 제외)
+    Page<Order> findByUserAndStatusNot(User user, OrderStatus status, Pageable pageable);
 
     // 토스 주문번호로 조회
     java.util.Optional<Order> findByTossOrderId(String tossOrderId);
