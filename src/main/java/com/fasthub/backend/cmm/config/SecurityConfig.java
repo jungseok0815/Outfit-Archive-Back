@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/auth/login").permitAll()
                         .requestMatchers("/api/admin/product/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
                         .requestMatchers("/api/admin/order/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
+                        .requestMatchers("/api/admin/review/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
                         .requestMatchers("/api/admin/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN")
                         .requestMatchers("/api/usr/**").hasRole("USER")
                         .anyRequest().authenticated()

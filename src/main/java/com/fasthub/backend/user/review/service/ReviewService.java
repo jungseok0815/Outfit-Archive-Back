@@ -106,6 +106,14 @@ public class ReviewService {
         log.info("[Review] 후기 삭제 완료 userId={}, reviewId={}", userId, reviewId);
     }
 
+    @Transactional
+    public void deleteByAdmin(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.REVIEW_NOT_FOUND));
+        reviewRepository.delete(review);
+        log.info("[Review] 관리자 후기 삭제 완료 reviewId={}", reviewId);
+    }
+
     @Transactional(readOnly = true)
     public Page<ResponseReviewDto> getByProduct(Long productId, Pageable pageable) {
         Product product = productRepository.findById(productId)
