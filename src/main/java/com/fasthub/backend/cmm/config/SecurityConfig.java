@@ -72,7 +72,7 @@ public class SecurityConfig {
                 .cors(c -> {
                         CorsConfigurationSource source = request -> {
                             CorsConfiguration config = new CorsConfiguration();
-                            config.addAllowedOrigin("http://localhost:3000"); // 허용할 도메인
+                            config.addAllowedOrigin("http://jungseok-outfit-frontend.s3-website.ap-northeast-2.amazonaws.com"); // 허용할 도메인
                             config.addAllowedMethod("*"); // 모든 HTTP 메서드 허용
                             config.addAllowedHeader("*"); // 모든 헤더 허용
                             config.setAllowCredentials(true); // 쿠키 허용
