@@ -1,5 +1,7 @@
 package com.fasthub.backend.user.post;
 
+import com.fasthub.backend.admin.product.repository.ProductRepository;
+import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
@@ -8,7 +10,10 @@ import com.fasthub.backend.user.post.dto.ResponsePostDto;
 import com.fasthub.backend.user.post.dto.UpdatePostDto;
 import com.fasthub.backend.user.post.entity.Post;
 import com.fasthub.backend.user.post.entity.PostImg;
+import com.fasthub.backend.user.post.repository.PostCommentRepository;
 import com.fasthub.backend.user.post.repository.PostImgRepository;
+import com.fasthub.backend.user.post.repository.PostLikeRepository;
+import com.fasthub.backend.user.post.repository.PostProductRepository;
 import com.fasthub.backend.user.post.repository.PostRepository;
 import com.fasthub.backend.user.post.service.PostService;
 import com.fasthub.backend.user.usr.entity.User;
@@ -26,6 +31,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +57,19 @@ class PostServiceTest {
     private PostImgRepository postImgRepository;
 
     @Mock
+    private PostProductRepository postProductRepository;
+
+    @Mock
+    private PostLikeRepository postLikeRepository;
+
+    @Mock
+    private PostCommentRepository postCommentRepository;
+
+    @Mock
     private AuthRepository authRepository;
+
+    @Mock
+    private ProductRepository productRepository;
 
     @Mock
     private ImgHandler imgHandler;
@@ -61,18 +79,23 @@ class PostServiceTest {
     // ────────────────────────────────────────────────
     private User buildUser() {
         return User.builder()
+                .id(1L)
                 .userId("user01")
                 .userNm("홍길동")
                 .userPwd("encodedPwd")
                 .userAge(25)
+                .authName(UserRole.ROLE_USER)
                 .build();
     }
 
     private Post buildPost(User user) {
         return Post.builder()
+                .id(1L)
                 .title("오늘의 코디")
                 .content("봄 코디 공유합니다.")
                 .user(user)
+                .images(new ArrayList<>())
+                .postProducts(new ArrayList<>())
                 .build();
     }
 
@@ -92,6 +115,8 @@ class PostServiceTest {
             Page<Post> postPage = new PageImpl<>(List.of(post));
 
             given(postRepository.findAllByKeyword(null, pageable)).willReturn(postPage);
+            given(postLikeRepository.countByPostId(post.getId())).willReturn(0L);
+            given(postCommentRepository.countByPostId(post.getId())).willReturn(0L);
 
             Page<ResponsePostDto> result = postService.list(null, pageable);
 
@@ -109,10 +134,14 @@ class PostServiceTest {
             Page<Post> postPage = new PageImpl<>(List.of(post));
 
             given(postRepository.findAllByKeyword(keyword, pageable)).willReturn(postPage);
+            given(postLikeRepository.countByPostId(post.getId())).willReturn(3L);
+            given(postCommentRepository.countByPostId(post.getId())).willReturn(5L);
 
             Page<ResponsePostDto> result = postService.list(keyword, pageable);
 
             assertThat(result.getContent()).hasSize(1);
+            assertThat(result.getContent().get(0).getLikeCount()).isEqualTo(3L);
+            assertThat(result.getContent().get(0).getCommentCount()).isEqualTo(5L);
         }
 
         @Test
@@ -221,7 +250,7 @@ class PostServiceTest {
 
             given(postRepository.findById(1L)).willReturn(Optional.of(post));
 
-            postService.update(dto);
+            postService.update(dto, 1L);
 
             // 제목, 내용이 수정됐는지 검증
             assertThat(post.getTitle()).isEqualTo("수정된 코디");
@@ -249,7 +278,7 @@ class PostServiceTest {
             given(postRepository.findById(1L)).willReturn(Optional.of(post));
             given(imgHandler.createImg(eq(mockFile), any(), eq(post))).willReturn(newPostImg);
 
-            postService.update(dto);
+            postService.update(dto, 1L);
 
             // 기존 이미지 삭제 후 새 이미지 저장
             then(postImgRepository).should().deleteByPost(post);
@@ -266,9 +295,28 @@ class PostServiceTest {
 
             given(postRepository.findById(999L)).willReturn(Optional.empty());
 
-            assertThatThrownBy(() -> postService.update(dto))
+            assertThatThrownBy(() -> postService.update(dto, 1L))
                     .isInstanceOf(BusinessException.class)
                     .hasMessageContaining(ErrorCode.BOARD_FAIL_SELECT.getMessage());
+        }
+
+        @Test
+        @DisplayName("실패 - 본인 게시글이 아님")
+        void update_fail_unauthorized() {
+            UpdatePostDto dto = new UpdatePostDto();
+            dto.setId(1L);
+            dto.setTitle("수정된 코디");
+            dto.setContent("여름 코디로 변경합니다.");
+
+            User user = buildUser(); // id = 1L
+            Post post = buildPost(user);
+
+            given(postRepository.findById(1L)).willReturn(Optional.of(post));
+
+            // 다른 유저(id=2L)가 수정 시도
+            assertThatThrownBy(() -> postService.update(dto, 2L))
+                    .isInstanceOf(BusinessException.class)
+                    .hasMessageContaining(ErrorCode.BOARD_UNAUTHORIZED.getMessage());
         }
     }
 
@@ -287,7 +335,7 @@ class PostServiceTest {
 
             given(postRepository.findById(1L)).willReturn(Optional.of(post));
 
-            postService.delete(1L);
+            postService.delete(1L, 1L);
 
             then(postRepository).should().delete(post);
         }
@@ -300,7 +348,7 @@ class PostServiceTest {
 
             given(postRepository.findById(1L)).willReturn(Optional.of(post));
 
-            postService.delete(1L);
+            postService.delete(1L, 1L);
 
             // postRepository.delete() 호출 시 CascadeType.ALL로 PostImg도 자동 삭제
             then(postRepository).should().delete(post);
@@ -313,9 +361,25 @@ class PostServiceTest {
         void delete_fail_postNotFound() {
             given(postRepository.findById(999L)).willReturn(Optional.empty());
 
-            assertThatThrownBy(() -> postService.delete(999L))
+            assertThatThrownBy(() -> postService.delete(999L, 1L))
                     .isInstanceOf(BusinessException.class)
                     .hasMessageContaining(ErrorCode.BOARD_FAIL_SELECT.getMessage());
+
+            then(postRepository).should(never()).delete(any());
+        }
+
+        @Test
+        @DisplayName("실패 - 본인 게시글이 아님")
+        void delete_fail_unauthorized() {
+            User user = buildUser(); // id = 1L
+            Post post = buildPost(user);
+
+            given(postRepository.findById(1L)).willReturn(Optional.of(post));
+
+            // 다른 유저(id=2L)가 삭제 시도
+            assertThatThrownBy(() -> postService.delete(1L, 2L))
+                    .isInstanceOf(BusinessException.class)
+                    .hasMessageContaining(ErrorCode.BOARD_UNAUTHORIZED.getMessage());
 
             then(postRepository).should(never()).delete(any());
         }

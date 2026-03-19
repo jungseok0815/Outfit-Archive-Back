@@ -116,7 +116,7 @@ class UserServiceTest {
                     .isInstanceOf(BusinessException.class)
                     .hasMessageContaining(ErrorCode.ID_NOT_FOUND.getMessage());
 
-            then(jwtService).should(never()).generateAccessToken(any(), any());
+            then(jwtService).should(never()).generateAccessToken(any(HttpServletResponse.class), any(User.class));
         }
 
         @Test
@@ -132,7 +132,7 @@ class UserServiceTest {
                     .isInstanceOf(BusinessException.class)
                     .hasMessageContaining(ErrorCode.PWD_NOT_FOUND.getMessage());
 
-            then(jwtService).should(never()).generateAccessToken(any(), any());
+            then(jwtService).should(never()).generateAccessToken(any(HttpServletResponse.class), any(User.class));
         }
     }
 
