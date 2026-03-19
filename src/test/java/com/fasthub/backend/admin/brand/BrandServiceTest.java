@@ -25,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +62,7 @@ class BrandServiceTest {
                 .brandNum("NK-001")
                 .brandLocation("미국")
                 .brandDc("스포츠 브랜드")
+                .images(new ArrayList<>())
                 .build();
     }
 
