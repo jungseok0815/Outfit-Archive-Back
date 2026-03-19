@@ -8,6 +8,7 @@ import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
 import com.fasthub.backend.user.recommend.strategy.PopularProductProjection;
 import com.fasthub.backend.user.recommend.strategy.PopularityStrategy;
+import com.fasthub.backend.user.review.repository.ReviewRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,6 +39,9 @@ class PopularityStrategyTest {
 
     @Mock
     private ProductRepository productRepository;
+
+    @Mock
+    private ReviewRepository reviewRepository;
 
 
     // 테스트용 Projection 구현체
