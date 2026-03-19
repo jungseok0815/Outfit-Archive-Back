@@ -93,6 +93,8 @@ class PopularityStrategyTest {
                     .willReturn(projections);
             given(productRepository.findAllById(List.of(1L, 2L)))
                     .willReturn(List.of(product1, product2));
+            given(reviewRepository.findReviewStatsByProductIds(anyList()))
+                    .willReturn(Collections.emptyList());
 
             List<RecommendProductDto> result = popularityStrategy.recommend(limit);
 
@@ -112,6 +114,8 @@ class PopularityStrategyTest {
                     .willReturn(projections);
             given(productRepository.findAllById(List.of(1L)))
                     .willReturn(List.of(product));
+            given(reviewRepository.findReviewStatsByProductIds(anyList()))
+                    .willReturn(Collections.emptyList());
 
             List<RecommendProductDto> result = popularityStrategy.recommend(limit);
 
@@ -119,10 +123,10 @@ class PopularityStrategyTest {
         }
 
         @Test
-        @DisplayName("인기 순서(orderCount 높은 순)가 유지됨")
+        @DisplayName("인기 순서(종합점수 높은 순)가 유지됨")
         void recommend_maintainsPopularityOrder() {
             int limit = 3;
-            // orderCount: 10 > 7 > 2 순서
+            // orderCount: 10 > 7 > 2 순서 (리뷰 없으면 orderCount × 1.0 이 곧 점수)
             List<PopularProductProjection> projections = List.of(
                     buildProjection(1L, 10L),
                     buildProjection(2L, 7L),
@@ -136,6 +140,8 @@ class PopularityStrategyTest {
                     .willReturn(projections);
             given(productRepository.findAllById(List.of(1L, 2L, 3L)))
                     .willReturn(List.of(p1, p2, p3));
+            given(reviewRepository.findReviewStatsByProductIds(anyList()))
+                    .willReturn(Collections.emptyList());
 
             List<RecommendProductDto> result = popularityStrategy.recommend(limit);
 
@@ -158,13 +164,15 @@ class PopularityStrategyTest {
             int limit = 2;
             Product product = buildProduct(1L, "나이키 에어포스", ProductCategory.SHOES);
 
-            // 30일 → 결과 없음
+            // 30일 → 결과 없음, 90일 → 결과 있음
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
                     .willReturn(Collections.emptyList())               // 1번 호출 (30일)
                     .willReturn(List.of(buildProjection(1L, 2L)));     // 2번 호출 (90일)
 
             given(productRepository.findAllById(List.of(1L)))
                     .willReturn(List.of(product));
+            given(reviewRepository.findReviewStatsByProductIds(anyList()))
+                    .willReturn(Collections.emptyList());
 
             List<RecommendProductDto> result = popularityStrategy.recommend(limit);
 
@@ -187,7 +195,7 @@ class PopularityStrategyTest {
             Product product1 = buildProduct(1L, "최신상품A", ProductCategory.TOP);
             Product product2 = buildProduct(2L, "최신상품B", ProductCategory.OUTER);
 
-            // 30일, 90일 모두 결과 없음
+            // 30일, 90일 모두 결과 없음 (fetchLatest 경로는 reviewRepository 호출 없음)
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
                     .willReturn(Collections.emptyList());
 
