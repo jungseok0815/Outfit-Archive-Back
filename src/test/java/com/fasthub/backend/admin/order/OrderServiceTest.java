@@ -79,10 +79,10 @@ class OrderServiceTest {
             ResponseOrderDto responseDto = new ResponseOrderDto();
             Page<Order> orderPage = new PageImpl<>(List.of(order));
 
-            given(orderRepository.findAllByKeyword(null, pageable)).willReturn(orderPage);
+            given(orderRepository.findAllByKeyword(null, null, pageable)).willReturn(orderPage);
             given(orderMapper.orderToResponseDto(order)).willReturn(responseDto);
 
-            Page<ResponseOrderDto> result = orderService.list(null, pageable);
+            Page<ResponseOrderDto> result = orderService.list(null, null, pageable);
 
             assertThat(result.getContent()).hasSize(1);
         }
@@ -96,10 +96,27 @@ class OrderServiceTest {
             ResponseOrderDto responseDto = new ResponseOrderDto();
             Page<Order> orderPage = new PageImpl<>(List.of(order));
 
-            given(orderRepository.findAllByKeyword(keyword, pageable)).willReturn(orderPage);
+            given(orderRepository.findAllByKeyword(keyword, null, pageable)).willReturn(orderPage);
             given(orderMapper.orderToResponseDto(order)).willReturn(responseDto);
 
-            Page<ResponseOrderDto> result = orderService.list(keyword, pageable);
+            Page<ResponseOrderDto> result = orderService.list(keyword, null, pageable);
+
+            assertThat(result.getContent()).hasSize(1);
+        }
+
+        @Test
+        @DisplayName("성공 - 브랜드 ID로 필터링")
+        void list_success_withBrandId() {
+            Pageable pageable = PageRequest.of(0, 10);
+            Long brandId = 1L;
+            Order order = buildOrder();
+            ResponseOrderDto responseDto = new ResponseOrderDto();
+            Page<Order> orderPage = new PageImpl<>(List.of(order));
+
+            given(orderRepository.findAllByKeyword(null, brandId, pageable)).willReturn(orderPage);
+            given(orderMapper.orderToResponseDto(order)).willReturn(responseDto);
+
+            Page<ResponseOrderDto> result = orderService.list(null, brandId, pageable);
 
             assertThat(result.getContent()).hasSize(1);
         }
