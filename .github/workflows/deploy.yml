@@ -46,7 +46,7 @@ jobs:
           script: |
             pkill -f 'java -jar' || true
             sleep 3
-            nohup java -jar -Dspring.profiles.active=prod \
-              /home/ec2-user/app/*.jar \
-              > /home/ec2-user/app/app.log 2>&1 &
+            JAR_PATH=$(ls /home/ec2-user/app/*.jar | tail -1)
+            nohup java -jar -Dspring.profiles.active=prod $JAR_PATH > /home/ec2-user/app/app.log 2>&1 &
+            disown
             echo "서버 재시작 완료"
