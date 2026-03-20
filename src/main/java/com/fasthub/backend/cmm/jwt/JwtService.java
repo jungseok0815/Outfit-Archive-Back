@@ -136,7 +136,7 @@ public class JwtService {
                 .path("/")
                 .maxAge(maxAgeSeconds)
                 .httpOnly(true)
-                .sameSite("Lax")
+                .sameSite("None")
                 .secure(COOKIE_SECURE)
                 .build();
     }

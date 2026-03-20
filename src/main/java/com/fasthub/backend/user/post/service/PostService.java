@@ -60,6 +60,16 @@ public class PostService {
                 ));
     }
 
+    // 브랜드명 또는 제목으로 게시글 검색 (태그된 상품의 브랜드명 포함)
+    public Page<ResponsePostDto> searchByKeyword(String keyword, Pageable pageable) {
+        return postRepository.findAllByBrandKeyword(keyword, pageable)
+                .map(post -> new ResponsePostDto(
+                        post,
+                        postLikeRepository.countByPostId(post.getId()),
+                        postCommentRepository.countByPostId(post.getId())
+                ));
+    }
+
     // 게시글 등록
     @Transactional
     public void insert(InsertPostDto dto, Long userId) {

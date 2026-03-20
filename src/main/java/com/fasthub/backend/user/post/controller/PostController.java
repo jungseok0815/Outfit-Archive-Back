@@ -39,6 +39,14 @@ public class PostController {
         return ResponseEntity.ok(postService.list(keyword, pageable));
     }
 
+    // 브랜드명 또는 제목으로 게시글 검색 (비로그인 접근 가능)
+    @GetMapping("/search")
+    public ResponseEntity<Page<ResponsePostDto>> search(
+            @RequestParam String keyword,
+            @PageableDefault(size = 12) Pageable pageable) {
+        return ResponseEntity.ok(postService.searchByKeyword(keyword, pageable));
+    }
+
     // 게시글 등록
     @PostMapping("/insert")
     public ResponseEntity<Void> insert(

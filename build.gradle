@@ -56,6 +56,9 @@ dependencies {
 	// Redisson (Redis 분산 락)
 	implementation 'org.redisson:redisson:3.27.0'
 
+	// Apache POI (Excel 파싱)
+	implementation 'org.apache.poi:poi-ooxml:5.2.5'
+
 }
 
 tasks.named('test') {

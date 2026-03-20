@@ -96,6 +96,30 @@ public class ImgHandler {
         return imgEntity;
     }
 
+    // ZIP에서 추출한 바이트 배열로 S3 업로드 후 이미지 엔티티 생성
+    public <T extends BaseImg<U>, U> T createImgFromBytes(byte[] bytes, String originalFilename, String contentType, Supplier<T> entitySupplier, U mappingEntity) {
+        String fileName = getFileName(originalFilename);
+        try {
+            s3Client.putObject(
+                    PutObjectRequest.builder()
+                            .bucket(bucket)
+                            .key(fileName)
+                            .contentType(contentType != null ? contentType : "image/jpeg")
+                            .build(),
+                    RequestBody.fromBytes(bytes)
+            );
+        } catch (S3Exception e) {
+            throw new RuntimeException("S3 업로드 실패: " + fileName, e);
+        }
+        String s3Url = "https://" + bucket + ".s3." + region + ".amazonaws.com/" + fileName;
+        T imgEntity = entitySupplier.get();
+        imgEntity.setImgOriginNm(originalFilename);
+        imgEntity.setImgPath(s3Url);
+        imgEntity.setMappingEntity(mappingEntity);
+        imgEntity.setImgNm(fileName);
+        return imgEntity;
+    }
+
     // 매핑 엔티티 없이 이미지 엔티티만 생성 (사용처: 추후 확장)
     public <T extends BaseImg<U>, U> T createImg(MultipartFile file, Supplier<T> entitySupplier) {
         String fileName = getFileName(file.getOriginalFilename());

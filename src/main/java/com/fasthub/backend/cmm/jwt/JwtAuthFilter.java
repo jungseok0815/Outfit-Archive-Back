@@ -37,7 +37,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         return path.startsWith("/api/usr/login") || path.startsWith("/api/usr/join")
                 || path.startsWith("/api/admin/auth/login")
                 || (path.startsWith("/api/usr/product") && request.getMethod().equals("GET"))
-                || (path.equals("/api/usr/post/list") && request.getMethod().equals("GET"));
+                || (path.startsWith("/api/usr/brand") && request.getMethod().equals("GET"))
+                || (path.equals("/api/usr/post/list") && request.getMethod().equals("GET"))
+                || (path.equals("/api/usr/post/search") && request.getMethod().equals("GET"));
     }
 
     // 매 요청마다 실행되는 JWT 검증 로직
