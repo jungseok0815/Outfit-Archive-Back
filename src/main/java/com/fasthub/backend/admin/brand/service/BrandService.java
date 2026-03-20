@@ -32,6 +32,12 @@ public class BrandService {
                 .map(brandMapper::brandToResponseDto);
     }
 
+    public ResponseBrandDto getById(Long id) {
+        Brand brand = brandRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
+        return brandMapper.brandToResponseDto(brand);
+    }
+
     @Transactional
     public void insert(InsertBrandDto insertBrandDto) {
         Brand brand = brandRepository.save(brandMapper.insertDtoToBrand(insertBrandDto));

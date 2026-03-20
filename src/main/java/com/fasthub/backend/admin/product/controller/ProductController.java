@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/admin/product")
@@ -46,5 +47,11 @@ public class ProductController {
     public ResponseEntity<Void> delete(@RequestParam(value = "id") String id) {
         productService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/bulk", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> bulkInsert(@RequestParam("file") MultipartFile file) {
+        int count = productService.bulkInsert(file);
+        return ResponseEntity.ok(count + "개 상품이 등록되었습니다.");
     }
 }
