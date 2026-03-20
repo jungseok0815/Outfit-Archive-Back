@@ -35,7 +35,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getServletPath();
         return path.startsWith("/api/usr/login") || path.startsWith("/api/usr/join")
-                || path.startsWith("/api/admin/auth/login");
+                || path.startsWith("/api/admin/auth/login")
+                || (path.startsWith("/api/usr/product") && request.getMethod().equals("GET"))
+                || (path.equals("/api/usr/post/list") && request.getMethod().equals("GET"));
     }
 
     // 매 요청마다 실행되는 JWT 검증 로직
@@ -49,8 +51,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         // 경로로 Admin/User 구분 → 각각 다른 쿠키 이름에서 토큰 추출
         String path = request.getServletPath();
+
+        log.info("path : {}", path );
         boolean isAdminPath = path.startsWith("/api/admin/");
         String tokenType = isAdminPath ? "ADMIN" : "USER";
+
+        log.info("path : {}", tokenType );
 
         String accessToken, refreshToken;
         if (isAdminPath) {

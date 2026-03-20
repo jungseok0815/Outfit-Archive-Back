@@ -7,6 +7,7 @@ import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +33,9 @@ public class SecurityConfig {
     private final AuthRepository authRepository;
     private final AdminMemberRepository adminMemberRepository;
 
+    @Value("${cors.allowed-origin}")
+    private String allowedOrigin;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf(AbstractHttpConfigurer::disable)
@@ -40,6 +44,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/usr/login", "/api/usr/join", "/api/img/**").permitAll()
                         .requestMatchers("/api/recommend/**").permitAll()
                         .requestMatchers("/api/admin/auth/login").permitAll()
+                        .requestMatchers("/api/usr/product/list", "/api/usr/product/**").permitAll()
+                        .requestMatchers("/api/usr/post/list").permitAll()
                         .requestMatchers("/api/admin/product/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
                         .requestMatchers("/api/admin/order/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
                         .requestMatchers("/api/admin/review/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
@@ -72,7 +78,7 @@ public class SecurityConfig {
                 .cors(c -> {
                         CorsConfigurationSource source = request -> {
                             CorsConfiguration config = new CorsConfiguration();
-                            config.addAllowedOrigin("http://jungseok-outfit-frontend.s3-website.ap-northeast-2.amazonaws.com"); // 허용할 도메인
+                            config.addAllowedOrigin(allowedOrigin); // 허용할 도메인
                             config.addAllowedMethod("*"); // 모든 HTTP 메서드 허용
                             config.addAllowedHeader("*"); // 모든 헤더 허용
                             config.setAllowCredentials(true); // 쿠키 허용
