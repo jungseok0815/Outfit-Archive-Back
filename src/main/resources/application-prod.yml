@@ -5,7 +5,7 @@ spring:
       port: 6379
 
 cors:
-  allowed-origin: http://localhost:3000
+  allowed-origin: http://jungseok-outfit-frontend.s3-website.ap-northeast-2.amazonaws.com
 
 jwt:
   cookie-secure: false
