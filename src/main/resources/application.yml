@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: backend
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://outfitarchivedb.cr6wags8qoxs.ap-northeast-2.rds.amazonaws.com:3306/outfitArchive?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: ENC(nEyDsLBB087f6W8dHVnSei6YlXEhwMA7)
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+
+jasypt:
+  encryptor:
+    password: ${JASYPT_ENCRYPTOR_PASSWORD}
+    algorithm: PBEWithMD5AndDES
+    iv-generator-class-name: org.jasypt.iv.NoIvGenerator
+
+jwt:
+  access-expiration: 5400000
+  refresh-expiration: 10800000
+  access-secret: ENC(Bbviq+yx4yW+qqec+1BgFbWv8znlnn67goBULcphgDOgqhgJIUTFfowxzvzDINN+r4q5AAUruA6EK6V/lIoUKg==)
+  refresh-secret: ENC(7UIvm6nvRJHvZ00tcmbE+kMJtv/tUFjYZVyzt60QuSMwtQ7gCdZYnvfI8zYaT+7jwtR6uB+XVbZ6Hs+GdDbnLQ==)
+
+toss:
+  secret-key: ENC(rorFzGs2dh7Brfybl22lxKBbG2G+HFbcKTfabSLY8rWmemsDWhzEVX8p1dFkB2Ss)
+
+cloud:
+  aws:
+    s3:
+      bucket: jungseok-outfit-s3
+    region:
+      static: ap-northeast-2
+    credentials:
+      access-key: ENC(7XV1f9nC+UvyTj4p3o3SXvynhNX9Z2RX+cq5frjyncA=)
+      secret-key: ENC(w0w4coAiU6s2gSh4nlSFXJpVEhSAl1n2QnyysbSyQEeFAd8+taUZpeBsbFCQZEZ2KC6k2x3Fsek=)

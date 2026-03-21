@@ -24,6 +24,8 @@ jobs:
 
       - name: Gradle 빌드 (테스트 제외)
         run: ./gradlew build -x test
+        env:
+          JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
 
       - name: EC2에 JAR 전송
         uses: appleboy/scp-action@v0.1.7
