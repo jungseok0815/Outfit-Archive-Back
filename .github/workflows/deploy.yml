@@ -47,5 +47,5 @@ jobs:
           port: 22
           script: |
             mv /home/ec2-user/app/backend-0.0.1-SNAPSHOT.jar /home/ec2-user/app/app.jar
-            sudo systemctl restart backend
+            sudo systemctl restart app
             echo "서버 재시작 완료"
