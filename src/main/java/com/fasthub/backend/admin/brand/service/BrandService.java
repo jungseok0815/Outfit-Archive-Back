@@ -11,6 +11,8 @@ import com.fasthub.backend.admin.brand.repository.BrandRepository;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
+import static com.fasthub.backend.cmm.img.ImgHandler.BRAND_MAX_WIDTH;
+import static com.fasthub.backend.cmm.img.ImgHandler.BRAND_MAX_HEIGHT;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -42,7 +44,7 @@ public class BrandService {
     public void insert(InsertBrandDto insertBrandDto) {
         Brand brand = brandRepository.save(brandMapper.insertDtoToBrand(insertBrandDto));
         if (insertBrandDto.getBrandImg() != null) {
-            brandImgRepository.save(imgHandler.createImg(insertBrandDto.getBrandImg(), BrandImg::new, brand));
+            brandImgRepository.save(imgHandler.createImg(insertBrandDto.getBrandImg(), BrandImg::new, brand, BRAND_MAX_WIDTH, BRAND_MAX_HEIGHT));
         }
     }
 
@@ -56,7 +58,7 @@ public class BrandService {
             // 기존 이미지를 S3에서 먼저 삭제 후 DB 엔티티 제거
             brand.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
             brandImgRepository.deleteByBrand(brand);
-            brandImgRepository.save(imgHandler.createImg(updateBrandDto.getBrandImg(), BrandImg::new, brand));
+            brandImgRepository.save(imgHandler.createImg(updateBrandDto.getBrandImg(), BrandImg::new, brand, BRAND_MAX_WIDTH, BRAND_MAX_HEIGHT));
         }
     }
 

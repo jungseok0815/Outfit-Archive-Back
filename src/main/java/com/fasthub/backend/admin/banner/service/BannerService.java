@@ -11,6 +11,8 @@ import com.fasthub.backend.admin.banner.repository.BannerRepository;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
+import static com.fasthub.backend.cmm.img.ImgHandler.BANNER_MAX_WIDTH;
+import static com.fasthub.backend.cmm.img.ImgHandler.BANNER_MAX_HEIGHT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +55,7 @@ public class BannerService {
                 .build());
 
         if (dto.getImage() != null && !dto.getImage().isEmpty()) {
-            bannerImgRepository.save(imgHandler.createImg(dto.getImage(), BannerImg::new, banner));
+            bannerImgRepository.save(imgHandler.createImg(dto.getImage(), BannerImg::new, banner, BANNER_MAX_WIDTH, BANNER_MAX_HEIGHT));
         }
     }
 
@@ -68,7 +70,7 @@ public class BannerService {
             bannerImgRepository.findByBanner(banner)
                     .forEach(img -> imgHandler.deleteFile(img.getImgNm()));
             bannerImgRepository.deleteByBanner(banner);
-            bannerImgRepository.save(imgHandler.createImg(dto.getImage(), BannerImg::new, banner));
+            bannerImgRepository.save(imgHandler.createImg(dto.getImage(), BannerImg::new, banner, BANNER_MAX_WIDTH, BANNER_MAX_HEIGHT));
         }
     }
 
