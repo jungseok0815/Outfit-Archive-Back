@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +28,7 @@ public class PostController {
     @GetMapping("/my")
     public ResponseEntity<Page<ResponsePostDto>> myList(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PageableDefault(size = 10) Pageable pageable) {
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok(postService.myList(userDetails.getId(), pageable));
     }
 
@@ -35,7 +36,7 @@ public class PostController {
     @GetMapping("/list")
     public ResponseEntity<Page<ResponsePostDto>> list(
             @RequestParam(required = false) String keyword,
-            @PageableDefault(size = 10) Pageable pageable) {
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok(postService.list(keyword, pageable));
     }
 
@@ -43,8 +44,16 @@ public class PostController {
     @GetMapping("/search")
     public ResponseEntity<Page<ResponsePostDto>> search(
             @RequestParam String keyword,
-            @PageableDefault(size = 12) Pageable pageable) {
+            @PageableDefault(size = 12, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok(postService.searchByKeyword(keyword, pageable));
+    }
+
+    // 특정 상품이 태그된 게시글 목록 (비로그인 접근 가능)
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<Page<ResponsePostDto>> listByProduct(
+            @PathVariable Long productId,
+            @PageableDefault(size = 12, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(postService.listByProduct(productId, pageable));
     }
 
     // 게시글 등록

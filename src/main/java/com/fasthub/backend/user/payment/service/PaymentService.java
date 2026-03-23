@@ -5,6 +5,7 @@ import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.cmm.enums.OrderStatus;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
+import com.fasthub.backend.user.order.dto.ResponseUserOrderDto;
 import com.fasthub.backend.user.payment.client.TossPaymentClient;
 import com.fasthub.backend.user.payment.dto.PaymentConfirmRequestDto;
 import com.fasthub.backend.user.point.entity.PointHistory;
@@ -91,6 +92,66 @@ public class PaymentService {
             order.confirmPayment(dto.getPaymentKey());
 
             log.info("[Payment] 결제 완료 orderId={}, amount={}, earnPoint={}", dto.getOrderId(), dto.getAmount(), earnPoint);
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new BusinessException(ErrorCode.ORDER_CONCURRENT_FAIL);
+        } finally {
+            if (lock.isHeldByCurrentThread()) lock.unlock();
+        }
+    }
+
+    // PG 없이 직접 결제 완료 처리 (토스 연동 없이 서버에 내역 저장)
+    @Transactional
+    public ResponseUserOrderDto directComplete(String tossOrderId) {
+        String lockKey = "payment:lock:" + tossOrderId;
+        RLock lock = redissonClient.getLock(lockKey);
+
+        try {
+            boolean isLocked = lock.tryLock(5, 3, TimeUnit.SECONDS);
+            if (!isLocked) throw new BusinessException(ErrorCode.ORDER_CONCURRENT_FAIL);
+
+            Order order = orderRepository.findByTossOrderId(tossOrderId)
+                    .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_NOT_FOUND));
+
+            if (order.getStatus() != OrderStatus.PENDING) {
+                throw new BusinessException(ErrorCode.ORDER_ALREADY_PAID);
+            }
+
+            // 재고 차감
+            order.getProduct().decreaseQuantity(order.getQuantity());
+
+            // 포인트 차감
+            User user = order.getUser();
+            int usePoint = order.getUsedPoint();
+            if (usePoint > 0) {
+                user.usePoint(usePoint);
+                pointHistoryRepository.save(PointHistory.builder()
+                        .user(user)
+                        .amount(-usePoint)
+                        .balanceAfter(user.getPoint())
+                        .description("포인트 사용 - " + order.getProduct().getProductNm())
+                        .type(PointType.USE)
+                        .build());
+            }
+
+            // 포인트 적립 (실제 결제 금액의 1%)
+            int actualPayment = order.getTotalPrice() - order.getUsedPoint();
+            int earnPoint = (int) (actualPayment * POINT_EARN_RATE);
+            user.earnPoint(earnPoint);
+            pointHistoryRepository.save(PointHistory.builder()
+                    .user(user)
+                    .amount(earnPoint)
+                    .balanceAfter(user.getPoint())
+                    .description("구매 적립 - " + order.getProduct().getProductNm())
+                    .type(PointType.EARN)
+                    .build());
+
+            // 주문 상태 업데이트 (PG 키 없이 DIRECT로 표시)
+            order.confirmPayment("DIRECT");
+
+            log.info("[Payment] 직접 결제 완료 tossOrderId={}, amount={}, earnPoint={}", tossOrderId, actualPayment, earnPoint);
+            return ResponseUserOrderDto.of(order, earnPoint);
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

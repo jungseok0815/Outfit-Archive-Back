@@ -19,4 +19,5 @@ public class UpdateProductDto {
     private Long brandId;
     private ProductCategory category;
     private List<MultipartFile> image;
+    private List<Long> deleteImageIds;
 }
