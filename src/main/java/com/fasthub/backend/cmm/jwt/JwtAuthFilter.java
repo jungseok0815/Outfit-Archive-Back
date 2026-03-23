@@ -35,7 +35,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getServletPath();
         return path.startsWith("/api/usr/login") || path.startsWith("/api/usr/join")
-                || path.startsWith("/api/admin/auth/login")
+                || path.equals("/api/usr/logout")
+                || path.startsWith("/api/admin/auth/login") || path.equals("/api/admin/auth/logout")
                 || (path.startsWith("/api/usr/product") && request.getMethod().equals("GET"))
                 || (path.startsWith("/api/usr/brand") && request.getMethod().equals("GET"))
                 || (path.equals("/api/usr/post/list") && request.getMethod().equals("GET"))

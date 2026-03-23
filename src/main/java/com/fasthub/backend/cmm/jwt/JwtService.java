@@ -130,6 +130,44 @@ public class JwtService {
         return refreshToken;
     }
 
+    // User 로그아웃: Redis Refresh Token 삭제 + Access/Refresh 쿠키 만료 처리
+    public void logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        String refreshToken = resolveTokenFromCookie(request, USER_REFRESH_PREFIX);
+        if (refreshToken != null) {
+            try {
+                String userId = getIdentifierFromRefresh(refreshToken);
+                refreshTokenService.delete(userId);
+            } catch (Exception ignored) {}
+        }
+        clearCookie(response, USER_ACCESS_PREFIX.getValue());
+        clearCookie(response, USER_REFRESH_PREFIX.getValue());
+    }
+
+    // Admin 로그아웃: Redis Refresh Token 삭제 + Access/Refresh 쿠키 만료 처리
+    public void logoutAdmin(HttpServletRequest request, HttpServletResponse response) {
+        String refreshToken = resolveTokenFromCookie(request, ADMIN_REFRESH_PREFIX);
+        if (refreshToken != null) {
+            try {
+                String identifier = getIdentifierFromRefresh(refreshToken);
+                refreshTokenService.delete(identifier);
+            } catch (Exception ignored) {}
+        }
+        clearCookie(response, ADMIN_ACCESS_PREFIX.getValue());
+        clearCookie(response, ADMIN_REFRESH_PREFIX.getValue());
+    }
+
+    // MaxAge=0 쿠키로 브라우저 쿠키 즉시 삭제
+    private void clearCookie(HttpServletResponse response, String cookieName) {
+        ResponseCookie cookie = ResponseCookie.from(cookieName, "")
+                .path("/")
+                .maxAge(0)
+                .httpOnly(true)
+                .sameSite(COOKIE_SAME_SITE)
+                .secure(COOKIE_SECURE)
+                .build();
+        response.addHeader(JWT_ISSUE_HEADER.getValue(), cookie.toString());
+    }
+
     // 토큰을 HttpOnly 쿠키로 세팅
     // HttpOnly  → JS에서 접근 불가 (XSS 방어)
     // Secure    → HTTPS에서만 전송 (네트워크 감청 방어)
