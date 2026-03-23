@@ -1,5 +1,6 @@
 package com.fasthub.backend.user.usr.controller;
 
+import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.user.usr.dto.*;
 import com.fasthub.backend.user.usr.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,13 @@ import java.util.Objects;
 public class UserController {
 
     private final UserService userService;
+    private final JwtService jwtService;
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
+        jwtService.logoutUser(request, response);
+        return ResponseEntity.noContent().build();
+    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto, HttpServletRequest request, HttpServletResponse response) {

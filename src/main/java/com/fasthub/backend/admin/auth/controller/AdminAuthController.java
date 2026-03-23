@@ -5,6 +5,8 @@ import com.fasthub.backend.admin.auth.dto.AdminLoginDto;
 import com.fasthub.backend.admin.auth.dto.AdminLoginResponseDto;
 import com.fasthub.backend.admin.auth.dto.AdminMemberResponseDto;
 import com.fasthub.backend.admin.auth.service.AdminAuthService;
+import com.fasthub.backend.cmm.jwt.JwtService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,13 @@ import java.util.List;
 public class AdminAuthController {
 
     private final AdminAuthService adminAuthService;
+    private final JwtService jwtService;
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> adminLogout(HttpServletRequest request, HttpServletResponse response) {
+        jwtService.logoutAdmin(request, response);
+        return ResponseEntity.noContent().build();
+    }
 
     @PostMapping("/login")
     public ResponseEntity<AdminLoginResponseDto> adminLogin(

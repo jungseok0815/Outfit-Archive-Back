@@ -31,7 +31,7 @@ jasypt:
     iv-generator-class-name: org.jasypt.iv.NoIvGenerator
 
 jwt:
-  access-expiration: 5400000
+  access-expiration: 1800000
   refresh-expiration: 10800000
   access-secret: ENC(Bbviq+yx4yW+qqec+1BgFbWv8znlnn67goBULcphgDOgqhgJIUTFfowxzvzDINN+r4q5AAUruA6EK6V/lIoUKg==)
   refresh-secret: ENC(7UIvm6nvRJHvZ00tcmbE+kMJtv/tUFjYZVyzt60QuSMwtQ7gCdZYnvfI8zYaT+7jwtR6uB+XVbZ6Hs+GdDbnLQ==)
