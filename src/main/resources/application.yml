@@ -16,6 +16,9 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQLDialect
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
   servlet:
     multipart:
       enabled: true
