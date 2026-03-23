@@ -47,6 +47,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/usr/product/list", "/api/usr/product/**").permitAll()
                         .requestMatchers("/api/usr/brand/list", "/api/usr/brand/**").permitAll()
                         .requestMatchers("/api/usr/post/list", "/api/usr/post/search").permitAll()
+                        .requestMatchers("/api/usr/banner/list").permitAll()
                         .requestMatchers("/api/admin/product/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
                         .requestMatchers("/api/admin/order/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
                         .requestMatchers("/api/admin/review/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")

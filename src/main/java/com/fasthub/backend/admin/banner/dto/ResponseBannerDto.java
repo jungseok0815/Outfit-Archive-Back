@@ -15,4 +15,5 @@ public class ResponseBannerDto {
     private String buttonText;
     private int sortOrder;
     private boolean active;
+    private String imgPath;
 }

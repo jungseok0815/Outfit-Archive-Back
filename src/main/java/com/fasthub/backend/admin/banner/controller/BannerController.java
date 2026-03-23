@@ -5,6 +5,7 @@ import com.fasthub.backend.admin.banner.dto.ResponseBannerDto;
 import com.fasthub.backend.admin.banner.dto.UpdateBannerDto;
 import com.fasthub.backend.admin.banner.service.BannerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,14 +23,14 @@ public class BannerController {
         return ResponseEntity.ok(bannerService.list());
     }
 
-    @PostMapping("/insert")
-    public ResponseEntity<Void> insert(@RequestBody InsertBannerDto dto) {
+    @PostMapping(value = "/insert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> insert(@ModelAttribute InsertBannerDto dto) {
         bannerService.insert(dto);
         return ResponseEntity.status(201).build();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Void> update(@RequestBody UpdateBannerDto dto) {
+    @PutMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> update(@ModelAttribute UpdateBannerDto dto) {
         bannerService.update(dto);
         return ResponseEntity.ok().build();
     }

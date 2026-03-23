@@ -3,6 +3,9 @@ package com.fasthub.backend.admin.banner.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
@@ -33,6 +36,9 @@ public class Banner {
 
     @Column(name = "ACTIVE", nullable = false)
     private boolean active;
+
+    @OneToMany(mappedBy = "banner", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BannerImg> images = new ArrayList<>();
 
     public void update(String title, String highlight, String description, String buttonText, int sortOrder, boolean active) {
         this.title = title;
