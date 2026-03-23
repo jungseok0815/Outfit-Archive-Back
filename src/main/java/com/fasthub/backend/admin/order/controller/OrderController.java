@@ -1,5 +1,6 @@
 package com.fasthub.backend.admin.order.controller;
 
+import com.fasthub.backend.admin.order.dto.RegisterShippingDto;
 import com.fasthub.backend.admin.order.dto.ResponseOrderDto;
 import com.fasthub.backend.admin.order.dto.UpdateOrderStatusDto;
 import com.fasthub.backend.admin.order.service.OrderService;
@@ -31,6 +32,12 @@ public class OrderController {
     @PutMapping("/status")
     public ResponseEntity<Void> updateStatus(@RequestBody UpdateOrderStatusDto dto) {
         orderService.updateStatus(dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/shipping")
+    public ResponseEntity<Void> registerShipping(@RequestBody RegisterShippingDto dto) {
+        orderService.registerShipping(dto);
         return ResponseEntity.ok().build();
     }
 

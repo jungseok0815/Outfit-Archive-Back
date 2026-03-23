@@ -70,6 +70,16 @@ public class PostService {
                 ));
     }
 
+    // 특정 상품이 태그된 게시글 목록
+    public Page<ResponsePostDto> listByProduct(Long productId, Pageable pageable) {
+        return postRepository.findByProductId(productId, pageable)
+                .map(post -> new ResponsePostDto(
+                        post,
+                        postLikeRepository.countByPostId(post.getId()),
+                        postCommentRepository.countByPostId(post.getId())
+                ));
+    }
+
     // 게시글 등록
     @Transactional
     public void insert(InsertPostDto dto, Long userId) {

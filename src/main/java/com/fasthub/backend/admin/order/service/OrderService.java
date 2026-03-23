@@ -1,5 +1,6 @@
 package com.fasthub.backend.admin.order.service;
 
+import com.fasthub.backend.admin.order.dto.RegisterShippingDto;
 import com.fasthub.backend.admin.order.dto.ResponseOrderDto;
 import com.fasthub.backend.admin.order.dto.UpdateOrderStatusDto;
 import com.fasthub.backend.admin.order.entity.Order;
@@ -32,6 +33,13 @@ public class OrderService {
         Order order = orderRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_NOT_FOUND));
         order.updateStatus(dto.getStatus());
+    }
+
+    @Transactional
+    public void registerShipping(RegisterShippingDto dto) {
+        Order order = orderRepository.findById(dto.getId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_NOT_FOUND));
+        order.registerShipping(dto.getTrackingNumber());
     }
 
     @Transactional

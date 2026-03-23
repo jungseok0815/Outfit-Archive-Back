@@ -22,4 +22,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findByUser_Id(Long userId, Pageable pageable);
 
     long countByUser_Id(Long userId);
+
+    @Query("SELECT DISTINCT p FROM Post p JOIN p.postProducts pp WHERE pp.product.id = :productId")
+    Page<Post> findByProductId(@Param("productId") Long productId, Pageable pageable);
 }

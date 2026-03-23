@@ -82,11 +82,17 @@ public class ProductService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
         product.update(productDto.getProductNm(), productDto.getProductCode(),
                 productDto.getProductPrice(), productDto.getProductQuantity(), productDto.getCategory(), brand);
-        if (productDto.getImage() != null) {
-            // 기존 이미지를 S3에서 먼저 삭제 후 DB 엔티티 제거
-            productImgRepository.findByProduct(product)
-                    .forEach(img -> imgHandler.deleteFile(img.getImgNm()));
-            productImgRepository.deleteByProduct(product);
+        // 선택된 이미지만 삭제
+        if (productDto.getDeleteImageIds() != null && !productDto.getDeleteImageIds().isEmpty()) {
+            productDto.getDeleteImageIds().forEach(imgId ->
+                    productImgRepository.findById(imgId).ifPresent(img -> {
+                        imgHandler.deleteFile(img.getImgNm());
+                        productImgRepository.delete(img);
+                    })
+            );
+        }
+        // 새 이미지 추가
+        if (productDto.getImage() != null && !productDto.getImage().isEmpty()) {
             productDto.getImage().forEach(item ->
                     productImgRepository.save(imgHandler.createImg(item, ProductImg::new, product)));
         }

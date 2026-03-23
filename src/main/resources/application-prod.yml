@@ -9,6 +9,7 @@ cors:
 
 jwt:
   cookie-secure: false
+  cookie-same-site: Lax
 
 file:
   path-product: C:\jungseok\img\

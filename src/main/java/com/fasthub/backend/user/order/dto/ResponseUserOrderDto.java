@@ -14,6 +14,7 @@ public class ResponseUserOrderDto {
     private String tossOrderId;  // 토스 결제창에 전달할 주문번호
     private String productNm;
     private String brandNm;
+    private String productImgPath;  // 상품 대표 이미지
     private int quantity;
     private int totalPrice;
     private int usedPoint;
@@ -23,11 +24,16 @@ public class ResponseUserOrderDto {
     private LocalDateTime orderDate;
 
     public static ResponseUserOrderDto of(Order order, int earnedPoint) {
+        String imgPath = order.getProduct().getImages() != null && !order.getProduct().getImages().isEmpty()
+                ? order.getProduct().getImages().get(0).getImgPath()
+                : null;
+
         return ResponseUserOrderDto.builder()
                 .orderId(order.getId())
                 .tossOrderId(order.getTossOrderId())
                 .productNm(order.getProduct().getProductNm())
                 .brandNm(order.getProduct().getBrand() != null ? order.getProduct().getBrand().getBrandNm() : null)
+                .productImgPath(imgPath)
                 .quantity(order.getQuantity())
                 .totalPrice(order.getTotalPrice())
                 .usedPoint(order.getUsedPoint())

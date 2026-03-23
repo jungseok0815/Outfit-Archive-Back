@@ -15,6 +15,7 @@ public class ResponseOrderDto {
     private String userId;
     private String userNm;
     private String productNm;
+    private String productImgPath;
     private int quantity;
     private int totalPrice;
     private OrderStatus status;
@@ -22,4 +23,5 @@ public class ResponseOrderDto {
     private String shippingAddress;
     private String recipientName;
     private String recipientPhone;
+    private String trackingNumber;
 }

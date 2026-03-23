@@ -1,5 +1,6 @@
 package com.fasthub.backend.user.payment.controller;
 
+import com.fasthub.backend.user.order.dto.ResponseUserOrderDto;
 import com.fasthub.backend.user.payment.dto.PaymentConfirmRequestDto;
 import com.fasthub.backend.user.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,12 @@ public class PaymentController {
     public ResponseEntity<Void> confirm(@RequestBody PaymentConfirmRequestDto dto) {
         paymentService.confirm(dto);
         return ResponseEntity.ok().build();
+    }
+
+    // PG 없이 직접 결제 완료 (토스 연동 없이 서버에 내역 저장)
+    @PostMapping("/direct-complete")
+    public ResponseEntity<ResponseUserOrderDto> directComplete(@RequestParam String orderId) {
+        return ResponseEntity.ok(paymentService.directComplete(orderId));
     }
 
     // 결제 취소

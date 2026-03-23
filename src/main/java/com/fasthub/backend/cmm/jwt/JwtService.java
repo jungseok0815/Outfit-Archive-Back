@@ -52,6 +52,7 @@ public class JwtService {
     private final long ACCESS_EXPIRATION;
     private final long REFRESH_EXPIRATION;
     private final boolean COOKIE_SECURE;
+    private final String COOKIE_SAME_SITE;
 
 
     public JwtService(
@@ -66,7 +67,8 @@ public class JwtService {
             @Value("${jwt.refresh-secret}") String REFRESH_SECRET_KEY,
             @Value("${jwt.access-expiration}") long ACCESS_EXPIRATION,
             @Value("${jwt.refresh-expiration}") long REFRESH_EXPIRATION,
-            @Value("${jwt.cookie-secure}") boolean COOKIE_SECURE
+            @Value("${jwt.cookie-secure}") boolean COOKIE_SECURE,
+            @Value("${jwt.cookie-same-site:Lax}") String COOKIE_SAME_SITE
 
     ) {
         this.customUserDetailService = customUserDetailService;
@@ -81,6 +83,7 @@ public class JwtService {
         this.ACCESS_EXPIRATION = ACCESS_EXPIRATION;
         this.REFRESH_EXPIRATION = REFRESH_EXPIRATION;
         this.COOKIE_SECURE = COOKIE_SECURE;
+        this.COOKIE_SAME_SITE = COOKIE_SAME_SITE;
     }
 
     // 유저의 가입 승인 여부 확인
@@ -136,7 +139,7 @@ public class JwtService {
                 .path("/")
                 .maxAge(maxAgeSeconds)
                 .httpOnly(true)
-                .sameSite("None")
+                .sameSite(COOKIE_SAME_SITE)
                 .secure(COOKIE_SECURE)
                 .build();
     }

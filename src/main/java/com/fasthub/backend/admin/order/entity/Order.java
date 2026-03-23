@@ -63,8 +63,16 @@ public class Order {
     @Column(length = 200)
     private String paymentKey;   // 토스 결제 승인 후 받는 키
 
+    @Column(length = 100)
+    private String trackingNumber;  // 운송장 번호
+
     public void updateStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public void registerShipping(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+        this.status = OrderStatus.SHIPPING;
     }
 
     public void confirmPayment(String paymentKey) {

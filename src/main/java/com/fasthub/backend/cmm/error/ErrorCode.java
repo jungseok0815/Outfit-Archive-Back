@@ -82,6 +82,9 @@ public enum ErrorCode {
     PAYMENT_CANCEL_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "PAY003", "결제 취소에 실패했습니다."),
     PAYMENT_NOT_CANCELABLE(HttpStatus.BAD_REQUEST, "PAY004", "취소 가능한 주문이 아닙니다."),
 
+    //BANNER
+    BANNER_NOT_FOUND(HttpStatus.NOT_FOUND, "BN001", "배너를 찾을 수 없습니다."),
+
     //REVIEW
     REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "R001", "후기를 찾을 수 없습니다."),
     REVIEW_ALREADY_EXISTS(HttpStatus.CONFLICT, "R002", "이미 후기를 작성한 주문입니다."),
