@@ -27,7 +27,7 @@ public class UserProductService {
     }
 
     public ResponseProductDto getDetail(Long id) {
-        Product product = userProductRepository.findById(id)
+        Product product = userProductRepository.findByIdWithDetails(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_SELECT));
         return productMapper.productToProductDto(product);
     }

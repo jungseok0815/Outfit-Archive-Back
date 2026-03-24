@@ -7,8 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import java.util.Optional;
 
 public interface UserProductRepository extends JpaRepository<Product, Long> {
+
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.brand LEFT JOIN FETCH p.images WHERE p.id = :id")
+    Optional<Product> findByIdWithDetails(@Param("id") Long id);
 
     @Query("SELECT p FROM Product p WHERE " +
             "(:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND " +
