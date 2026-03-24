@@ -53,6 +53,19 @@ public class Coupon {
         this.issuedCount++;
     }
 
+    public void update(String name, CouponDiscountType discountType, int discountValue,
+                       int minOrderPrice, int maxDiscountPrice, int totalQuantity,
+                       LocalDateTime startAt, LocalDateTime endAt) {
+        this.name = name;
+        this.discountType = discountType;
+        this.discountValue = discountValue;
+        this.minOrderPrice = minOrderPrice;
+        this.maxDiscountPrice = maxDiscountPrice;
+        this.totalQuantity = totalQuantity;
+        this.startAt = startAt;
+        this.endAt = endAt;
+    }
+
     // 발급 가능 여부: 수량 & 기간 모두 충족해야 함
     public boolean isAvailable() {
         LocalDateTime now = LocalDateTime.now();

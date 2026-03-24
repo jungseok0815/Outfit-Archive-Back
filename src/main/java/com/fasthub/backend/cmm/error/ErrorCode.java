@@ -101,7 +101,8 @@ public enum ErrorCode {
     COUPON_NOT_OWNER(HttpStatus.FORBIDDEN, "CPN006", "해당 쿠폰의 소유자가 아닙니다."),
     COUPON_ALREADY_USED(HttpStatus.BAD_REQUEST, "CPN007", "이미 사용된 쿠폰입니다."),
     COUPON_EXPIRED(HttpStatus.BAD_REQUEST, "CPN008", "만료된 쿠폰입니다."),
-    COUPON_MIN_ORDER_NOT_MET(HttpStatus.BAD_REQUEST, "CPN009", "최소 주문금액을 충족하지 않습니다.");
+    COUPON_MIN_ORDER_NOT_MET(HttpStatus.BAD_REQUEST, "CPN009", "최소 주문금액을 충족하지 않습니다."),
+    COUPON_HAS_ISSUED(HttpStatus.CONFLICT, "CPN010", "이미 발급된 쿠폰이 있어 삭제할 수 없습니다.");
 
     private final HttpStatus status;
     private final String code;

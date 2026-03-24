@@ -3,6 +3,8 @@ package com.fasthub.backend.user.coupon.service;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.user.coupon.dto.CouponCreateDto;
+import com.fasthub.backend.user.coupon.dto.CouponDto;
+import com.fasthub.backend.user.coupon.dto.CouponUpdateDto;
 import com.fasthub.backend.user.coupon.dto.UserCouponDto;
 import com.fasthub.backend.user.coupon.entity.Coupon;
 import com.fasthub.backend.user.coupon.entity.UserCoupon;
@@ -52,6 +54,43 @@ public class CouponService {
                 .endAt(dto.getEndAt())
                 .build());
         log.info("[Coupon] 쿠폰 생성 code={}", dto.getCode());
+    }
+
+    // ───────────────────────────────────────────────
+    // 관리자: 전체 쿠폰 목록 조회
+    // ───────────────────────────────────────────────
+    @Transactional(readOnly = true)
+    public List<CouponDto> getAllCoupons() {
+        return couponRepository.findAll().stream()
+                .map(CouponDto::of)
+                .collect(Collectors.toList());
+    }
+
+    // ───────────────────────────────────────────────
+    // 관리자: 쿠폰 수정 (코드 제외)
+    // ───────────────────────────────────────────────
+    @Transactional
+    public void updateCoupon(Long id, CouponUpdateDto dto) {
+        Coupon coupon = couponRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.COUPON_NOT_FOUND));
+        coupon.update(dto.getName(), dto.getDiscountType(), dto.getDiscountValue(),
+                dto.getMinOrderPrice(), dto.getMaxDiscountPrice(), dto.getTotalQuantity(),
+                dto.getStartAt(), dto.getEndAt());
+        log.info("[Coupon] 쿠폰 수정 id={}", id);
+    }
+
+    // ───────────────────────────────────────────────
+    // 관리자: 쿠폰 삭제 (미발급 쿠폰만 삭제 가능)
+    // ───────────────────────────────────────────────
+    @Transactional
+    public void deleteCoupon(Long id) {
+        Coupon coupon = couponRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.COUPON_NOT_FOUND));
+        if (coupon.getIssuedCount() > 0) {
+            throw new BusinessException(ErrorCode.COUPON_HAS_ISSUED);
+        }
+        couponRepository.delete(coupon);
+        log.info("[Coupon] 쿠폰 삭제 id={}", id);
     }
 
     // ───────────────────────────────────────────────
