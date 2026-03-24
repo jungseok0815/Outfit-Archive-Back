@@ -57,6 +57,13 @@ public class Order {
     @Column(nullable = false)
     private int usedPoint;
 
+    @Builder.Default
+    @Column(nullable = false)
+    private int couponDiscount = 0;  // 쿠폰 할인 금액 (미사용 시 0)
+
+    @Column
+    private Long userCouponId;       // 사용된 UserCoupon ID (취소 시 복원용, null이면 쿠폰 미사용)
+
     @Column(unique = true, length = 100)
     private String tossOrderId;  // 토스에 전달하는 UUID 주문번호
 

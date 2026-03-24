@@ -2,13 +2,17 @@ package com.fasthub.backend.user.recommend.service;
 
 import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
+import com.fasthub.backend.user.recommend.strategy.ContentBasedStrategy;
 import com.fasthub.backend.user.recommend.strategy.PopularityStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,9 +22,10 @@ public class RecommendService {
 
     private final OrderRepository orderRepository;
     private final PopularityStrategy popularityStrategy;
+    private final ContentBasedStrategy contentBasedStrategy;
 
     public List<RecommendProductDto> recommend(Long userId, int limit) {
-        // 비로그인 or 구매 이력 없는 사용자 → 인기 상품 추천
+        // 비로그인 → 인기 상품
         if (userId == null) {
             log.info("[Recommend] 비로그인 사용자 → 인기 상품 추천");
             return popularityStrategy.recommend(limit);
@@ -29,14 +34,32 @@ public class RecommendService {
         long orderCount = orderRepository.countByUserId(userId);
         log.info("[Recommend] userId={}, orderCount={}", userId, orderCount);
 
+        // Cold Start (구매 이력 없음) → 인기 상품
         if (orderCount == 0) {
-            log.info("[Recommend] Cold Start (구매 이력 없음) → 인기 상품 추천");
+            log.info("[Recommend] Cold Start → 인기 상품 추천");
             return popularityStrategy.recommend(limit);
         }
 
-        // 추후 Content-Based, Collaborative Filtering 추가 예정
-        log.info("[Recommend] 구매 이력 있음 → 추후 개인화 추천 적용 예정, 임시로 인기 상품 반환");
-        return popularityStrategy.recommend(limit);
-    }
+        // 구매 이력 있음 → 콘텐츠 기반 추천
+        log.info("[Recommend] 구매 이력 있음 → 콘텐츠 기반 추천");
+        List<RecommendProductDto> contentBased = contentBasedStrategy.recommend(userId, limit);
 
+        if (contentBased.size() >= limit) {
+            return contentBased;
+        }
+
+        // 콘텐츠 기반 결과가 부족하면 인기 상품으로 보완
+        log.info("[Recommend] 콘텐츠 기반 추천 부족 ({}/{}), 인기 상품으로 보완", contentBased.size(), limit);
+        Set<Long> existingIds = contentBased.stream()
+                .map(RecommendProductDto::getProductId)
+                .collect(Collectors.toSet());
+
+        List<RecommendProductDto> result = new ArrayList<>(contentBased);
+        popularityStrategy.recommend(limit).stream()
+                .filter(p -> !existingIds.contains(p.getProductId()))
+                .limit(limit - contentBased.size())
+                .forEach(result::add);
+
+        return result;
+    }
 }

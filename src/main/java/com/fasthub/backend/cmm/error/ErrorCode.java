@@ -90,7 +90,19 @@ public enum ErrorCode {
     REVIEW_ALREADY_EXISTS(HttpStatus.CONFLICT, "R002", "이미 후기를 작성한 주문입니다."),
     REVIEW_UNAUTHORIZED(HttpStatus.FORBIDDEN, "R003", "후기 작성/수정/삭제 권한이 없습니다."),
     REVIEW_ORDER_NOT_DELIVERED(HttpStatus.BAD_REQUEST, "R004", "배송 완료된 주문에만 후기를 작성할 수 있습니다."),
-    REVIEW_INVALID_RATING(HttpStatus.BAD_REQUEST, "R005", "평점은 1 ~ 5 사이여야 합니다.");
+    REVIEW_INVALID_RATING(HttpStatus.BAD_REQUEST, "R005", "평점은 1 ~ 5 사이여야 합니다."),
+
+    //COUPON
+    COUPON_CODE_DUPLICATE(HttpStatus.CONFLICT, "CPN001", "이미 존재하는 쿠폰 코드입니다."),
+    COUPON_NOT_FOUND(HttpStatus.NOT_FOUND, "CPN002", "쿠폰을 찾을 수 없습니다."),
+    COUPON_NOT_AVAILABLE(HttpStatus.BAD_REQUEST, "CPN003", "발급 가능한 쿠폰이 아닙니다. (수량 소진 또는 기간 만료)"),
+    COUPON_ALREADY_ISSUED(HttpStatus.CONFLICT, "CPN004", "이미 발급받은 쿠폰입니다."),
+    COUPON_CONCURRENT_FAIL(HttpStatus.CONFLICT, "CPN005", "현재 요청이 많습니다. 잠시 후 다시 시도해주세요."),
+    COUPON_NOT_OWNER(HttpStatus.FORBIDDEN, "CPN006", "해당 쿠폰의 소유자가 아닙니다."),
+    COUPON_ALREADY_USED(HttpStatus.BAD_REQUEST, "CPN007", "이미 사용된 쿠폰입니다."),
+    COUPON_EXPIRED(HttpStatus.BAD_REQUEST, "CPN008", "만료된 쿠폰입니다."),
+    COUPON_MIN_ORDER_NOT_MET(HttpStatus.BAD_REQUEST, "CPN009", "최소 주문금액을 충족하지 않습니다."),
+    COUPON_HAS_ISSUED(HttpStatus.CONFLICT, "CPN010", "이미 발급된 쿠폰이 있어 삭제할 수 없습니다.");
 
     private final HttpStatus status;
     private final String code;

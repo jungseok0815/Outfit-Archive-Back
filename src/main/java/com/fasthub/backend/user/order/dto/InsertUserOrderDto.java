@@ -11,5 +11,6 @@ public class InsertUserOrderDto {
     private String shippingAddress;
     private String recipientName;
     private String recipientPhone;
-    private int usePoint;   // 사용할 포인트 (0이면 미사용)
+    private int usePoint;        // 사용할 포인트 (0이면 미사용)
+    private Long userCouponId;   // 사용할 쿠폰 ID (null이면 미사용)
 }
