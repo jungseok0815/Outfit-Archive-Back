@@ -18,8 +18,9 @@ public class ResponseUserOrderDto {
     private int quantity;
     private int totalPrice;
     private int usedPoint;
+    private int couponDiscount;
     private int earnedPoint;
-    private int actualPayment;  // totalPrice - usedPoint
+    private int actualPayment;  // totalPrice - usedPoint - couponDiscount
     private OrderStatus status;
     private LocalDateTime orderDate;
 
