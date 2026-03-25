@@ -26,8 +26,9 @@ public class UserProductController {
             @RequestParam(required = false) Long brandId,
             @RequestParam(required = false) Integer minPrice,
             @RequestParam(required = false) Integer maxPrice,
+            @RequestParam(required = false, defaultValue = "popular") String sortBy,
             @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok(userProductService.search(keyword, category, brandId, minPrice, maxPrice, pageable));
+        return ResponseEntity.ok(userProductService.search(keyword, category, brandId, minPrice, maxPrice, sortBy, pageable));
     }
 
     // 상품 상세 조회

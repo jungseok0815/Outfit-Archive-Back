@@ -21,7 +21,11 @@ public class UserProductService {
     private final UserProductRepository userProductRepository;
     private final ProductMapper productMapper;
 
-    public Page<ResponseProductDto> search(String keyword, ProductCategory category, Long brandId, Integer minPrice, Integer maxPrice, Pageable pageable) {
+    public Page<ResponseProductDto> search(String keyword, ProductCategory category, Long brandId, Integer minPrice, Integer maxPrice, String sortBy, Pageable pageable) {
+        if ("popular".equals(sortBy)) {
+            return userProductRepository.searchProductsByPopularity(keyword, category, brandId, minPrice, maxPrice, pageable)
+                    .map(productMapper::productToProductDto);
+        }
         return userProductRepository.searchProducts(keyword, category, brandId, minPrice, maxPrice, pageable)
                 .map(productMapper::productToProductDto);
     }

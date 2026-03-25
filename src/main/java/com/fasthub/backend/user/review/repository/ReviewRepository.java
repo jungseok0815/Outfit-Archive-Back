@@ -17,6 +17,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Page<Review> findByProduct(Product product, Pageable pageable);
 
+    void deleteByProduct(Product product);
+
     // 상품 ID 목록에 대한 리뷰 수 / 평균 평점 일괄 조회
     @Query("SELECT r.product.id AS productId, COUNT(r) AS reviewCount, AVG(r.rating) AS avgRating " +
            "FROM Review r " +
