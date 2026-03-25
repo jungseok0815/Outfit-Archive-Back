@@ -14,6 +14,12 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.images WHERE p.brand.id = :brandId")
+    List<Product> findAllByBrandIdWithImages(@Param("brandId") Long brandId);
+
+    @Query("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.images WHERE p.id IN :ids")
+    List<Product> findAllByIdInWithImages(@Param("ids") List<Long> ids);
+
     @Override
     @EntityGraph(attributePaths = {"images"})
     List<Product> findAll();

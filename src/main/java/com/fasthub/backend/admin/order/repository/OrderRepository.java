@@ -66,4 +66,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     // 토스 주문번호로 조회
     java.util.Optional<Order> findByTossOrderId(String tossOrderId);
+
+    // 상품 기준 주문 목록 (브랜드/상품 삭제 시 연관 데이터 제거용)
+    List<Order> findByProduct(com.fasthub.backend.admin.product.entity.Product product);
 }

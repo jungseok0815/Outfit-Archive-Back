@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface BrandRepository extends JpaRepository<Brand, Long> {
 
-    @Query("SELECT b FROM Brand b WHERE :keyword IS NULL OR :keyword = '' OR b.brandNm LIKE %:keyword%")
+    @Query(value = "SELECT DISTINCT b FROM Brand b LEFT JOIN FETCH b.images WHERE :keyword IS NULL OR :keyword = '' OR b.brandNm LIKE %:keyword%",
+           countQuery = "SELECT COUNT(b) FROM Brand b WHERE :keyword IS NULL OR :keyword = '' OR b.brandNm LIKE %:keyword%")
     Page<Brand> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 }

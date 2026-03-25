@@ -14,6 +14,7 @@ public class RecommendProductDto {
     private int productPrice;
     private ProductCategory category;
     private String brandNm;
+    private String imgPath;    // 첫 번째 이미지 경로
     private long orderCount;   // 기간 내 주문 수
     private long reviewCount;  // 전체 리뷰 수
     private double avgRating;  // 평균 평점 (소수점 1자리)

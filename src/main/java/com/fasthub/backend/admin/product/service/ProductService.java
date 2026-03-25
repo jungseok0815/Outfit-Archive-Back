@@ -99,7 +99,7 @@ public class ProductService {
     }
 
     @Transactional
-    public int bulkInsert(MultipartFile zipFile) {
+    public int bulkInsert(MultipartFile zipFile, Long overrideBrandId) {
         Map<String, byte[]> imageMap = new HashMap<>();
         byte[] excelBytes = null;
 
@@ -133,11 +133,16 @@ public class ProductService {
 
                 String productNm   = getCellValue(row, 0);
                 String productCode = getCellValue(row, 1);
-                int productPrice   = (int) row.getCell(2).getNumericCellValue();
-                int productQty     = (int) row.getCell(3).getNumericCellValue();
+                int productPrice   = Integer.parseInt(getCellValue(row, 2));
+                int productQty     = Integer.parseInt(getCellValue(row, 3));
                 String categoryStr = getCellValue(row, 4);
-                long brandId       = (long) row.getCell(5).getNumericCellValue();
-                String imageFile   = getCellValue(row, 6);
+                String imageFile   = getCellValue(row, 5);
+
+                if (overrideBrandId == null) {
+                    log.warn("[BulkInsert] brandId가 없습니다. 행 {} 건너뜀", i);
+                    continue;
+                }
+                long brandId = overrideBrandId;
 
                 Brand brand = brandRepository.findById(brandId)
                         .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));

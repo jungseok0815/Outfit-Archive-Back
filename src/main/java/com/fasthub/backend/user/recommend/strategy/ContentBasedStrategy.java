@@ -99,7 +99,7 @@ public class ContentBasedStrategy {
                 .collect(toMap(PopularProductProjection::getProductId,
                                PopularProductProjection::getOrderCount));
 
-        Map<Long, Product> productMap = productRepository.findAllById(productIds).stream()
+        Map<Long, Product> productMap = productRepository.findAllByIdInWithImages(productIds).stream()
                 .collect(toMap(Product::getId, p -> p));
 
         Map<Long, ReviewStatsProjection> reviewStatsMap = reviewRepository
@@ -117,6 +117,8 @@ public class ContentBasedStrategy {
                     double avgRating = stats != null && stats.getAvgRating() != null
                             ? Math.round(stats.getAvgRating() * 10.0) / 10.0 : 0.0;
 
+                    String imgPath = (product.getImages() != null && !product.getImages().isEmpty())
+                            ? product.getImages().get(0).getImgPath() : null;
                     return RecommendProductDto.builder()
                             .productId(product.getId())
                             .productNm(product.getProductNm())
@@ -124,6 +126,7 @@ public class ContentBasedStrategy {
                             .productPrice(product.getProductPrice())
                             .category(product.getCategory())
                             .brandNm(product.getBrand() != null ? product.getBrand().getBrandNm() : null)
+                            .imgPath(imgPath)
                             .orderCount(orderCnt)
                             .reviewCount(reviewCnt)
                             .avgRating(avgRating)

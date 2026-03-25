@@ -27,4 +27,25 @@ public interface UserProductRepository extends JpaRepository<Product, Long> {
             @Param("minPrice") Integer minPrice,
             @Param("maxPrice") Integer maxPrice,
             Pageable pageable);
+
+    @Query(value = "SELECT p FROM Product p WHERE " +
+            "(:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND " +
+            "(:category IS NULL OR p.category = :category) AND " +
+            "(:brandId IS NULL OR p.brand.id = :brandId) AND " +
+            "(:minPrice IS NULL OR p.productPrice >= :minPrice) AND " +
+            "(:maxPrice IS NULL OR p.productPrice <= :maxPrice) " +
+            "ORDER BY (SELECT COUNT(o) FROM Order o WHERE o.product.id = p.id) DESC",
+           countQuery = "SELECT COUNT(p) FROM Product p WHERE " +
+            "(:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND " +
+            "(:category IS NULL OR p.category = :category) AND " +
+            "(:brandId IS NULL OR p.brand.id = :brandId) AND " +
+            "(:minPrice IS NULL OR p.productPrice >= :minPrice) AND " +
+            "(:maxPrice IS NULL OR p.productPrice <= :maxPrice)")
+    Page<Product> searchProductsByPopularity(
+            @Param("keyword") String keyword,
+            @Param("category") ProductCategory category,
+            @Param("brandId") Long brandId,
+            @Param("minPrice") Integer minPrice,
+            @Param("maxPrice") Integer maxPrice,
+            Pageable pageable);
 }

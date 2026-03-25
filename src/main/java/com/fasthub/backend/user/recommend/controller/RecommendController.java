@@ -31,4 +31,11 @@ public class RecommendController {
         Long userId = (userDetails != null) ? userDetails.getId() : null;
         return ResponseEntity.ok(recommendService.recommend(userId, limit));
     }
+
+    // 로그인 여부 무관하게 항상 인기 상품 반환
+    @GetMapping("/popular")
+    public ResponseEntity<List<RecommendProductDto>> popularProducts(
+            @RequestParam(defaultValue = "10") int limit) {
+        return ResponseEntity.ok(recommendService.recommendPopular(limit));
+    }
 }

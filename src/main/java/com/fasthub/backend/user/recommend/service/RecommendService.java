@@ -24,6 +24,11 @@ public class RecommendService {
     private final PopularityStrategy popularityStrategy;
     private final ContentBasedStrategy contentBasedStrategy;
 
+    public List<RecommendProductDto> recommendPopular(int limit) {
+        log.info("[Recommend] 인기 상품 추천 (로그인 무관)");
+        return popularityStrategy.recommend(limit);
+    }
+
     public List<RecommendProductDto> recommend(Long userId, int limit) {
         // 비로그인 → 인기 상품
         if (userId == null) {
