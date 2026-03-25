@@ -23,4 +23,5 @@ public class ResponseProductDto {
     private ProductCategory category;
     private List<ResponseProductImgDto> images;
     private long reviewCount;
+    private long orderCount;
 }
