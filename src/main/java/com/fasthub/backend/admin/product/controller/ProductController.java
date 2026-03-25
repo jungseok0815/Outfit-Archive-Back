@@ -50,8 +50,10 @@ public class ProductController {
     }
 
     @PostMapping(value = "/bulk", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> bulkInsert(@RequestParam("file") MultipartFile file) {
-        int count = productService.bulkInsert(file);
+    public ResponseEntity<String> bulkInsert(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam(value = "brandId", required = false) Long brandId) {
+        int count = productService.bulkInsert(file, brandId);
         return ResponseEntity.ok(count + "개 상품이 등록되었습니다.");
     }
 }
