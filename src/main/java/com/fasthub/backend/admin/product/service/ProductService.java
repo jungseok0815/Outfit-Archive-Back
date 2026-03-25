@@ -133,8 +133,8 @@ public class ProductService {
 
                 String productNm   = getCellValue(row, 0);
                 String productCode = getCellValue(row, 1);
-                int productPrice   = (int) row.getCell(2).getNumericCellValue();
-                int productQty     = (int) row.getCell(3).getNumericCellValue();
+                int productPrice   = Integer.parseInt(getCellValue(row, 2));
+                int productQty     = Integer.parseInt(getCellValue(row, 3));
                 String categoryStr = getCellValue(row, 4);
                 String imageFile   = getCellValue(row, 5);
 
