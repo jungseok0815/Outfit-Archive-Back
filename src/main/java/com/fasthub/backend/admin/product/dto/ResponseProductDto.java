@@ -22,4 +22,5 @@ public class ResponseProductDto {
     private String brandNm;
     private ProductCategory category;
     private List<ResponseProductImgDto> images;
+    private long reviewCount;
 }

@@ -36,6 +36,7 @@ public class PopularityStrategy {
     private static final double RATING_WEIGHT = 2.0;
 
     public List<RecommendProductDto> recommend(int limit) {
+        log.info("recmmend come limit : {}", limit);
         // 1순위: 최근 30일 인기 상품
         List<RecommendProductDto> result = fetchPopular(RECENT_DAYS, limit, "최근 30일 인기 상품");
 
@@ -57,9 +58,14 @@ public class PopularityStrategy {
     private List<RecommendProductDto> fetchPopular(int days, int limit, String reason) {
         LocalDateTime since = LocalDateTime.now().minusDays(days);
 
+        log.info("since : {}" , since);
+
         // 주문 수 기준 후보 풀 조회 (limit * 3: 리뷰 점수 반영 후 재정렬 여유분)
         List<PopularProductProjection> projections =
                 orderRepository.findPopularProductIds(since, PageRequest.of(0, limit * 3));
+
+
+        projections.forEach(item -> log.info("projection : {}", projections));
 
         if (projections.isEmpty()) {
             return List.of();
@@ -76,8 +82,8 @@ public class PopularityStrategy {
                         PopularProductProjection::getOrderCount
                 ));
 
-        // 상품 상세 정보 일괄 조회
-        Map<Long, Product> productMap = productRepository.findAllById(productIds).stream()
+        // 상품 상세 정보 일괄 조회 (이미지 포함)
+        Map<Long, Product> productMap = productRepository.findAllByIdInWithImages(productIds).stream()
                 .collect(Collectors.toMap(Product::getId, p -> p));
 
         // productId → 리뷰 수 / 평균 평점 맵
@@ -101,6 +107,8 @@ public class PopularityStrategy {
                             + (avgRating * RATING_WEIGHT);
                     log.debug("[Recommend] productId={} score={} (order={}, review={}, rating={})",
                             id, score, orderCnt, reviewCnt, avgRating);
+                    String imgPath = (product.getImages() != null && !product.getImages().isEmpty())
+                            ? product.getImages().get(0).getImgPath() : null;
                     return RecommendProductDto.builder()
                             .productId(product.getId())
                             .productNm(product.getProductNm())
@@ -108,6 +116,7 @@ public class PopularityStrategy {
                             .productPrice(product.getProductPrice())
                             .category(product.getCategory())
                             .brandNm(product.getBrand() != null ? product.getBrand().getBrandNm() : null)
+                            .imgPath(imgPath)
                             .orderCount(orderCnt)
                             .reviewCount(reviewCnt)
                             .avgRating(avgRating)
