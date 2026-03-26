@@ -15,6 +15,7 @@ import java.util.List;
 public class ResponseProductDto {
     private Long id;
     private String productNm;
+    private String productEnNm;
     private String productCode;
     private int productPrice;
     private int productQuantity;
@@ -22,5 +23,7 @@ public class ResponseProductDto {
     private String brandNm;
     private ProductCategory category;
     private List<ResponseProductImgDto> images;
+    private List<ProductSizeDto> sizes;
     private long reviewCount;
+    private long orderCount;
 }

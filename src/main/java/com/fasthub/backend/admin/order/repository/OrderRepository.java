@@ -55,6 +55,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             @Param("since") LocalDateTime since,
             Pageable pageable);
 
+    // 상품 ID 목록에 대한 주문 수 일괄 조회
+    @Query("SELECT o.product.id AS productId, COUNT(o) AS orderCount " +
+           "FROM Order o WHERE o.product.id IN :productIds GROUP BY o.product.id")
+    List<PopularProductProjection> findOrderCountsByProductIds(@Param("productIds") List<Long> productIds);
+
     // 특정 유저의 주문 수 (Cold Start 판별용)
     long countByUserId(Long userId);
 

@@ -12,10 +12,12 @@ import java.util.List;
 @ToString
 public class InsertProductDto {
     private String productNm;
+    private String productEnNm;
     private String productCode;
     private int productPrice;
     private int productQuantity;
     private Long brandId;
     private ProductCategory category;
     private List<MultipartFile> image;
+    private String sizesJson; // JSON 문자열로 전달: [{"sizeNm":"M","quantity":10}, ...]
 }
