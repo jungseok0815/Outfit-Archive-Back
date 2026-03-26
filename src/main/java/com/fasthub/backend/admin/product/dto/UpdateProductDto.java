@@ -13,6 +13,7 @@ import java.util.List;
 public class UpdateProductDto {
     private Long id;
     private String productNm;
+    private String productEnNm;
     private String productCode;
     private int productPrice;
     private int productQuantity;

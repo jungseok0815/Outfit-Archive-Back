@@ -12,6 +12,7 @@ import java.util.List;
 @ToString
 public class InsertProductDto {
     private String productNm;
+    private String productEnNm;
     private String productCode;
     private int productPrice;
     private int productQuantity;

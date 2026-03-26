@@ -25,6 +25,9 @@ public class Product {
     @Column(name = "PRODUCT_NM", nullable = false)
     private String productNm;
 
+    @Column(name = "PRODUCT_EN_NM")
+    private String productEnNm;
+
     @Column(name = "PRODUCT_CODE", nullable = false)
     private String productCode;
 
@@ -49,8 +52,9 @@ public class Product {
     @Column(name = "EMBEDDING", columnDefinition = "TEXT")
     private String embedding;
 
-    public void update(String productNm, String productCode, int productPrice, int productQuantity, ProductCategory category, Brand brand) {
+    public void update(String productNm, String productEnNm, String productCode, int productPrice, int productQuantity, ProductCategory category, Brand brand) {
         this.productNm = productNm;
+        this.productEnNm = productEnNm;
         this.productCode = productCode;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;

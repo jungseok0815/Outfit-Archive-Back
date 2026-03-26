@@ -49,6 +49,7 @@ public class ProductService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
         Product product = productRepository.save(Product.builder()
                 .productNm(productDto.getProductNm())
+                .productEnNm(productDto.getProductEnNm())
                 .productCode(productDto.getProductCode())
                 .productPrice(productDto.getProductPrice())
                 .productQuantity(productDto.getProductQuantity())
@@ -80,7 +81,7 @@ public class ProductService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_UPDATE));
         Brand brand = brandRepository.findById(productDto.getBrandId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
-        product.update(productDto.getProductNm(), productDto.getProductCode(),
+        product.update(productDto.getProductNm(), productDto.getProductEnNm(), productDto.getProductCode(),
                 productDto.getProductPrice(), productDto.getProductQuantity(), productDto.getCategory(), brand);
         // 선택된 이미지만 삭제
         if (productDto.getDeleteImageIds() != null && !productDto.getDeleteImageIds().isEmpty()) {
