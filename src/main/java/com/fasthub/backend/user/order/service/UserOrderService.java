@@ -3,7 +3,9 @@ package com.fasthub.backend.user.order.service;
 import com.fasthub.backend.admin.order.entity.Order;
 import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.entity.Product;
+import com.fasthub.backend.admin.product.entity.ProductSize;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
+import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
 import com.fasthub.backend.cmm.enums.OrderStatus;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
@@ -30,6 +32,7 @@ public class UserOrderService {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final ProductSizeRepository productSizeRepository;
     private final AuthRepository authRepository;
     private final RedissonClient redissonClient;
 
@@ -51,8 +54,20 @@ public class UserOrderService {
                     .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_PRODUCT_NOT_FOUND));
 
             // 재고 검증 (차감은 결제 승인 후)
-            if (product.getProductQuantity() < dto.getQuantity()) {
-                throw new BusinessException(ErrorCode.ORDER_QUANTITY_EXCEEDED);
+            boolean hasSizes = !product.getSizes().isEmpty();
+            if (hasSizes) {
+                if (dto.getSizeNm() == null || dto.getSizeNm().isBlank()) {
+                    throw new BusinessException(ErrorCode.ORDER_SIZE_REQUIRED);
+                }
+                ProductSize size = productSizeRepository.findByProductAndSizeNm(product, dto.getSizeNm())
+                        .orElseThrow(() -> new BusinessException(ErrorCode.ORDER_SIZE_NOT_FOUND));
+                if (size.getQuantity() < dto.getQuantity()) {
+                    throw new BusinessException(ErrorCode.ORDER_QUANTITY_EXCEEDED);
+                }
+            } else {
+                if (product.getProductQuantity() < dto.getQuantity()) {
+                    throw new BusinessException(ErrorCode.ORDER_QUANTITY_EXCEEDED);
+                }
             }
 
             // 포인트 잔액 검증 (차감은 결제 승인 후)
@@ -73,6 +88,7 @@ public class UserOrderService {
                     .shippingAddress(dto.getShippingAddress())
                     .recipientName(dto.getRecipientName())
                     .recipientPhone(dto.getRecipientPhone())
+                    .sizeNm(dto.getSizeNm())
                     .build());
 
             log.info("[Order] 주문 준비 userId={}, productId={}, tossOrderId={}", userId, dto.getProductId(), order.getTossOrderId());

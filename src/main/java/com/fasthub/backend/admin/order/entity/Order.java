@@ -73,6 +73,9 @@ public class Order {
     @Column(length = 100)
     private String trackingNumber;  // 운송장 번호
 
+    @Column(length = 20)
+    private String sizeNm;  // 선택 사이즈 (사이즈 없는 상품은 null)
+
     public void updateStatus(OrderStatus status) {
         this.status = status;
     }

@@ -23,6 +23,7 @@ public class ResponseProductDto {
     private String brandNm;
     private ProductCategory category;
     private List<ResponseProductImgDto> images;
+    private List<ProductSizeDto> sizes;
     private long reviewCount;
     private long orderCount;
 }

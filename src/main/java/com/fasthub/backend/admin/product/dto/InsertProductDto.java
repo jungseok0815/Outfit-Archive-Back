@@ -19,4 +19,5 @@ public class InsertProductDto {
     private Long brandId;
     private ProductCategory category;
     private List<MultipartFile> image;
+    private String sizesJson; // JSON 문자열로 전달: [{"sizeNm":"M","quantity":10}, ...]
 }

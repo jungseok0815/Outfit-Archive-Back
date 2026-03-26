@@ -24,4 +24,5 @@ public class ResponseOrderDto {
     private String recipientName;
     private String recipientPhone;
     private String trackingNumber;
+    private String sizeNm;
 }

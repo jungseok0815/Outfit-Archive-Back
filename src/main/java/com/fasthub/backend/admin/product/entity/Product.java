@@ -49,6 +49,10 @@ public class Product {
     @JsonIgnore
     private List<ProductImg> images = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<ProductSize> sizes = new ArrayList<>();
+
     @Column(name = "EMBEDDING", columnDefinition = "TEXT")
     private String embedding;
 

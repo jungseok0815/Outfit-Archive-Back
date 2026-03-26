@@ -2,6 +2,7 @@ package com.fasthub.backend.user.payment.service;
 
 import com.fasthub.backend.admin.order.entity.Order;
 import com.fasthub.backend.admin.order.repository.OrderRepository;
+import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
 import com.fasthub.backend.cmm.enums.OrderStatus;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
@@ -29,6 +30,7 @@ public class PaymentService {
     private static final double POINT_EARN_RATE = 0.01; // 결제 금액의 1% 적립
 
     private final OrderRepository orderRepository;
+    private final ProductSizeRepository productSizeRepository;
     private final PointHistoryRepository pointHistoryRepository;
     private final TossPaymentClient tossPaymentClient;
     private final RedissonClient redissonClient;
@@ -60,8 +62,12 @@ public class PaymentService {
             // 토스 결제 승인 API 호출
             tossPaymentClient.confirm(dto.getPaymentKey(), dto.getOrderId(), dto.getAmount());
 
-            // 재고 차감
+            // 재고 차감 (사이즈 있으면 사이즈 재고도 차감)
             order.getProduct().decreaseQuantity(order.getQuantity());
+            if (order.getSizeNm() != null) {
+                productSizeRepository.findByProductAndSizeNm(order.getProduct(), order.getSizeNm())
+                        .ifPresent(s -> s.decreaseQuantity(order.getQuantity()));
+            }
 
             // 포인트 차감
             User user = order.getUser();
@@ -118,8 +124,12 @@ public class PaymentService {
                 throw new BusinessException(ErrorCode.ORDER_ALREADY_PAID);
             }
 
-            // 재고 차감
+            // 재고 차감 (사이즈 있으면 사이즈 재고도 차감)
             order.getProduct().decreaseQuantity(order.getQuantity());
+            if (order.getSizeNm() != null) {
+                productSizeRepository.findByProductAndSizeNm(order.getProduct(), order.getSizeNm())
+                        .ifPresent(s -> s.decreaseQuantity(order.getQuantity()));
+            }
 
             // 포인트 차감
             User user = order.getUser();
@@ -176,8 +186,12 @@ public class PaymentService {
         if (order.getStatus() == OrderStatus.PAYMENT_COMPLETE) {
             tossPaymentClient.cancel(order.getPaymentKey(), cancelReason);
 
-            // 재고 복원
+            // 재고 복원 (사이즈 있으면 사이즈 재고도 복원)
             order.getProduct().increaseQuantity(order.getQuantity());
+            if (order.getSizeNm() != null) {
+                productSizeRepository.findByProductAndSizeNm(order.getProduct(), order.getSizeNm())
+                        .ifPresent(s -> s.increaseQuantity(order.getQuantity()));
+            }
 
             // 포인트 복원
             User user = order.getUser();

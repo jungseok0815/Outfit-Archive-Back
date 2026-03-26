@@ -23,6 +23,8 @@ public class ResponseUserOrderDto {
     private int actualPayment;  // totalPrice - usedPoint - couponDiscount
     private OrderStatus status;
     private LocalDateTime orderDate;
+    private String sizeNm;
+    private String trackingNumber;
 
     public static ResponseUserOrderDto of(Order order, int earnedPoint) {
         String imgPath = order.getProduct().getImages() != null && !order.getProduct().getImages().isEmpty()
@@ -42,6 +44,8 @@ public class ResponseUserOrderDto {
                 .actualPayment(order.getTotalPrice() - order.getUsedPoint())
                 .status(order.getStatus())
                 .orderDate(order.getOrderDate())
+                .sizeNm(order.getSizeNm())
+                .trackingNumber(order.getTrackingNumber())
                 .build();
     }
 }

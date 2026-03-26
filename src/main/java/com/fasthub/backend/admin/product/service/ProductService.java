@@ -3,13 +3,18 @@ package com.fasthub.backend.admin.product.service;
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
 import com.fasthub.backend.admin.product.dto.InsertProductDto;
+import com.fasthub.backend.admin.product.dto.ProductSizeDto;
 import com.fasthub.backend.admin.product.dto.ResponseProductDto;
 import com.fasthub.backend.admin.product.dto.UpdateProductDto;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.entity.ProductImg;
+import com.fasthub.backend.admin.product.entity.ProductSize;
 import com.fasthub.backend.admin.product.mapper.ProductMapper;
 import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
+import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
@@ -38,9 +43,11 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductImgRepository productImgRepository;
+    private final ProductSizeRepository productSizeRepository;
     private final BrandRepository brandRepository;
     private final ImgHandler imgHandler;
     private final ProductMapper productMapper;
+    private final ObjectMapper objectMapper;
     // private final EmbeddingService embeddingService;  // AI 임베딩 기능 비활성화
 
     @Transactional
@@ -61,8 +68,25 @@ public class ProductService {
                     productImgRepository.save(imgHandler.createImg(item, ProductImg::new, product)));
         }
 
-        // 비동기로 이미지 임베딩 생성 (트랜잭션 커밋 후 백그라운드 실행) - AI 임베딩 기능 비활성화
-        // embeddingService.generateAndSave(product.getId());
+        saveSizes(product, productDto.getSizesJson());
+    }
+
+    private void saveSizes(Product product, String sizesJson) {
+        if (sizesJson == null || sizesJson.isBlank()) return;
+        try {
+            List<ProductSizeDto> sizes = objectMapper.readValue(sizesJson, new TypeReference<>() {});
+            sizes.stream()
+                .filter(s -> s.getSizeNm() != null && !s.getSizeNm().isBlank())
+                .forEach(s -> productSizeRepository.save(
+                    ProductSize.builder()
+                        .product(product)
+                        .sizeNm(s.getSizeNm().trim())
+                        .quantity(s.getQuantity())
+                        .build()
+                ));
+        } catch (Exception e) {
+            log.warn("[Product] sizesJson 파싱 실패: {}", sizesJson);
+        }
     }
 
     public Page<ResponseProductDto> list(String keyword, Pageable pageable) {
@@ -96,6 +120,12 @@ public class ProductService {
         if (productDto.getImage() != null && !productDto.getImage().isEmpty()) {
             productDto.getImage().forEach(item ->
                     productImgRepository.save(imgHandler.createImg(item, ProductImg::new, product)));
+        }
+
+        // 사이즈 전체 교체
+        if (productDto.getSizesJson() != null) {
+            productSizeRepository.deleteByProduct(product);
+            saveSizes(product, productDto.getSizesJson());
         }
     }
 
