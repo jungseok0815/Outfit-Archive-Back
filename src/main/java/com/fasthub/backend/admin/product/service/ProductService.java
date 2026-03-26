@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -165,7 +166,7 @@ public class ProductService {
                 String productNm   = getCellValue(row, 0);
                 String productCode = getCellValue(row, 1);
                 int productPrice   = Integer.parseInt(getCellValue(row, 2));
-                int productQty     = Integer.parseInt(getCellValue(row, 3));
+                String sizesStr    = getCellValue(row, 3);
                 String categoryStr = getCellValue(row, 4);
                 String imageFile   = getCellValue(row, 5);
 
@@ -190,10 +191,12 @@ public class ProductService {
                         .productNm(productNm)
                         .productCode(productCode)
                         .productPrice(productPrice)
-                        .productQuantity(productQty)
+                        .productQuantity(0)
                         .category(category)
                         .brand(brand)
                         .build());
+
+                saveSizesFromString(product, sizesStr);
 
                 // 이미지 파일명이 있고 ZIP 내에 해당 파일이 있으면 S3 업로드
                 if (imageFile != null && !imageFile.isBlank() && imageMap.containsKey(imageFile)) {
@@ -209,6 +212,28 @@ public class ProductService {
         }
         log.info("[BulkInsert] {}개 상품 등록 완료", count);
         return count;
+    }
+
+    private void saveSizesFromString(Product product, String sizesStr) {
+        if (sizesStr == null || sizesStr.isBlank()) return;
+        for (String entry : sizesStr.split(",")) {
+            String[] parts = entry.trim().split(":");
+            if (parts.length != 2 || parts[0].trim().isBlank()) {
+                throw new BusinessException(ErrorCode.PRODUCT_INVALID_SIZE_FORMAT);
+            }
+            String sizeNm = parts[0].trim();
+            int qty;
+            try {
+                qty = Integer.parseInt(parts[1].trim());
+            } catch (NumberFormatException e) {
+                throw new BusinessException(ErrorCode.PRODUCT_INVALID_SIZE_FORMAT);
+            }
+            productSizeRepository.save(ProductSize.builder()
+                    .product(product)
+                    .sizeNm(sizeNm)
+                    .quantity(qty)
+                    .build());
+        }
     }
 
     private String getCellValue(Row row, int col) {
