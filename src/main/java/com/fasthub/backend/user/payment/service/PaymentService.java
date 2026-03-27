@@ -6,6 +6,8 @@ import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
 import com.fasthub.backend.cmm.enums.OrderStatus;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
+import com.fasthub.backend.user.coupon.entity.UserCoupon;
+import com.fasthub.backend.user.coupon.repository.UserCouponRepository;
 import com.fasthub.backend.user.order.dto.ResponseUserOrderDto;
 import com.fasthub.backend.user.payment.client.TossPaymentClient;
 import com.fasthub.backend.user.payment.dto.PaymentConfirmRequestDto;
@@ -32,6 +34,7 @@ public class PaymentService {
     private final OrderRepository orderRepository;
     private final ProductSizeRepository productSizeRepository;
     private final PointHistoryRepository pointHistoryRepository;
+    private final UserCouponRepository userCouponRepository;
     private final TossPaymentClient tossPaymentClient;
     private final RedissonClient redissonClient;
 
@@ -53,14 +56,21 @@ public class PaymentService {
                 throw new BusinessException(ErrorCode.ORDER_ALREADY_PAID);
             }
 
-            // 금액 변조 검증 (totalPrice - usedPoint = 실제 결제 금액)
-            int expectedAmount = order.getTotalPrice() - order.getUsedPoint();
+            // 금액 변조 검증 (totalPrice - couponDiscount - usedPoint = 실제 결제 금액)
+            int expectedAmount = order.getTotalPrice() - order.getCouponDiscount() - order.getUsedPoint();
             if (expectedAmount != dto.getAmount()) {
                 throw new BusinessException(ErrorCode.PAYMENT_AMOUNT_MISMATCH);
             }
 
             // 토스 결제 승인 API 호출
             tossPaymentClient.confirm(dto.getPaymentKey(), dto.getOrderId(), dto.getAmount());
+
+            // 쿠폰 사용 처리
+            if (order.getUserCouponId() != null) {
+                UserCoupon userCoupon = userCouponRepository.findById(order.getUserCouponId())
+                        .orElseThrow(() -> new BusinessException(ErrorCode.COUPON_NOT_FOUND));
+                userCoupon.use();
+            }
 
             // 재고 차감 (사이즈 있으면 사이즈 재고도 차감)
             order.getProduct().decreaseQuantity(order.getQuantity());
@@ -145,8 +155,15 @@ public class PaymentService {
                         .build());
             }
 
+            // 쿠폰 사용 처리
+            if (order.getUserCouponId() != null) {
+                UserCoupon userCoupon = userCouponRepository.findById(order.getUserCouponId())
+                        .orElseThrow(() -> new BusinessException(ErrorCode.COUPON_NOT_FOUND));
+                userCoupon.use();
+            }
+
             // 포인트 적립 (실제 결제 금액의 1%)
-            int actualPayment = order.getTotalPrice() - order.getUsedPoint();
+            int actualPayment = order.getTotalPrice() - order.getCouponDiscount() - order.getUsedPoint();
             int earnPoint = (int) (actualPayment * POINT_EARN_RATE);
             user.earnPoint(earnPoint);
             pointHistoryRepository.save(PointHistory.builder()
@@ -204,6 +221,12 @@ public class PaymentService {
                         .description("주문 취소 포인트 환불 - " + order.getProduct().getProductNm())
                         .type(PointType.EARN)
                         .build());
+            }
+
+            // 쿠폰 복원
+            if (order.getUserCouponId() != null) {
+                userCouponRepository.findById(order.getUserCouponId())
+                        .ifPresent(UserCoupon::restore);
             }
         }
 

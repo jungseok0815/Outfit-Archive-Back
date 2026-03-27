@@ -2,6 +2,7 @@ package com.fasthub.backend.user.coupon.dto;
 
 import com.fasthub.backend.cmm.enums.CouponDiscountType;
 import com.fasthub.backend.user.coupon.entity.UserCoupon;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,6 +18,7 @@ public class UserCouponDto {
     private int discountValue;
     private int minOrderPrice;
     private int maxDiscountPrice;
+    @JsonProperty("isUsed")
     private boolean isUsed;
     private LocalDateTime issuedAt;
     private LocalDateTime expiredAt;

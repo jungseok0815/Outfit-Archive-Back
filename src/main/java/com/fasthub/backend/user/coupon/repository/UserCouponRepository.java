@@ -13,7 +13,7 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon, Long> {
     // 중복 발급 체크
     boolean existsByUserIdAndCouponId(Long userId, Long couponId);
 
-    // 미사용 쿠폰 목록 (발급일 내림차순)
-    @Query("SELECT uc FROM UserCoupon uc JOIN FETCH uc.coupon WHERE uc.user = :user AND uc.isUsed = false ORDER BY uc.issuedAt DESC")
-    List<UserCoupon> findAvailableByUser(@Param("user") User user);
+    // 전체 쿠폰 목록 - 미사용 먼저, 발급일 내림차순
+    @Query("SELECT uc FROM UserCoupon uc JOIN FETCH uc.coupon WHERE uc.user = :user ORDER BY uc.isUsed ASC, uc.issuedAt DESC")
+    List<UserCoupon> findAllByUser(@Param("user") User user);
 }
