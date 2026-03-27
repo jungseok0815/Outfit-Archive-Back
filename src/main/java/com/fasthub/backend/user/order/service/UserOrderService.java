@@ -9,6 +9,7 @@ import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
 import com.fasthub.backend.cmm.enums.OrderStatus;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
+import com.fasthub.backend.user.coupon.service.CouponService;
 import com.fasthub.backend.user.order.dto.InsertUserOrderDto;
 import com.fasthub.backend.user.order.dto.ResponseUserOrderDto;
 import com.fasthub.backend.user.usr.entity.User;
@@ -34,6 +35,7 @@ public class UserOrderService {
     private final ProductRepository productRepository;
     private final ProductSizeRepository productSizeRepository;
     private final AuthRepository authRepository;
+    private final CouponService couponService;
     private final RedissonClient redissonClient;
 
     // 주문 준비 - 재고 검증 후 PENDING 주문 생성 (결제 승인 전)
@@ -77,12 +79,25 @@ public class UserOrderService {
 
             int totalPrice = product.getProductPrice() * dto.getQuantity();
 
+            // 쿠폰 할인 계산
+            int couponDiscount = 0;
+            if (dto.getUserCouponId() != null) {
+                couponDiscount = couponService.validateAndGetDiscount(userId, dto.getUserCouponId(), totalPrice);
+            }
+
+            // 포인트는 쿠폰 할인 후 금액을 초과할 수 없음
+            if (usePoint > totalPrice - couponDiscount) {
+                throw new BusinessException(ErrorCode.POINT_INVALID_AMOUNT);
+            }
+
             Order order = orderRepository.save(Order.builder()
                     .user(user)
                     .product(product)
                     .quantity(dto.getQuantity())
                     .totalPrice(totalPrice)
                     .usedPoint(usePoint)
+                    .couponDiscount(couponDiscount)
+                    .userCouponId(dto.getUserCouponId())
                     .status(OrderStatus.PENDING)
                     .tossOrderId(UUID.randomUUID().toString())
                     .shippingAddress(dto.getShippingAddress())

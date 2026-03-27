@@ -144,7 +144,7 @@ public class CouponService {
     public List<UserCouponDto> getMyCoupons(Long userId) {
         User user = authRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-        return userCouponRepository.findAvailableByUser(user).stream()
+        return userCouponRepository.findAllByUser(user).stream()
                 .map(UserCouponDto::of)
                 .collect(Collectors.toList());
     }

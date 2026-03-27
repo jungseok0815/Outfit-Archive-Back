@@ -18,6 +18,9 @@ public class ResponseOrderDto {
     private String productImgPath;
     private int quantity;
     private int totalPrice;
+    private int usedPoint;
+    private int couponDiscount;
+    private int actualPayment;
     private OrderStatus status;
     private LocalDateTime orderDate;
     private String shippingAddress;

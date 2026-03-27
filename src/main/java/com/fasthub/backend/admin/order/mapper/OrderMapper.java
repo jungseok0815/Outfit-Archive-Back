@@ -13,6 +13,7 @@ public interface OrderMapper {
     @Mapping(target = "productNm", source = "product.productNm")
     @Mapping(target = "productImgPath", expression = "java(getFirstImgPath(order))")
     @Mapping(target = "trackingNumber", source = "trackingNumber")
+    @Mapping(target = "actualPayment", expression = "java(order.getTotalPrice() - order.getUsedPoint() - order.getCouponDiscount())")
     ResponseOrderDto orderToResponseDto(Order order);
 
     default String getFirstImgPath(Order order) {
