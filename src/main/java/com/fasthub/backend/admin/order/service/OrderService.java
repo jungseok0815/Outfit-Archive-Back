@@ -23,6 +23,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
 
+    @Transactional(readOnly = true)
     public Page<ResponseOrderDto> list(String keyword, Long brandId, Pageable pageable) {
         return orderRepository.findAllByKeyword(keyword, brandId, pageable)
                 .map(orderMapper::orderToResponseDto);

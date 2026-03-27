@@ -57,8 +57,7 @@ public class Order {
     @Column(nullable = false)
     private int usedPoint;
 
-    @Builder.Default
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "int not null default 0")
     private int couponDiscount = 0;  // 쿠폰 할인 금액 (미사용 시 0)
 
     @Column
