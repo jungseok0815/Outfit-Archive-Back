@@ -46,37 +46,41 @@ public class PostService {
                 .map(post -> new ResponsePostDto(
                         post,
                         postLikeRepository.countByPostId(post.getId()),
-                        postCommentRepository.countByPostId(post.getId())
+                        postCommentRepository.countByPostId(post.getId()),
+                        postLikeRepository.existsByPostIdAndUserId(post.getId(), userId)
                 ));
     }
 
     // 게시글 목록 조회 (제목으로 키워드 검색, 페이징)
-    public Page<ResponsePostDto> list(String keyword, Pageable pageable) {
+    public Page<ResponsePostDto> list(String keyword, Long userId, Pageable pageable) {
         return postRepository.findAllByKeyword(keyword, pageable)
                 .map(post -> new ResponsePostDto(
                         post,
                         postLikeRepository.countByPostId(post.getId()),
-                        postCommentRepository.countByPostId(post.getId())
+                        postCommentRepository.countByPostId(post.getId()),
+                        userId != null && postLikeRepository.existsByPostIdAndUserId(post.getId(), userId)
                 ));
     }
 
     // 브랜드명 또는 제목으로 게시글 검색 (태그된 상품의 브랜드명 포함)
-    public Page<ResponsePostDto> searchByKeyword(String keyword, Pageable pageable) {
+    public Page<ResponsePostDto> searchByKeyword(String keyword, Long userId, Pageable pageable) {
         return postRepository.findAllByBrandKeyword(keyword, pageable)
                 .map(post -> new ResponsePostDto(
                         post,
                         postLikeRepository.countByPostId(post.getId()),
-                        postCommentRepository.countByPostId(post.getId())
+                        postCommentRepository.countByPostId(post.getId()),
+                        userId != null && postLikeRepository.existsByPostIdAndUserId(post.getId(), userId)
                 ));
     }
 
     // 특정 상품이 태그된 게시글 목록
-    public Page<ResponsePostDto> listByProduct(Long productId, Pageable pageable) {
+    public Page<ResponsePostDto> listByProduct(Long productId, Long userId, Pageable pageable) {
         return postRepository.findByProductId(productId, pageable)
                 .map(post -> new ResponsePostDto(
                         post,
                         postLikeRepository.countByPostId(post.getId()),
-                        postCommentRepository.countByPostId(post.getId())
+                        postCommentRepository.countByPostId(post.getId()),
+                        userId != null && postLikeRepository.existsByPostIdAndUserId(post.getId(), userId)
                 ));
     }
 

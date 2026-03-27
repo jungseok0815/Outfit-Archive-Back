@@ -36,24 +36,30 @@ public class PostController {
     @GetMapping("/list")
     public ResponseEntity<Page<ResponsePostDto>> list(
             @RequestParam(required = false) String keyword,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok(postService.list(keyword, pageable));
+        Long userId = userDetails != null ? userDetails.getId() : null;
+        return ResponseEntity.ok(postService.list(keyword, userId, pageable));
     }
 
     // 브랜드명 또는 제목으로 게시글 검색 (비로그인 접근 가능)
     @GetMapping("/search")
     public ResponseEntity<Page<ResponsePostDto>> search(
             @RequestParam String keyword,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PageableDefault(size = 12, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok(postService.searchByKeyword(keyword, pageable));
+        Long userId = userDetails != null ? userDetails.getId() : null;
+        return ResponseEntity.ok(postService.searchByKeyword(keyword, userId, pageable));
     }
 
     // 특정 상품이 태그된 게시글 목록 (비로그인 접근 가능)
     @GetMapping("/product/{productId}")
     public ResponseEntity<Page<ResponsePostDto>> listByProduct(
             @PathVariable Long productId,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PageableDefault(size = 12, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok(postService.listByProduct(productId, pageable));
+        Long userId = userDetails != null ? userDetails.getId() : null;
+        return ResponseEntity.ok(postService.listByProduct(productId, userId, pageable));
     }
 
     // 게시글 등록

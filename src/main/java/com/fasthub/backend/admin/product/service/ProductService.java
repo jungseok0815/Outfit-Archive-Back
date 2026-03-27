@@ -2,6 +2,7 @@ package com.fasthub.backend.admin.product.service;
 
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
+import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.dto.InsertProductDto;
 import com.fasthub.backend.admin.product.dto.ProductSizeDto;
 import com.fasthub.backend.admin.product.dto.ResponseProductDto;
@@ -13,6 +14,9 @@ import com.fasthub.backend.admin.product.mapper.ProductMapper;
 import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
+import com.fasthub.backend.user.post.repository.PostProductRepository;
+import com.fasthub.backend.user.review.repository.ReviewRepository;
+import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasthub.backend.cmm.enums.ProductCategory;
@@ -46,6 +50,10 @@ public class ProductService {
     private final ProductImgRepository productImgRepository;
     private final ProductSizeRepository productSizeRepository;
     private final BrandRepository brandRepository;
+    private final OrderRepository orderRepository;
+    private final ReviewRepository reviewRepository;
+    private final PostProductRepository postProductRepository;
+    private final WishlistRepository wishlistRepository;
     private final ImgHandler imgHandler;
     private final ProductMapper productMapper;
     private final ObjectMapper objectMapper;
@@ -248,11 +256,28 @@ public class ProductService {
 
     @Transactional
     public void delete(String id) {
-        Product product = productRepository.findById(Long.valueOf(id))
-                .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_DELETE));
-        // 상품 삭제 전 S3 이미지 먼저 제거 (CASCADE로 DB 엔티티는 자동 삭제)
+        log.info("[Product Delete] 요청 id={}", id);
+        long productId;
+        try {
+            productId = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            log.error("[Product Delete] 잘못된 id 형식: {}", id);
+            throw new BusinessException(ErrorCode.PRODUCT_FAIL_DELETE);
+        }
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> {
+                    log.error("[Product Delete] 상품을 찾을 수 없음: id={}", productId);
+                    return new BusinessException(ErrorCode.PRODUCT_FAIL_DELETE);
+                });
+        // FK 참조 데이터 먼저 제거 (벌크 삭제)
+        wishlistRepository.deleteByProductId(product.getId());
+        postProductRepository.deleteByProduct(product);
+        reviewRepository.deleteByProduct(product);
+        orderRepository.deleteByProduct(product);
+        // S3 이미지 제거 (CASCADE로 DB 엔티티는 자동 삭제)
         productImgRepository.findByProduct(product)
                 .forEach(img -> imgHandler.deleteFile(img.getImgNm()));
         productRepository.delete(product);
+        log.info("[Product Delete] 삭제 완료: id={}", productId);
     }
 }

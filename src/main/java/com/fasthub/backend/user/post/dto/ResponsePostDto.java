@@ -24,10 +24,11 @@ public class ResponsePostDto {
     private List<ProductSummary> products;
     private long likeCount;
     private long commentCount;
+    private boolean liked;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ResponsePostDto(Post post, long likeCount, long commentCount) {
+    public ResponsePostDto(Post post, long likeCount, long commentCount, boolean liked) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
@@ -40,6 +41,7 @@ public class ResponsePostDto {
                 .toList();
         this.likeCount = likeCount;
         this.commentCount = commentCount;
+        this.liked = liked;
         this.createdAt = post.getCreatedAt();
         this.updatedAt = post.getUpdatedAt();
     }
