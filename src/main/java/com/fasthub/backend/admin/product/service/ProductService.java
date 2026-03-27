@@ -280,4 +280,12 @@ public class ProductService {
         productRepository.delete(product);
         log.info("[Product Delete] 삭제 완료: id={}", productId);
     }
+
+    @Transactional
+    public boolean toggleHidden(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_SELECT));
+        product.toggleHidden();
+        return product.isHidden();
+    }
 }

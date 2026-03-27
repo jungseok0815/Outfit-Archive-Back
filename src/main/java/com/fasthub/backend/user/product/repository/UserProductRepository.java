@@ -15,6 +15,7 @@ public interface UserProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByIdWithDetails(@Param("id") Long id);
 
     @Query("SELECT p FROM Product p WHERE " +
+            "p.hidden = false AND " +
             "(:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND " +
             "(:category IS NULL OR p.category = :category) AND " +
             "(:brandId IS NULL OR p.brand.id = :brandId) AND " +
@@ -29,6 +30,7 @@ public interface UserProductRepository extends JpaRepository<Product, Long> {
             Pageable pageable);
 
     @Query(value = "SELECT p FROM Product p WHERE " +
+            "p.hidden = false AND " +
             "(:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND " +
             "(:category IS NULL OR p.category = :category) AND " +
             "(:brandId IS NULL OR p.brand.id = :brandId) AND " +
@@ -36,6 +38,7 @@ public interface UserProductRepository extends JpaRepository<Product, Long> {
             "(:maxPrice IS NULL OR p.productPrice <= :maxPrice) " +
             "ORDER BY (SELECT COUNT(o) FROM Order o WHERE o.product.id = p.id) DESC",
            countQuery = "SELECT COUNT(p) FROM Product p WHERE " +
+            "p.hidden = false AND " +
             "(:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND " +
             "(:category IS NULL OR p.category = :category) AND " +
             "(:brandId IS NULL OR p.brand.id = :brandId) AND " +
