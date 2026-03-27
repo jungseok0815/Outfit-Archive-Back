@@ -9,6 +9,7 @@ import com.fasthub.backend.user.usr.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -74,4 +75,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     // 상품 기준 주문 목록 (브랜드/상품 삭제 시 연관 데이터 제거용)
     List<Order> findByProduct(com.fasthub.backend.admin.product.entity.Product product);
+
+    @Modifying
+    @Query("DELETE FROM Order o WHERE o.product = :product")
+    void deleteByProduct(@Param("product") com.fasthub.backend.admin.product.entity.Product product);
 }

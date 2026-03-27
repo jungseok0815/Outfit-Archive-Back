@@ -2,6 +2,7 @@ package com.fasthub.backend.admin.product.service;
 
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
+import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.dto.InsertProductDto;
 import com.fasthub.backend.admin.product.dto.ProductSizeDto;
 import com.fasthub.backend.admin.product.dto.ResponseProductDto;
@@ -13,6 +14,9 @@ import com.fasthub.backend.admin.product.mapper.ProductMapper;
 import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
+import com.fasthub.backend.user.post.repository.PostProductRepository;
+import com.fasthub.backend.user.review.repository.ReviewRepository;
+import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasthub.backend.cmm.enums.ProductCategory;
@@ -32,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -45,6 +50,10 @@ public class ProductService {
     private final ProductImgRepository productImgRepository;
     private final ProductSizeRepository productSizeRepository;
     private final BrandRepository brandRepository;
+    private final OrderRepository orderRepository;
+    private final ReviewRepository reviewRepository;
+    private final PostProductRepository postProductRepository;
+    private final WishlistRepository wishlistRepository;
     private final ImgHandler imgHandler;
     private final ProductMapper productMapper;
     private final ObjectMapper objectMapper;
@@ -165,7 +174,7 @@ public class ProductService {
                 String productNm   = getCellValue(row, 0);
                 String productCode = getCellValue(row, 1);
                 int productPrice   = Integer.parseInt(getCellValue(row, 2));
-                int productQty     = Integer.parseInt(getCellValue(row, 3));
+                String sizesStr    = getCellValue(row, 3);
                 String categoryStr = getCellValue(row, 4);
                 String imageFile   = getCellValue(row, 5);
 
@@ -190,10 +199,12 @@ public class ProductService {
                         .productNm(productNm)
                         .productCode(productCode)
                         .productPrice(productPrice)
-                        .productQuantity(productQty)
+                        .productQuantity(0)
                         .category(category)
                         .brand(brand)
                         .build());
+
+                saveSizesFromString(product, sizesStr);
 
                 // 이미지 파일명이 있고 ZIP 내에 해당 파일이 있으면 S3 업로드
                 if (imageFile != null && !imageFile.isBlank() && imageMap.containsKey(imageFile)) {
@@ -211,6 +222,28 @@ public class ProductService {
         return count;
     }
 
+    private void saveSizesFromString(Product product, String sizesStr) {
+        if (sizesStr == null || sizesStr.isBlank()) return;
+        for (String entry : sizesStr.split(",")) {
+            String[] parts = entry.trim().split(":");
+            if (parts.length != 2 || parts[0].trim().isBlank()) {
+                throw new BusinessException(ErrorCode.PRODUCT_INVALID_SIZE_FORMAT);
+            }
+            String sizeNm = parts[0].trim();
+            int qty;
+            try {
+                qty = Integer.parseInt(parts[1].trim());
+            } catch (NumberFormatException e) {
+                throw new BusinessException(ErrorCode.PRODUCT_INVALID_SIZE_FORMAT);
+            }
+            productSizeRepository.save(ProductSize.builder()
+                    .product(product)
+                    .sizeNm(sizeNm)
+                    .quantity(qty)
+                    .build());
+        }
+    }
+
     private String getCellValue(Row row, int col) {
         Cell cell = row.getCell(col);
         if (cell == null) return "";
@@ -223,11 +256,36 @@ public class ProductService {
 
     @Transactional
     public void delete(String id) {
-        Product product = productRepository.findById(Long.valueOf(id))
-                .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_DELETE));
-        // 상품 삭제 전 S3 이미지 먼저 제거 (CASCADE로 DB 엔티티는 자동 삭제)
+        log.info("[Product Delete] 요청 id={}", id);
+        long productId;
+        try {
+            productId = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            log.error("[Product Delete] 잘못된 id 형식: {}", id);
+            throw new BusinessException(ErrorCode.PRODUCT_FAIL_DELETE);
+        }
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> {
+                    log.error("[Product Delete] 상품을 찾을 수 없음: id={}", productId);
+                    return new BusinessException(ErrorCode.PRODUCT_FAIL_DELETE);
+                });
+        // FK 참조 데이터 먼저 제거 (벌크 삭제)
+        wishlistRepository.deleteByProductId(product.getId());
+        postProductRepository.deleteByProduct(product);
+        reviewRepository.deleteByProduct(product);
+        orderRepository.deleteByProduct(product);
+        // S3 이미지 제거 (CASCADE로 DB 엔티티는 자동 삭제)
         productImgRepository.findByProduct(product)
                 .forEach(img -> imgHandler.deleteFile(img.getImgNm()));
         productRepository.delete(product);
+        log.info("[Product Delete] 삭제 완료: id={}", productId);
+    }
+
+    @Transactional
+    public boolean toggleHidden(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_SELECT));
+        product.toggleHidden();
+        return product.isHidden();
     }
 }

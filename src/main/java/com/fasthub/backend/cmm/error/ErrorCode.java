@@ -42,6 +42,7 @@ public enum ErrorCode {
     PRODUCT_FAIL_INSERT(HttpStatus.INTERNAL_SERVER_ERROR,"P002","상품 등록 실패"),
     PRODUCT_FAIL_UPDATE(HttpStatus.INTERNAL_SERVER_ERROR,"P003","상품 업데이트 실패"),
     PRODUCT_FAIL_DELETE(HttpStatus.INTERNAL_SERVER_ERROR,"P004","상품 삭제 실패"),
+    PRODUCT_INVALID_SIZE_FORMAT(HttpStatus.BAD_REQUEST,"P005","사이즈/수량 형식이 올바르지 않습니다. (올바른 형식: S:10,M:20,L:15)"),
 
     //ORDER
     ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "O001", "구매내역을 찾을 수 없습니다."),

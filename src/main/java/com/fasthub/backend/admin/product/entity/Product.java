@@ -56,6 +56,14 @@ public class Product {
     @Column(name = "EMBEDDING", columnDefinition = "TEXT")
     private String embedding;
 
+    @Builder.Default
+    @Column(name = "HIDDEN", nullable = false)
+    private boolean hidden = false;
+
+    public void toggleHidden() {
+        this.hidden = !this.hidden;
+    }
+
     public void update(String productNm, String productEnNm, String productCode, int productPrice, int productQuantity, ProductCategory category, Brand brand) {
         this.productNm = productNm;
         this.productEnNm = productEnNm;

@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -43,10 +44,16 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("hasAnyAuthority('SUPER_ADMIN', 'ADMIN')")
     @DeleteMapping("/delete")
     public ResponseEntity<Void> delete(@RequestParam(value = "id") String id) {
         productService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/hide")
+    public ResponseEntity<Boolean> toggleHidden(@RequestParam("id") Long id) {
+        return ResponseEntity.ok(productService.toggleHidden(id));
     }
 
     @PostMapping(value = "/bulk", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

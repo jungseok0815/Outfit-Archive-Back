@@ -26,4 +26,5 @@ public class ResponseProductDto {
     private List<ProductSizeDto> sizes;
     private long reviewCount;
     private long orderCount;
+    private boolean hidden;
 }
