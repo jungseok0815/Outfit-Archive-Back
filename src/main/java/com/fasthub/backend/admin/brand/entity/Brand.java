@@ -31,6 +31,12 @@ public class Brand {
     @Column(name = "BRAND_DC")
     private String brandDc;
 
+    @Column(name = "BANNER_IMG_PATH")
+    private String bannerImgPath;
+
+    @Column(name = "BANNER_IMG_NM")
+    private String bannerImgNm;
+
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BrandImg> images = new ArrayList<>();
 
@@ -39,5 +45,10 @@ public class Brand {
         this.brandNum = brandNum;
         this.brandLocation = brandLocation;
         this.brandDc = brandDc;
+    }
+
+    public void updateBannerImg(String bannerImgPath, String bannerImgNm) {
+        this.bannerImgPath = bannerImgPath;
+        this.bannerImgNm = bannerImgNm;
     }
 }

@@ -58,6 +58,11 @@ public class BrandService {
         if (insertBrandDto.getBrandImg() != null) {
             brandImgRepository.save(imgHandler.createImg(insertBrandDto.getBrandImg(), BrandImg::new, brand, BRAND_MAX_WIDTH, BRAND_MAX_HEIGHT));
         }
+        if (insertBrandDto.getBrandBannerImg() != null) {
+            String bannerNm = imgHandler.getFileName(insertBrandDto.getBrandBannerImg().getOriginalFilename());
+            String bannerPath = imgHandler.upload(insertBrandDto.getBrandBannerImg(), bannerNm);
+            brand.updateBannerImg(bannerPath, bannerNm);
+        }
     }
 
     @Transactional
@@ -67,10 +72,16 @@ public class BrandService {
         brand.update(updateBrandDto.getBrandNm(), updateBrandDto.getBrandNum(),
                 updateBrandDto.getBrandLocation(), updateBrandDto.getBrandDc());
         if (updateBrandDto.getBrandImg() != null) {
-            // 기존 이미지를 S3에서 먼저 삭제 후 DB 엔티티 제거
+            // 기존 로고 이미지를 S3에서 먼저 삭제 후 DB 엔티티 제거
             brand.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
             brandImgRepository.deleteByBrand(brand);
             brandImgRepository.save(imgHandler.createImg(updateBrandDto.getBrandImg(), BrandImg::new, brand, BRAND_MAX_WIDTH, BRAND_MAX_HEIGHT));
+        }
+        if (updateBrandDto.getBrandBannerImg() != null) {
+            if (brand.getBannerImgNm() != null) imgHandler.deleteFile(brand.getBannerImgNm());
+            String bannerNm = imgHandler.getFileName(updateBrandDto.getBrandBannerImg().getOriginalFilename());
+            String bannerPath = imgHandler.upload(updateBrandDto.getBrandBannerImg(), bannerNm);
+            brand.updateBannerImg(bannerPath, bannerNm);
         }
     }
 
@@ -97,6 +108,7 @@ public class BrandService {
 
         // 2. 브랜드 S3 이미지 삭제 후 브랜드 삭제 (CASCADE ALL로 DB 엔티티는 자동 삭제)
         brand.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
+        if (brand.getBannerImgNm() != null) imgHandler.deleteFile(brand.getBannerImgNm());
         brandRepository.delete(brand);
     }
 }

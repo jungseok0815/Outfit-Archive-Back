@@ -17,4 +17,5 @@ public class UpdateBrandDto {
     private String brandLocation;
     private String brandDc;
     private MultipartFile brandImg;
+    private MultipartFile brandBannerImg;
 }
