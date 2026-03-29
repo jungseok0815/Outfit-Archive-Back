@@ -1,13 +1,23 @@
 package com.fasthub.backend.user.usr.service;
 
+import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.enums.UserRole;
 import com.fasthub.backend.cmm.img.ImgHandler;
 import com.fasthub.backend.cmm.jwt.JwtService;
+import com.fasthub.backend.user.coupon.repository.UserCouponRepository;
 import com.fasthub.backend.user.follow.repository.FollowRepository;
+import com.fasthub.backend.user.point.repository.PointHistoryRepository;
+import com.fasthub.backend.user.post.entity.Post;
+import com.fasthub.backend.user.post.repository.PostCommentRepository;
+import com.fasthub.backend.user.post.repository.PostLikeRepository;
 import com.fasthub.backend.user.post.repository.PostRepository;
+import com.fasthub.backend.user.review.repository.ReviewRepository;
 import com.fasthub.backend.user.usr.dto.*;
+import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
+
+import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.mapper.AuthMapper;
@@ -34,6 +44,13 @@ public class UserService {
     private final ImgHandler imgHandler;
     private final FollowRepository followRepository;
     private final PostRepository postRepository;
+    private final UserCouponRepository userCouponRepository;
+    private final PointHistoryRepository pointHistoryRepository;
+    private final WishlistRepository wishlistRepository;
+    private final ReviewRepository reviewRepository;
+    private final OrderRepository orderRepository;
+    private final PostCommentRepository postCommentRepository;
+    private final PostLikeRepository postLikeRepository;
 
 
     public LoginResponseDto login(LoginDto loginDto, HttpServletResponse response) {
@@ -107,6 +124,44 @@ public class UserService {
     public void delete(Long id) {
         User user = authRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        // 1. 팔로우 관계 삭제 (follower/following 양방향)
+        followRepository.deleteByFollowerId(id);
+        followRepository.deleteByFollowingId(id);
+
+        // 2. 유저쿠폰 삭제
+        userCouponRepository.deleteByUserId(id);
+
+        // 3. 포인트 내역 삭제
+        pointHistoryRepository.deleteByUserId(id);
+
+        // 4. 위시리스트 삭제
+        wishlistRepository.deleteByUserId(id);
+
+        // 5. 리뷰 삭제 (order_id FK로 주문보다 먼저 삭제)
+        reviewRepository.deleteByUserId(id);
+
+        // 6. 주문 삭제
+        orderRepository.deleteByUserId(id);
+
+        // 7. 다른 유저 게시글에 달린 댓글/좋아요 삭제
+        postCommentRepository.deleteByUserId(id);
+        postLikeRepository.deleteByUserId(id);
+
+        // 8. 본인 게시글 삭제 (댓글 먼저 삭제 후 S3 이미지 정리, cascade로 PostImg/PostProduct/PostLike 자동 삭제)
+        List<Post> userPosts = postRepository.findAllByUser_Id(id);
+        userPosts.forEach(post -> {
+            postCommentRepository.deleteByPost(post);
+            post.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
+        });
+        postRepository.deleteAll(userPosts);
+
+        // 9. 프로필 이미지 S3 삭제
+        if (user.getProfileImgNm() != null) {
+            imgHandler.deleteFile(user.getProfileImgNm());
+        }
+
+        // 10. 유저 삭제
         authRepository.delete(user);
     }
 }

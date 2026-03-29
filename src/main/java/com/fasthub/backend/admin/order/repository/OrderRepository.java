@@ -79,4 +79,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Modifying
     @Query("DELETE FROM Order o WHERE o.product = :product")
     void deleteByProduct(@Param("product") com.fasthub.backend.admin.product.entity.Product product);
+
+    @Modifying
+    @Query("DELETE FROM Order o WHERE o.user.id = :userId")
+    void deleteByUserId(@Param("userId") Long userId);
 }
