@@ -41,11 +41,13 @@ public class BrandService {
     private final ImgHandler imgHandler;
     private final BrandMapper brandMapper;
 
+    @Transactional(readOnly = true)
     public Page<ResponseBrandDto> list(String keyword, Pageable pageable) {
         return brandRepository.findAllByKeyword(keyword, pageable)
                 .map(brandMapper::brandToResponseDto);
     }
 
+    @Transactional(readOnly = true)
     public ResponseBrandDto getById(Long id) {
         Brand brand = brandRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
