@@ -18,4 +18,5 @@ public class ResponseBrandDto {
     private String imgPath;
     private String imgNm;
     private String imgOriginNm;
+    private String bannerImgPath;
 }

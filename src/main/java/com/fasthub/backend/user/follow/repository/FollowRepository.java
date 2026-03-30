@@ -3,6 +3,7 @@ package com.fasthub.backend.user.follow.repository;
 import com.fasthub.backend.user.follow.entity.Follow;
 import com.fasthub.backend.user.usr.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -33,4 +34,13 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 
     // 팔로잉 수
     long countByFollowerId(Long followerId);
+
+    // 유저 삭제 시 팔로우 관계 일괄 삭제
+    @Modifying
+    @Query("DELETE FROM Follow f WHERE f.follower.id = :userId")
+    void deleteByFollowerId(@Param("userId") Long userId);
+
+    @Modifying
+    @Query("DELETE FROM Follow f WHERE f.following.id = :userId")
+    void deleteByFollowingId(@Param("userId") Long userId);
 }

@@ -22,6 +22,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("DELETE FROM Review r WHERE r.product = :product")
     void deleteByProduct(@Param("product") Product product);
 
+    @Modifying
+    @Query("DELETE FROM Review r WHERE r.user.id = :userId")
+    void deleteByUserId(@Param("userId") Long userId);
+
     // 상품 ID 목록에 대한 리뷰 수 / 평균 평점 일괄 조회
     @Query("SELECT r.product.id AS productId, COUNT(r) AS reviewCount, AVG(r.rating) AS avgRating " +
            "FROM Review r " +
