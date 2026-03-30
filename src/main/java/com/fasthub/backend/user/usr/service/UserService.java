@@ -13,6 +13,7 @@ import com.fasthub.backend.user.post.entity.Post;
 import com.fasthub.backend.user.post.repository.PostCommentRepository;
 import com.fasthub.backend.user.post.repository.PostLikeRepository;
 import com.fasthub.backend.user.post.repository.PostRepository;
+import com.fasthub.backend.user.productview.repository.ProductViewRepository;
 import com.fasthub.backend.user.review.repository.ReviewRepository;
 import com.fasthub.backend.user.usr.dto.*;
 import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
@@ -51,6 +52,7 @@ public class UserService {
     private final OrderRepository orderRepository;
     private final PostCommentRepository postCommentRepository;
     private final PostLikeRepository postLikeRepository;
+    private final ProductViewRepository productViewRepository;
 
 
     public LoginResponseDto login(LoginDto loginDto, HttpServletResponse response) {
@@ -147,6 +149,9 @@ public class UserService {
         // 7. 다른 유저 게시글에 달린 댓글/좋아요 삭제
         postCommentRepository.deleteByUserId(id);
         postLikeRepository.deleteByUserId(id);
+
+        // 7-1. 상품 조회 기록 삭제
+        productViewRepository.deleteByUserId(id);
 
         // 8. 본인 게시글 삭제 (댓글 먼저 삭제 후 S3 이미지 정리, cascade로 PostImg/PostProduct/PostLike 자동 삭제)
         List<Post> userPosts = postRepository.findAllByUser_Id(id);

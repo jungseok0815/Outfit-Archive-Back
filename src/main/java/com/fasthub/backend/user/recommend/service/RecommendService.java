@@ -1,6 +1,7 @@
 package com.fasthub.backend.user.recommend.service;
 
 import com.fasthub.backend.admin.order.repository.OrderRepository;
+import com.fasthub.backend.user.productview.repository.ProductViewRepository;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
 import com.fasthub.backend.user.recommend.strategy.ContentBasedStrategy;
 import com.fasthub.backend.user.recommend.strategy.PopularityStrategy;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 public class RecommendService {
 
     private final OrderRepository orderRepository;
+    private final ProductViewRepository productViewRepository;
     private final PopularityStrategy popularityStrategy;
     private final ContentBasedStrategy contentBasedStrategy;
 
@@ -39,8 +42,23 @@ public class RecommendService {
         long orderCount = orderRepository.countByUserId(userId);
         log.info("[Recommend] userId={}, orderCount={}", userId, orderCount);
 
-        // Cold Start (구매 이력 없음) → 인기 상품
+        // Cold Start (구매 이력 없음) → 조회 기록 확인 후 조회 기반 추천, 없으면 인기 상품
         if (orderCount == 0) {
+            long viewCount = productViewRepository.countByUserIdAndViewedAtAfter(userId, LocalDateTime.now().minusDays(30));
+            if (viewCount > 0) {
+                log.info("[Recommend] Cold Start (조회 기록 {}건) → 조회 기반 추천", viewCount);
+                List<RecommendProductDto> viewBased = contentBasedStrategy.recommendFromViews(userId, limit);
+                if (!viewBased.isEmpty()) {
+                    if (viewBased.size() >= limit) return viewBased;
+                    Set<Long> existingIds = viewBased.stream().map(RecommendProductDto::getProductId).collect(Collectors.toSet());
+                    List<RecommendProductDto> result = new ArrayList<>(viewBased);
+                    popularityStrategy.recommend(limit).stream()
+                            .filter(p -> !existingIds.contains(p.getProductId()))
+                            .limit(limit - viewBased.size())
+                            .forEach(result::add);
+                    return result;
+                }
+            }
             log.info("[Recommend] Cold Start → 인기 상품 추천");
             return popularityStrategy.recommend(limit);
         }

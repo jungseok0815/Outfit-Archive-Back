@@ -15,6 +15,7 @@ import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
 import com.fasthub.backend.user.post.repository.PostProductRepository;
+import com.fasthub.backend.user.productview.repository.ProductViewRepository;
 import com.fasthub.backend.user.review.repository.ReviewRepository;
 import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -54,6 +55,7 @@ public class ProductService {
     private final ReviewRepository reviewRepository;
     private final PostProductRepository postProductRepository;
     private final WishlistRepository wishlistRepository;
+    private final ProductViewRepository productViewRepository;
     private final ImgHandler imgHandler;
     private final ProductMapper productMapper;
     private final ObjectMapper objectMapper;
@@ -98,11 +100,13 @@ public class ProductService {
         }
     }
 
+    @Transactional(readOnly = true)
     public Page<ResponseProductDto> list(String keyword, Pageable pageable) {
         return productRepository.findAllByKeyword(keyword, pageable)
                 .map(productMapper::productToProductDto);
     }
 
+    @Transactional(readOnly = true)
     public Page<ResponseProductDto> listForUser(String keyword, ProductCategory category, Pageable pageable) {
         return productRepository.findAllByKeywordAndCategory(keyword, category, pageable)
                 .map(productMapper::productToProductDto);
@@ -271,6 +275,7 @@ public class ProductService {
                 });
         // FK 참조 데이터 먼저 제거 (벌크 삭제)
         wishlistRepository.deleteByProductId(product.getId());
+        productViewRepository.deleteByProductId(product.getId());
         postProductRepository.deleteByProduct(product);
         reviewRepository.deleteByProduct(product);
         orderRepository.deleteByProduct(product);

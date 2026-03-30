@@ -5,6 +5,8 @@ import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.cmm.enums.ProductCategory;
+import com.fasthub.backend.user.productview.entity.ProductView;
+import com.fasthub.backend.user.productview.repository.ProductViewRepository;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
 import com.fasthub.backend.user.review.repository.ReviewRepository;
 import com.fasthub.backend.user.review.repository.ReviewStatsProjection;
@@ -27,9 +29,12 @@ public class ContentBasedStrategy {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
+    private final ProductViewRepository productViewRepository;
 
     // 구매 이력 조회 기간 (90일)
     private static final int HISTORY_DAYS = 90;
+    // 조회 기록 기간 (30일, Cold Start용)
+    private static final int VIEW_HISTORY_DAYS = 30;
     // 인기도 기준 기간 (30일)
     private static final int POPULAR_DAYS = 30;
     // 상위 카테고리/브랜드 추출 개수
@@ -131,6 +136,107 @@ public class ContentBasedStrategy {
                             .reviewCount(reviewCnt)
                             .avgRating(avgRating)
                             .reason("구매 이력 기반 추천")
+                            .build();
+                })
+                .sorted(Comparator.comparingDouble(dto ->
+                        -(dto.getOrderCount() * ORDER_WEIGHT
+                        + dto.getReviewCount() * REVIEW_WEIGHT
+                        + dto.getAvgRating() * RATING_WEIGHT)))
+                .limit(limit)
+                .collect(toList());
+    }
+
+    /**
+     * Cold Start 전용: 구매 이력은 없지만 조회 기록이 있는 경우 조회 기록 기반 추천
+     */
+    public List<RecommendProductDto> recommendFromViews(Long userId, int limit) {
+        LocalDateTime since = LocalDateTime.now().minusDays(VIEW_HISTORY_DAYS);
+
+        // 1. 최근 조회 기록 조회 (최대 50개)
+        List<ProductView> recentViews = productViewRepository.findRecentByUserId(userId, since, PageRequest.of(0, 50));
+        if (recentViews.isEmpty()) {
+            log.info("[ContentBased-View] userId={} 조회 기록 없음", userId);
+            return List.of();
+        }
+
+        // 2. 조회한 상품 ID 수집 (추천 결과에서 제외)
+        List<Long> viewedIds = recentViews.stream()
+                .map(pv -> pv.getProduct().getId())
+                .distinct()
+                .collect(toList());
+
+        // 3. 카테고리/브랜드 빈도 집계
+        List<ProductCategory> topCategories = recentViews.stream()
+                .collect(groupingBy(pv -> pv.getProduct().getCategory(), counting()))
+                .entrySet().stream()
+                .sorted(Map.Entry.<ProductCategory, Long>comparingByValue().reversed())
+                .limit(TOP_N)
+                .map(Map.Entry::getKey)
+                .collect(toList());
+
+        List<Long> topBrandIds = recentViews.stream()
+                .filter(pv -> pv.getProduct().getBrand() != null)
+                .collect(groupingBy(pv -> pv.getProduct().getBrand().getId(), counting()))
+                .entrySet().stream()
+                .sorted(Map.Entry.<Long, Long>comparingByValue().reversed())
+                .limit(TOP_N)
+                .map(Map.Entry::getKey)
+                .collect(toList());
+
+        log.info("[ContentBased-View] userId={} topCategories={} topBrandIds={}", userId, topCategories, topBrandIds);
+
+        if (topBrandIds.isEmpty()) topBrandIds = List.of(-1L);
+
+        // 4. 해당 카테고리/브랜드의 인기 상품 조회 (조회 이력 제외)
+        LocalDateTime popularSince = LocalDateTime.now().minusDays(POPULAR_DAYS);
+        List<PopularProductProjection> popular = orderRepository.findPopularProductsByCategoriesOrBrands(
+                topCategories, topBrandIds, viewedIds, popularSince,
+                PageRequest.of(0, limit * 3));
+
+        if (popular.isEmpty()) {
+            log.info("[ContentBased-View] userId={} 조건에 맞는 인기 상품 없음", userId);
+            return List.of();
+        }
+
+        // 5. 상품 상세 + 리뷰 통계 조회
+        List<Long> productIds = popular.stream()
+                .map(PopularProductProjection::getProductId)
+                .collect(toList());
+
+        Map<Long, Long> orderCountMap = popular.stream()
+                .collect(toMap(PopularProductProjection::getProductId,
+                               PopularProductProjection::getOrderCount));
+
+        Map<Long, Product> productMap = productRepository.findAllByIdInWithImages(productIds).stream()
+                .collect(toMap(Product::getId, p -> p));
+
+        Map<Long, ReviewStatsProjection> reviewStatsMap = reviewRepository
+                .findReviewStatsByProductIds(productIds).stream()
+                .collect(toMap(ReviewStatsProjection::getProductId, s -> s));
+
+        return productIds.stream()
+                .filter(productMap::containsKey)
+                .map(id -> {
+                    Product product = productMap.get(id);
+                    long orderCnt = orderCountMap.getOrDefault(id, 0L);
+                    ReviewStatsProjection stats = reviewStatsMap.get(id);
+                    long reviewCnt  = stats != null ? stats.getReviewCount() : 0L;
+                    double avgRating = stats != null && stats.getAvgRating() != null
+                            ? Math.round(stats.getAvgRating() * 10.0) / 10.0 : 0.0;
+                    String imgPath = (product.getImages() != null && !product.getImages().isEmpty())
+                            ? product.getImages().get(0).getImgPath() : null;
+                    return RecommendProductDto.builder()
+                            .productId(product.getId())
+                            .productNm(product.getProductNm())
+                            .productCode(product.getProductCode())
+                            .productPrice(product.getProductPrice())
+                            .category(product.getCategory())
+                            .brandNm(product.getBrand() != null ? product.getBrand().getBrandNm() : null)
+                            .imgPath(imgPath)
+                            .orderCount(orderCnt)
+                            .reviewCount(reviewCnt)
+                            .avgRating(avgRating)
+                            .reason("관심 상품 기반 추천")
                             .build();
                 })
                 .sorted(Comparator.comparingDouble(dto ->
