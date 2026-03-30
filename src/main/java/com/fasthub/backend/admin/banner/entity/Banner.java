@@ -19,7 +19,7 @@ public class Banner {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "TITLE", nullable = false)
+    @Column(name = "TITLE")
     private String title;
 
     @Column(name = "HIGHLIGHT")
@@ -31,6 +31,9 @@ public class Banner {
     @Column(name = "BUTTON_TEXT")
     private String buttonText;
 
+    @Column(name = "BUTTON_URL")
+    private String buttonUrl;
+
     @Column(name = "SORT_ORDER", nullable = false)
     private int sortOrder;
 
@@ -40,11 +43,12 @@ public class Banner {
     @OneToMany(mappedBy = "banner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BannerImg> images = new ArrayList<>();
 
-    public void update(String title, String highlight, String description, String buttonText, int sortOrder, boolean active) {
+    public void update(String title, String highlight, String description, String buttonText, String buttonUrl, int sortOrder, boolean active) {
         this.title = title;
         this.highlight = highlight;
         this.description = description;
         this.buttonText = buttonText;
+        this.buttonUrl = buttonUrl;
         this.sortOrder = sortOrder;
         this.active = active;
     }

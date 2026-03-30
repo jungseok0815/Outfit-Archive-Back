@@ -13,6 +13,7 @@ public class InsertBannerDto {
     private String highlight;
     private String description;
     private String buttonText;
+    private String buttonUrl;
     private int sortOrder;
     private boolean active;
     private MultipartFile image;

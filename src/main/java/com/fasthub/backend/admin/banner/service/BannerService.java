@@ -50,6 +50,7 @@ public class BannerService {
                 .highlight(dto.getHighlight())
                 .description(dto.getDescription())
                 .buttonText(dto.getButtonText())
+                .buttonUrl(dto.getButtonUrl())
                 .sortOrder(dto.getSortOrder())
                 .active(dto.isActive())
                 .build());
@@ -64,7 +65,7 @@ public class BannerService {
         Banner banner = bannerRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.BANNER_NOT_FOUND));
         banner.update(dto.getTitle(), dto.getHighlight(), dto.getDescription(),
-                dto.getButtonText(), dto.getSortOrder(), dto.isActive());
+                dto.getButtonText(), dto.getButtonUrl(), dto.getSortOrder(), dto.isActive());
 
         if (dto.getImage() != null && !dto.getImage().isEmpty()) {
             bannerImgRepository.findByBanner(banner)
