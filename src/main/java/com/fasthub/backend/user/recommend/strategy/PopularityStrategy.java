@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -40,26 +41,30 @@ public class PopularityStrategy {
     }
 
     public List<RecommendProductDto> recommend(int limit, int page) {
-        log.info("[Recommend] limit={} page={}", limit, page);
+        return recommend(limit, page, Set.of());
+    }
+
+    public List<RecommendProductDto> recommend(int limit, int page, Set<Long> excludeIds) {
+        log.info("[Recommend] limit={} page={} excludeIds={}", limit, page, excludeIds.size());
         // 1순위: 최근 30일 인기 상품
-        List<RecommendProductDto> result = fetchPopular(RECENT_DAYS, limit, page, "최근 30일 인기 상품");
+        List<RecommendProductDto> result = fetchPopular(RECENT_DAYS, limit, page, excludeIds, "최근 30일 인기 상품");
 
         // 2순위: 30일 결과가 부족하면 90일로 확장
         if (result.size() < limit) {
             log.info("[Recommend] 30일 인기 상품 부족 ({}/{}), 90일로 확장", result.size(), limit);
-            result = fetchPopular(FALLBACK_DAYS, limit, page, "최근 3개월 인기 상품");
+            result = fetchPopular(FALLBACK_DAYS, limit, page, excludeIds, "최근 3개월 인기 상품");
         }
 
         // 3순위: 주문 이력 자체가 없으면 최신 상품 순으로 반환
         if (result.isEmpty()) {
             log.info("[Recommend] 주문 이력 없음, 최신 상품으로 대체");
-            result = fetchLatest(limit, page);
+            result = fetchLatest(limit, page, excludeIds);
         }
 
         return result;
     }
 
-    private List<RecommendProductDto> fetchPopular(int days, int limit, int page, String reason) {
+    private List<RecommendProductDto> fetchPopular(int days, int limit, int page, Set<Long> excludeIds, String reason) {
         LocalDateTime since = LocalDateTime.now().minusDays(days);
 
         log.info("since : {}" , since);
@@ -100,6 +105,7 @@ public class PopularityStrategy {
         // score = (주문 수 × 1.0) + (리뷰 수 × 0.5) + (평균 평점 × 2.0)
         return productIds.stream()
                 .filter(productMap::containsKey)
+                .filter(id -> !excludeIds.contains(id))
                 .map(id -> {
                     Product product = productMap.get(id);
                     long orderCnt = orderCountMap.getOrDefault(id, 0L);
@@ -137,11 +143,12 @@ public class PopularityStrategy {
                 .collect(Collectors.toList());
     }
 
-    private List<RecommendProductDto> fetchLatest(int limit, int page) {
+    private List<RecommendProductDto> fetchLatest(int limit, int page, Set<Long> excludeIds) {
         return productRepository.findAll(PageRequest.of(page, limit,
                         org.springframework.data.domain.Sort.by(
                                 org.springframework.data.domain.Sort.Direction.DESC, "id")))
                 .stream()
+                .filter(p -> !excludeIds.contains(p.getId()))
                 .map(p -> RecommendProductDto.of(p, 0L))
                 .collect(Collectors.toList());
     }

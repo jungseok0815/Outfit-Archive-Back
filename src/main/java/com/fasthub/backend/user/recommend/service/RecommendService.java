@@ -1,5 +1,6 @@
 package com.fasthub.backend.user.recommend.service;
 
+import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
 import com.fasthub.backend.user.recommend.strategy.ContentBasedStrategy;
 import com.fasthub.backend.user.recommend.strategy.PopularityStrategy;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +20,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class RecommendService {
 
+    private final OrderRepository orderRepository;
     private final PopularityStrategy popularityStrategy;
     private final ContentBasedStrategy contentBasedStrategy;
     private final VectorBasedStrategy vectorBasedStrategy;
@@ -44,16 +48,22 @@ public class RecommendService {
         return popularityStrategy.recommend(limit);
     }
 
-    // AI 추천: 벡터 기반 / 벡터 계산 불가 시 인기 상품
+    // AI 추천: 벡터 기반 / 벡터 계산 불가 시 인기 상품 (구매한 상품 제외)
     public List<RecommendProductDto> recommendAi(Long userId, int limit, int page) {
         log.info("[Recommend] AI 추천 요청 userId={} page={}", userId, page);
-        List<RecommendProductDto> vectorBased = vectorBasedStrategy.recommend(userId, limit, page);
+
+        Set<Long> purchasedIds = (userId != null)
+                ? orderRepository.findPurchasedProductIdsByUserId(userId).stream().collect(Collectors.toSet())
+                : Set.of();
+        log.info("[Recommend] 구매 상품 제외 {}건", purchasedIds.size());
+
+        List<RecommendProductDto> vectorBased = vectorBasedStrategy.recommend(userId, limit, page, purchasedIds);
         if (!vectorBased.isEmpty()) {
             log.info("[Recommend] 벡터 기반 추천 성공 {}건", vectorBased.size());
             return vectorBased;
         }
 
         log.info("[Recommend] 벡터 계산 불가 → 인기 상품 추천");
-        return popularityStrategy.recommend(limit, page);
+        return popularityStrategy.recommend(limit, page, purchasedIds);
     }
 }

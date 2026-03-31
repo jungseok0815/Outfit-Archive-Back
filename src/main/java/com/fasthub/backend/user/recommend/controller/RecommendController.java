@@ -35,7 +35,7 @@ public class RecommendController {
     @GetMapping("/ai")
     public ResponseEntity<List<RecommendProductDto>> recommendAi(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestParam(defaultValue = "12") int limit,
+            @RequestParam(defaultValue = "15") int limit,
             @RequestParam(defaultValue = "0") int page) {
         log.info("come in ai recomand page={}", page);
         Long userId = (userDetails != null) ? userDetails.getId() : null;

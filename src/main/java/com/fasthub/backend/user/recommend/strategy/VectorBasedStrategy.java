@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class VectorBasedStrategy {
     private final TasteVectorService tasteVectorService;
     private final ObjectMapper objectMapper;
 
-    public List<RecommendProductDto> recommend(Long userId, int limit, int page) {
+    public List<RecommendProductDto> recommend(Long userId, int limit, int page, Set<Long> excludeIds) {
         // 1. Redis 캐시에서 취향 벡터 조회 → 없으면 실시간 계산
         double[] tasteVector = tasteVectorService.getFromCache(userId);
         if (tasteVector == null) {
@@ -40,6 +41,7 @@ public class VectorBasedStrategy {
         List<Product> allProducts = productRepository.findAllWithEmbedding();
 
         List<RecommendProductDto> result = allProducts.stream()
+                .filter(p -> !excludeIds.contains(p.getId()))
                 .map(p -> {
                     double[] vec = parseVector(p.getEmbedding());
                     double similarity = cosineSimilarity(finalTasteVector, vec);
