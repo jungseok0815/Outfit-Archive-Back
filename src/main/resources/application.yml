@@ -40,6 +40,10 @@ jwt:
 toss:
   secret-key: ENC(rorFzGs2dh7Brfybl22lxKBbG2G+HFbcKTfabSLY8rWmemsDWhzEVX8p1dFkB2Ss)
 
+clip:
+  server:
+    url: ${CLIP_SERVER_URL:http://localhost:8000}
+
 cloud:
   aws:
     s3:

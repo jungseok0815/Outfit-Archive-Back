@@ -14,6 +14,7 @@ import com.fasthub.backend.user.post.repository.PostCommentRepository;
 import com.fasthub.backend.user.post.repository.PostLikeRepository;
 import com.fasthub.backend.user.post.repository.PostRepository;
 import com.fasthub.backend.user.productview.repository.ProductViewRepository;
+import com.fasthub.backend.user.recommend.service.TasteVectorService;
 import com.fasthub.backend.user.review.repository.ReviewRepository;
 import com.fasthub.backend.user.usr.dto.*;
 import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
@@ -53,6 +54,7 @@ public class UserService {
     private final PostCommentRepository postCommentRepository;
     private final PostLikeRepository postLikeRepository;
     private final ProductViewRepository productViewRepository;
+    private final TasteVectorService tasteVectorService;
 
 
     public LoginResponseDto login(LoginDto loginDto, HttpServletResponse response) {
@@ -63,6 +65,8 @@ public class UserService {
                     }
                     jwtService.generateAccessToken(response, user);
                     jwtService.generateRefreshToken(response, user);
+                    // 로그인 시 취향 벡터 비동기 계산 → Redis 캐싱 (로그인 응답에 영향 없음)
+                    tasteVectorService.computeAndCache(user.getId());
                     return new LoginResponseDto(user);
                 })
                 .orElseThrow(() -> new BusinessException(ErrorCode.ID_NOT_FOUND));

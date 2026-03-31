@@ -5,6 +5,7 @@ import com.fasthub.backend.user.productview.repository.ProductViewRepository;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
 import com.fasthub.backend.user.recommend.strategy.ContentBasedStrategy;
 import com.fasthub.backend.user.recommend.strategy.PopularityStrategy;
+import com.fasthub.backend.user.recommend.strategy.VectorBasedStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class RecommendService {
     private final ProductViewRepository productViewRepository;
     private final PopularityStrategy popularityStrategy;
     private final ContentBasedStrategy contentBasedStrategy;
+    private final VectorBasedStrategy vectorBasedStrategy;
 
     public List<RecommendProductDto> recommendPopular(int limit) {
         log.info("[Recommend] 인기 상품 추천 (로그인 무관)");
@@ -63,8 +65,15 @@ public class RecommendService {
             return popularityStrategy.recommend(limit);
         }
 
-        // 구매 이력 있음 → 콘텐츠 기반 추천
-        log.info("[Recommend] 구매 이력 있음 → 콘텐츠 기반 추천");
+        // 구매 이력 있음 → 벡터 기반 추천 우선, 없으면 콘텐츠 기반
+        log.info("[Recommend] 구매 이력 있음 → 벡터 기반 추천 시도");
+        List<RecommendProductDto> vectorBased = vectorBasedStrategy.recommend(userId, limit);
+        if (vectorBased.size() >= limit) {
+            log.info("[Recommend] 벡터 기반 추천 성공 {}건", vectorBased.size());
+            return vectorBased;
+        }
+
+        log.info("[Recommend] 벡터 기반 추천 부족 ({}/{}), 콘텐츠 기반 추천으로 전환", vectorBased.size(), limit);
         List<RecommendProductDto> contentBased = contentBasedStrategy.recommend(userId, limit);
 
         if (contentBased.size() >= limit) {
