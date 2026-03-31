@@ -29,6 +29,7 @@ public class BannerService {
     private final BannerMapper bannerMapper;
     private final ImgHandler imgHandler;
 
+    @Transactional(readOnly = true)
     public List<ResponseBannerDto> list() {
         return bannerRepository.findAllByOrderBySortOrderAsc()
                 .stream()
@@ -36,6 +37,7 @@ public class BannerService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<ResponseBannerDto> listActive() {
         return bannerRepository.findAllByActiveTrueOrderBySortOrderAsc()
                 .stream()

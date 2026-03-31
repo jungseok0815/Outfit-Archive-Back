@@ -15,8 +15,13 @@ import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
 import com.fasthub.backend.user.post.repository.PostProductRepository;
+import com.fasthub.backend.user.productview.repository.ProductViewRepository;
 import com.fasthub.backend.user.review.repository.ReviewRepository;
+import com.fasthub.backend.admin.product.event.BulkProductSavedEvent;
+import com.fasthub.backend.admin.product.event.ProductSavedEvent;
+import com.fasthub.backend.user.similar.service.EmbeddingService;
 import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
+import org.springframework.context.ApplicationEventPublisher;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasthub.backend.cmm.enums.ProductCategory;
@@ -35,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,10 +60,12 @@ public class ProductService {
     private final ReviewRepository reviewRepository;
     private final PostProductRepository postProductRepository;
     private final WishlistRepository wishlistRepository;
+    private final ProductViewRepository productViewRepository;
     private final ImgHandler imgHandler;
     private final ProductMapper productMapper;
     private final ObjectMapper objectMapper;
-    // private final EmbeddingService embeddingService;  // AI 임베딩 기능 비활성화
+    private final EmbeddingService embeddingService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public void insert(InsertProductDto productDto) {
@@ -78,6 +86,10 @@ public class ProductService {
         }
 
         saveSizes(product, productDto.getSizesJson());
+
+        // 트랜잭션 커밋 완료 후 벡터 추출 (커밋 전 조회 시 NoSuchElement 방지)
+        log.info("[Product] 상품 등록 완료 productId={} → 커밋 후 벡터 추출 예약", product.getId());
+        eventPublisher.publishEvent(new ProductSavedEvent(product.getId()));
     }
 
     private void saveSizes(Product product, String sizesJson) {
@@ -98,11 +110,13 @@ public class ProductService {
         }
     }
 
+    @Transactional(readOnly = true)
     public Page<ResponseProductDto> list(String keyword, Pageable pageable) {
         return productRepository.findAllByKeyword(keyword, pageable)
                 .map(productMapper::productToProductDto);
     }
 
+    @Transactional(readOnly = true)
     public Page<ResponseProductDto> listForUser(String keyword, ProductCategory category, Pageable pageable) {
         return productRepository.findAllByKeywordAndCategory(keyword, category, pageable)
                 .map(productMapper::productToProductDto);
@@ -165,6 +179,7 @@ public class ProductService {
 
         // 엑셀 파싱 후 상품 저장
         int count = 0;
+        List<Long> savedProductIds = new ArrayList<>();
         try (Workbook workbook = new XSSFWorkbook(new ByteArrayInputStream(excelBytes))) {
             Sheet sheet = workbook.getSheetAt(0);
             for (int i = 1; i <= sheet.getLastRowNum(); i++) { // 1행부터 (0행은 헤더)
@@ -213,12 +228,15 @@ public class ProductService {
                             imgHandler.createImgFromBytes(imageMap.get(imageFile), imageFile, contentType, ProductImg::new, product)
                     );
                 }
+                savedProductIds.add(product.getId());
                 count++;
             }
         } catch (IOException e) {
             throw new RuntimeException("엑셀 파싱 실패", e);
         }
-        log.info("[BulkInsert] {}개 상품 등록 완료", count);
+        // 전체 커밋 후 순차 벡터 추출 (한번에 하나씩 처리)
+        log.info("[BulkInsert] {}개 상품 등록 완료 → 커밋 후 순차 벡터 추출 예약", count);
+        eventPublisher.publishEvent(new BulkProductSavedEvent(savedProductIds));
         return count;
     }
 
@@ -271,6 +289,7 @@ public class ProductService {
                 });
         // FK 참조 데이터 먼저 제거 (벌크 삭제)
         wishlistRepository.deleteByProductId(product.getId());
+        productViewRepository.deleteByProductId(product.getId());
         postProductRepository.deleteByProduct(product);
         reviewRepository.deleteByProduct(product);
         orderRepository.deleteByProduct(product);

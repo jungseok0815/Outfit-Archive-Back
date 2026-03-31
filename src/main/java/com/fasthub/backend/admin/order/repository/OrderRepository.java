@@ -64,6 +64,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     // 특정 유저의 주문 수 (Cold Start 판별용)
     long countByUserId(Long userId);
 
+    // 유저가 구매한 상품 ID 목록 (취소 제외)
+    @Query("SELECT DISTINCT o.product.id FROM Order o WHERE o.user.id = :userId AND o.status != 'CANCELLED'")
+    List<Long> findPurchasedProductIdsByUserId(@Param("userId") Long userId);
+
     // 사용자 본인 주문 목록
     Page<Order> findByUser(User user, Pageable pageable);
 

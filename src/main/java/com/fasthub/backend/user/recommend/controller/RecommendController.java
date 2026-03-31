@@ -22,14 +22,24 @@ public class RecommendController {
 
     private final RecommendService recommendService;
 
-    // 비로그인 사용자도 접근 가능 (SecurityConfig에서 permitAll 설정)
-    // 로그인 사용자는 구매 이력 기반으로 분기, 비로그인은 인기 상품 반환
+    // 비로그인 → 인기 상품 / 로그인 → 조회 기반 추천
     @GetMapping("/products")
     public ResponseEntity<List<RecommendProductDto>> recommendProducts(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestParam(defaultValue = "10") int limit) {
         Long userId = (userDetails != null) ? userDetails.getId() : null;
         return ResponseEntity.ok(recommendService.recommend(userId, limit));
+    }
+
+    // AI 추천 버튼 클릭 시 벡터 기반 추천 (로그인 필요)
+    @GetMapping("/ai")
+    public ResponseEntity<List<RecommendProductDto>> recommendAi(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestParam(defaultValue = "15") int limit,
+            @RequestParam(defaultValue = "0") int page) {
+        log.info("come in ai recomand page={}", page);
+        Long userId = (userDetails != null) ? userDetails.getId() : null;
+        return ResponseEntity.ok(recommendService.recommendAi(userId, limit, page));
     }
 
     // 로그인 여부 무관하게 항상 인기 상품 반환

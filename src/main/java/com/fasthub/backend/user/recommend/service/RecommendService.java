@@ -4,12 +4,12 @@ import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
 import com.fasthub.backend.user.recommend.strategy.ContentBasedStrategy;
 import com.fasthub.backend.user.recommend.strategy.PopularityStrategy;
+import com.fasthub.backend.user.recommend.strategy.VectorBasedStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,48 +23,47 @@ public class RecommendService {
     private final OrderRepository orderRepository;
     private final PopularityStrategy popularityStrategy;
     private final ContentBasedStrategy contentBasedStrategy;
+    private final VectorBasedStrategy vectorBasedStrategy;
 
     public List<RecommendProductDto> recommendPopular(int limit) {
         log.info("[Recommend] 인기 상품 추천 (로그인 무관)");
         return popularityStrategy.recommend(limit);
     }
 
+    // 일반 추천: 비로그인 → 인기 상품 / 로그인 → 조회 기반
     public List<RecommendProductDto> recommend(Long userId, int limit) {
-        // 비로그인 → 인기 상품
         if (userId == null) {
             log.info("[Recommend] 비로그인 사용자 → 인기 상품 추천");
             return popularityStrategy.recommend(limit);
         }
 
-        long orderCount = orderRepository.countByUserId(userId);
-        log.info("[Recommend] userId={}, orderCount={}", userId, orderCount);
-
-        // Cold Start (구매 이력 없음) → 인기 상품
-        if (orderCount == 0) {
-            log.info("[Recommend] Cold Start → 인기 상품 추천");
-            return popularityStrategy.recommend(limit);
+        log.info("[Recommend] 로그인 사용자 userId={} → 조회 기반 추천 시도", userId);
+        List<RecommendProductDto> viewBased = contentBasedStrategy.recommendFromViews(userId, limit);
+        if (!viewBased.isEmpty()) {
+            log.info("[Recommend] 조회 기반 추천 성공 {}건", viewBased.size());
+            return viewBased;
         }
 
-        // 구매 이력 있음 → 콘텐츠 기반 추천
-        log.info("[Recommend] 구매 이력 있음 → 콘텐츠 기반 추천");
-        List<RecommendProductDto> contentBased = contentBasedStrategy.recommend(userId, limit);
+        log.info("[Recommend] 조회 기록 없음 → 인기 상품 추천");
+        return popularityStrategy.recommend(limit);
+    }
 
-        if (contentBased.size() >= limit) {
-            return contentBased;
+    // AI 추천: 벡터 기반 / 벡터 계산 불가 시 인기 상품 (구매한 상품 제외)
+    public List<RecommendProductDto> recommendAi(Long userId, int limit, int page) {
+        log.info("[Recommend] AI 추천 요청 userId={} page={}", userId, page);
+
+        Set<Long> purchasedIds = (userId != null)
+                ? orderRepository.findPurchasedProductIdsByUserId(userId).stream().collect(Collectors.toSet())
+                : Set.of();
+        log.info("[Recommend] 구매 상품 제외 {}건", purchasedIds.size());
+
+        List<RecommendProductDto> vectorBased = vectorBasedStrategy.recommend(userId, limit, page, purchasedIds);
+        if (!vectorBased.isEmpty()) {
+            log.info("[Recommend] 벡터 기반 추천 성공 {}건", vectorBased.size());
+            return vectorBased;
         }
 
-        // 콘텐츠 기반 결과가 부족하면 인기 상품으로 보완
-        log.info("[Recommend] 콘텐츠 기반 추천 부족 ({}/{}), 인기 상품으로 보완", contentBased.size(), limit);
-        Set<Long> existingIds = contentBased.stream()
-                .map(RecommendProductDto::getProductId)
-                .collect(Collectors.toSet());
-
-        List<RecommendProductDto> result = new ArrayList<>(contentBased);
-        popularityStrategy.recommend(limit).stream()
-                .filter(p -> !existingIds.contains(p.getProductId()))
-                .limit(limit - contentBased.size())
-                .forEach(result::add);
-
-        return result;
+        log.info("[Recommend] 벡터 계산 불가 → 인기 상품 추천");
+        return popularityStrategy.recommend(limit, page, purchasedIds);
     }
 }
