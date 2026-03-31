@@ -99,6 +99,7 @@ public class TasteVectorService {
      */
     @Transactional(readOnly = true)
     public double[] compute(Long userId) {
+        log.info("userId : {}", userId);
         LocalDateTime orderSince = LocalDateTime.now().minusDays(HISTORY_DAYS);
         LocalDateTime viewSince  = LocalDateTime.now().minusDays(VIEW_DAYS);
 
