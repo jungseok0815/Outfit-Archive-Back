@@ -35,10 +35,11 @@ public class RecommendController {
     @GetMapping("/ai")
     public ResponseEntity<List<RecommendProductDto>> recommendAi(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestParam(defaultValue = "10") int limit) {
-        log.info("come in ai recomand");
+            @RequestParam(defaultValue = "12") int limit,
+            @RequestParam(defaultValue = "0") int page) {
+        log.info("come in ai recomand page={}", page);
         Long userId = (userDetails != null) ? userDetails.getId() : null;
-        return ResponseEntity.ok(recommendService.recommendAi(userId, limit));
+        return ResponseEntity.ok(recommendService.recommendAi(userId, limit, page));
     }
 
     // 로그인 여부 무관하게 항상 인기 상품 반환

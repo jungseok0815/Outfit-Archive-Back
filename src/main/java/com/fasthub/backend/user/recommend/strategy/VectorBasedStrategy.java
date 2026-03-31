@@ -22,7 +22,7 @@ public class VectorBasedStrategy {
     private final TasteVectorService tasteVectorService;
     private final ObjectMapper objectMapper;
 
-    public List<RecommendProductDto> recommend(Long userId, int limit) {
+    public List<RecommendProductDto> recommend(Long userId, int limit, int page) {
         // 1. Redis 캐시에서 취향 벡터 조회 → 없으면 실시간 계산
         double[] tasteVector = tasteVectorService.getFromCache(userId);
         if (tasteVector == null) {
@@ -35,7 +35,7 @@ public class VectorBasedStrategy {
             return List.of();
         }
 
-        // 2. 전체 상품 임베딩과 유사도 계산
+        // 2. 전체 상품 임베딩과 유사도 계산 → 관련도 순 정렬 → 페이지 적용
         final double[] finalTasteVector = tasteVector;
         List<Product> allProducts = productRepository.findAllWithEmbedding();
 
@@ -60,10 +60,11 @@ public class VectorBasedStrategy {
                             .build();
                 })
                 .sorted(Comparator.comparingDouble(dto -> -dto.getAvgRating()))
+                .skip((long) page * limit)
                 .limit(limit)
                 .collect(Collectors.toList());
 
-        log.info("[VectorBased] userId={} 추천 결과 {}건", userId, result.size());
+        log.info("[VectorBased] userId={} page={} 추천 결과 {}건", userId, page, result.size());
         return result;
     }
 

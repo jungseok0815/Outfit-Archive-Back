@@ -36,33 +36,38 @@ public class PopularityStrategy {
     private static final double RATING_WEIGHT = 2.0;
 
     public List<RecommendProductDto> recommend(int limit) {
-        log.info("recmmend come limit : {}", limit);
+        return recommend(limit, 0);
+    }
+
+    public List<RecommendProductDto> recommend(int limit, int page) {
+        log.info("[Recommend] limit={} page={}", limit, page);
         // 1순위: 최근 30일 인기 상품
-        List<RecommendProductDto> result = fetchPopular(RECENT_DAYS, limit, "최근 30일 인기 상품");
+        List<RecommendProductDto> result = fetchPopular(RECENT_DAYS, limit, page, "최근 30일 인기 상품");
 
         // 2순위: 30일 결과가 부족하면 90일로 확장
         if (result.size() < limit) {
             log.info("[Recommend] 30일 인기 상품 부족 ({}/{}), 90일로 확장", result.size(), limit);
-            result = fetchPopular(FALLBACK_DAYS, limit, "최근 3개월 인기 상품");
+            result = fetchPopular(FALLBACK_DAYS, limit, page, "최근 3개월 인기 상품");
         }
 
         // 3순위: 주문 이력 자체가 없으면 최신 상품 순으로 반환
         if (result.isEmpty()) {
             log.info("[Recommend] 주문 이력 없음, 최신 상품으로 대체");
-            result = fetchLatest(limit);
+            result = fetchLatest(limit, page);
         }
 
         return result;
     }
 
-    private List<RecommendProductDto> fetchPopular(int days, int limit, String reason) {
+    private List<RecommendProductDto> fetchPopular(int days, int limit, int page, String reason) {
         LocalDateTime since = LocalDateTime.now().minusDays(days);
 
         log.info("since : {}" , since);
 
-        // 주문 수 기준 후보 풀 조회 (limit * 3: 리뷰 점수 반영 후 재정렬 여유분)
+        // 후보 풀: 현재 페이지까지 커버할 수 있도록 충분한 수 조회
+        int poolSize = (page + 3) * limit;
         List<PopularProductProjection> projections =
-                orderRepository.findPopularProductIds(since, PageRequest.of(0, limit * 3));
+                orderRepository.findPopularProductIds(since, PageRequest.of(0, poolSize));
 
 
         projections.forEach(item -> log.info("projection : {}", projections));
@@ -127,12 +132,13 @@ public class PopularityStrategy {
                         -(dto.getOrderCount() * ORDER_WEIGHT
                         + dto.getReviewCount() * REVIEW_WEIGHT
                         + dto.getAvgRating() * RATING_WEIGHT)))
+                .skip((long) page * limit)
                 .limit(limit)
                 .collect(Collectors.toList());
     }
 
-    private List<RecommendProductDto> fetchLatest(int limit) {
-        return productRepository.findAll(PageRequest.of(0, limit,
+    private List<RecommendProductDto> fetchLatest(int limit, int page) {
+        return productRepository.findAll(PageRequest.of(page, limit,
                         org.springframework.data.domain.Sort.by(
                                 org.springframework.data.domain.Sort.Direction.DESC, "id")))
                 .stream()

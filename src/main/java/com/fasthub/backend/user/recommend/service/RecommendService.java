@@ -45,15 +45,15 @@ public class RecommendService {
     }
 
     // AI 추천: 벡터 기반 / 벡터 계산 불가 시 인기 상품
-    public List<RecommendProductDto> recommendAi(Long userId, int limit) {
-        log.info("[Recommend] AI 추천 요청 userId={}", userId);
-        List<RecommendProductDto> vectorBased = vectorBasedStrategy.recommend(userId, limit);
+    public List<RecommendProductDto> recommendAi(Long userId, int limit, int page) {
+        log.info("[Recommend] AI 추천 요청 userId={} page={}", userId, page);
+        List<RecommendProductDto> vectorBased = vectorBasedStrategy.recommend(userId, limit, page);
         if (!vectorBased.isEmpty()) {
             log.info("[Recommend] 벡터 기반 추천 성공 {}건", vectorBased.size());
             return vectorBased;
         }
 
         log.info("[Recommend] 벡터 계산 불가 → 인기 상품 추천");
-        return popularityStrategy.recommend(limit);
+        return popularityStrategy.recommend(limit, page);
     }
 }
