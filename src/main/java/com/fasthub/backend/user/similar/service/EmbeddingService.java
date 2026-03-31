@@ -23,6 +23,7 @@ public class EmbeddingService {
     private final ProductRepository productRepository;
     private final ProductImgRepository productImgRepository;
     private final ObjectMapper objectMapper;
+    private final EmbeddingSyncService embeddingSyncService;
 
     @Async("embeddingExecutor")
     @Transactional
@@ -74,7 +75,7 @@ public class EmbeddingService {
 
         for (Long productId : productIds) {
             try {
-                generateAndSaveSync(productId);
+                embeddingSyncService.generateAndSaveSync(productId);
                 success++;
                 log.info("[Embedding] 배치 진행 {}/{} productId={} ✅",
                         success + fail, productIds.size(), productId);
@@ -86,30 +87,6 @@ public class EmbeddingService {
         }
 
         log.info("[Embedding] ===== 배치 완료 성공={} 실패={} =====", success, fail);
-    }
-
-    // 동기 처리 (배치에서 순차 호출용)
-    @Transactional
-    public void generateAndSaveSync(Long productId) throws Exception {
-        Product product = productRepository.findById(productId).orElseThrow();
-
-        List<ProductImg> images = productImgRepository.findByProduct(product);
-        if (images.isEmpty()) {
-            log.warn("[Embedding] 이미지 없음 → 건너뜀 productId={}", productId);
-            return;
-        }
-
-        String imageUrl = images.get(0).getImgPath();
-        List<Double> vector = clipClient.extractVector(productId, imageUrl);
-
-        if (vector.isEmpty()) {
-            log.warn("[Embedding] 빈 벡터 반환 productId={}", productId);
-            return;
-        }
-
-        String json = objectMapper.writeValueAsString(vector);
-        product.updateEmbedding(json);
-        productRepository.save(product);
     }
 
     private double round(double value) {

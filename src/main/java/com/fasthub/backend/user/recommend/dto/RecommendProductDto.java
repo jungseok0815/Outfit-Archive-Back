@@ -21,6 +21,8 @@ public class RecommendProductDto {
     private String reason;     // 추천 이유 텍스트
 
     public static RecommendProductDto of(Product product, long orderCount) {
+        String imgPath = (product.getImages() != null && !product.getImages().isEmpty())
+                ? product.getImages().get(0).getImgPath() : null;
         return RecommendProductDto.builder()
                 .productId(product.getId())
                 .productNm(product.getProductNm())
@@ -28,6 +30,7 @@ public class RecommendProductDto {
                 .productPrice(product.getProductPrice())
                 .category(product.getCategory())
                 .brandNm(product.getBrand() != null ? product.getBrand().getBrandNm() : null)
+                .imgPath(imgPath)
                 .orderCount(orderCount)
                 .reviewCount(0L)
                 .avgRating(0.0)
