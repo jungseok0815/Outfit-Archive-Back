@@ -55,6 +55,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Docker Buildx 설정
+        uses: docker/setup-buildx-action@v3
+
       - name: FastAPI 이미지 태그 설정
         id: meta
         uses: docker/metadata-action@v5
