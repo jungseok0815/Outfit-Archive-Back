@@ -1,15 +1,15 @@
 
 
 cors:
-  allowed-origin: http://jungseok-outfit-frontend.s3-website.ap-northeast-2.amazonaws.com
+  allowed-origin: https://outfitarchives.com
 
 jwt:
-  cookie-secure: false
-  cookie-same-site: Lax
+  cookie-secure: true
+  cookie-same-site: None
 
 file:
   path-product: C:\jungseok\img\
 
 ai:
   embedding:
-    url: http://localhost:8000/embed
+    url: http://recommend:8000/embed
