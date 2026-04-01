@@ -14,3 +14,10 @@ services:
       - SPRING_DATA_REDIS_HOST=redis
     depends_on:
       - redis
+
+  recommend:
+    build: ./outfit-recommend-server
+    ports:
+      - "8000:8000"
+    depends_on:
+      - app
