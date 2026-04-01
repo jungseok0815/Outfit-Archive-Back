@@ -43,8 +43,11 @@ out/
 logs/
 *.log
 
-### Gradle ###
-gradle.properties
+
+### Python ###
+outfit-recommend-server/venv/
+outfit-recommend-server/__pycache__/
+outfit-recommend-server/*.pyc
 
 ### Image Storage ###
 *.png

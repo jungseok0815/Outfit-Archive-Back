@@ -6,7 +6,8 @@ COPY build.gradle .
 COPY settings.gradle .
 COPY gradle.properties .
 COPY src src
-RUN chmod +x ./gradlew && ./gradlew build -x test
+ARG JASYPT_ENCRYPTOR_PASSWORD
+RUN chmod +x ./gradlew && JASYPT_ENCRYPTOR_PASSWORD=$JASYPT_ENCRYPTOR_PASSWORD ./gradlew build -x test
 
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
