@@ -7,7 +7,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-spring:
@@ -28,7 +27,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ghcr.io/jungseok0815/outfit-archive-back
           tags: |
             type=sha,prefix=,suffix=,format=short
             type=raw,value=latest
@@ -60,7 +59,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/recommend
+          images: ghcr.io/jungseok0815/outfit-archive-back/recommend
           tags: |
             type=sha,prefix=,suffix=,format=short
             type=raw,value=latest
@@ -89,8 +88,8 @@ jobs:
             echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
             # 최신 이미지 pull
-            docker pull ghcr.io/${{ github.repository }}:latest
-            docker pull ghcr.io/${{ github.repository }}/recommend:latest
+            docker pull ghcr.io/jungseok0815/outfit-archive-back:latest
+            docker pull ghcr.io/jungseok0815/outfit-archive-back/recommend:latest
 
             # 컨테이너 간 통신용 네트워크 생성 (이미 있으면 무시)
             docker network create app-network || true
@@ -115,7 +114,7 @@ jobs:
               -e SPRING_PROFILES_ACTIVE=prod \
               -e JASYPT_ENCRYPTOR_PASSWORD=${{ secrets.JASYPT_PASSWORD }} \
               -e SPRING_DATA_REDIS_HOST=redis \
-              ghcr.io/${{ github.repository }}:latest
+              ghcr.io/jungseok0815/outfit-archive-back:latest
 
             # FastAPI 컨테이너 교체
             docker stop recommend || true
@@ -125,7 +124,7 @@ jobs:
               --network app-network \
               --restart unless-stopped \
               -p 8000:8000 \
-              ghcr.io/${{ github.repository }}/recommend:latest
+              ghcr.io/jungseok0815/outfit-archive-back/recommend:latest
 
             # 오래된 이미지 정리
             docker image prune -f
