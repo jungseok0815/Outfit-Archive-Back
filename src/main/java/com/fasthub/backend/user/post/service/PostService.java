@@ -150,8 +150,10 @@ public class PostService {
             throw new BusinessException(ErrorCode.BOARD_UNAUTHORIZED);
         }
 
-        // 게시글 삭제 전 댓글 먼저 삭제 (Post → PostComment 간 cascade 없음)
+        // 게시글 삭제 전 연관 데이터 먼저 삭제
+        postLikeRepository.deleteByPostId(post.getId());
         postCommentRepository.deleteByPost(post);
+        postProductRepository.deleteByPost(post);
         // S3 이미지 먼저 제거 (CASCADE ALL로 DB 엔티티는 자동 삭제)
         post.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
         postRepository.delete(post);
