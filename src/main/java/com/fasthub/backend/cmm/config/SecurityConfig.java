@@ -80,10 +80,15 @@ public class SecurityConfig {
                 .cors(c -> {
                         CorsConfigurationSource source = request -> {
                             CorsConfiguration config = new CorsConfiguration();
-                            config.addAllowedOrigin(allowedOrigin); // 허용할 도메인
-                            config.addAllowedMethod("*"); // 모든 HTTP 메서드 허용
-                            config.addAllowedHeader("*"); // 모든 헤더 허용
-                            config.setAllowCredentials(true); // 쿠키 허용
+                            config.addAllowedOrigin(allowedOrigin);
+                            config.addAllowedMethod("*");
+                            config.addAllowedHeader("Authorization");
+                            config.addAllowedHeader("Content-Type");
+                            config.addAllowedHeader("X-Requested-With");
+                            config.addAllowedHeader("Accept");
+                            config.addAllowedHeader("Cookie");
+                            config.addExposedHeader("Set-Cookie");
+                            config.setAllowCredentials(true);
                             return config;
                         };
                     c.configurationSource(source);
