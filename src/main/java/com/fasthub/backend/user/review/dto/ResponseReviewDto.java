@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -20,6 +22,7 @@ public class ResponseReviewDto {
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+    private List<String> imgPaths;
 
     public static ResponseReviewDto of(Review review) {
         return ResponseReviewDto.builder()
@@ -33,6 +36,7 @@ public class ResponseReviewDto {
                 .content(review.getContent())
                 .createdDate(review.getCreatedDate())
                 .updatedDate(review.getUpdatedDate())
+                .imgPaths(review.getImages().stream().map(img -> img.getImgPath()).collect(Collectors.toList()))
                 .build();
     }
 }

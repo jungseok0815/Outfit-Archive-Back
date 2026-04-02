@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @Slf4j
 @RestControllerAdvice
@@ -37,6 +38,12 @@ public class GlobalExceptionHandler {
                         .code("VALID_FAIL")
                         .msg(msg)
                         .build());
+    }
+
+    // 정적 리소스 없음 (favicon.ico 등) — 404 처리
+    @ExceptionHandler(NoResourceFoundException.class)
+    protected ResponseEntity<Void> handleNoResourceFound(NoResourceFoundException e) {
+        return ResponseEntity.notFound().build();
     }
 
     // 예상치 못한 예외

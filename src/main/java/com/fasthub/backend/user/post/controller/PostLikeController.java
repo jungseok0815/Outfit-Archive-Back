@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,6 +25,12 @@ public class PostLikeController {
         boolean liked = postLikeService.toggle(postId, userDetails.getId());
         long likeCount = postLikeService.count(postId);
         return ResponseEntity.ok(Map.of("liked", liked, "likeCount", likeCount));
+    }
+
+    // 좋아요 누른 사용자 목록
+    @GetMapping("/users")
+    public ResponseEntity<List<Map<String, Object>>> likedUsers(@RequestParam Long postId) {
+        return ResponseEntity.ok(postLikeService.likedUsers(postId));
     }
 
     // 좋아요 상태 조회

@@ -12,6 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -52,5 +56,18 @@ public class PostLikeService {
     // 특정 사용자의 좋아요 여부 확인
     public boolean isLiked(Long postId, Long userId) {
         return postLikeRepository.existsByPostIdAndUserId(postId, userId);
+    }
+
+    // 좋아요 누른 사용자 목록
+    public List<Map<String, Object>> likedUsers(Long postId) {
+        return postLikeRepository.findByPostId(postId).stream()
+                .map(like -> {
+                    Map<String, Object> map = new java.util.HashMap<>();
+                    map.put("userId", like.getUser().getId());
+                    map.put("userNm", like.getUser().getUserNm());
+                    map.put("profileImgNm", like.getUser().getProfileImgNm());
+                    return map;
+                })
+                .collect(Collectors.toList());
     }
 }
