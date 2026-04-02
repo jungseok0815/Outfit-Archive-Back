@@ -7,10 +7,13 @@ import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.cmm.enums.OrderStatus;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
+import com.fasthub.backend.cmm.img.ImgHandler;
 import com.fasthub.backend.user.review.dto.InsertReviewDto;
 import com.fasthub.backend.user.review.dto.ResponseReviewDto;
 import com.fasthub.backend.user.review.dto.UpdateReviewDto;
 import com.fasthub.backend.user.review.entity.Review;
+import com.fasthub.backend.user.review.entity.ReviewImg;
+import com.fasthub.backend.user.review.repository.ReviewImgRepository;
 import com.fasthub.backend.user.review.repository.ReviewRepository;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
@@ -27,9 +30,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final ReviewImgRepository reviewImgRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final AuthRepository authRepository;
+    private final ImgHandler imgHandler;
 
     @Transactional
     public ResponseReviewDto insert(Long userId, InsertReviewDto dto) {
@@ -66,6 +71,11 @@ public class ReviewService {
                 .rating(dto.getRating())
                 .content(dto.getContent())
                 .build());
+
+        if (dto.getImages() != null) {
+            dto.getImages().forEach(image ->
+                    reviewImgRepository.save(imgHandler.createImg(image, ReviewImg::new, review)));
+        }
 
         log.info("[Review] 후기 작성 완료 userId={}, orderId={}, rating={}", userId, dto.getOrderId(), dto.getRating());
 

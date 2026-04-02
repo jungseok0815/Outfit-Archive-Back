@@ -12,6 +12,7 @@ import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.user.coupon.service.CouponService;
 import com.fasthub.backend.user.order.dto.InsertUserOrderDto;
 import com.fasthub.backend.user.order.dto.ResponseUserOrderDto;
+import com.fasthub.backend.user.review.repository.ReviewRepository;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class UserOrderService {
     private final AuthRepository authRepository;
     private final CouponService couponService;
     private final RedissonClient redissonClient;
+    private final ReviewRepository reviewRepository;
 
     // 주문 준비 - 재고 검증 후 PENDING 주문 생성 (결제 승인 전)
     @Transactional
@@ -124,6 +126,6 @@ public class UserOrderService {
         User user = authRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
         return orderRepository.findByUserAndStatusNot(user, OrderStatus.PENDING, pageable)
-                .map(o -> ResponseUserOrderDto.of(o, 0));
+                .map(o -> ResponseUserOrderDto.of(o, 0, reviewRepository.existsByOrder(o)));
     }
 }

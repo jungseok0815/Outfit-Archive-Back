@@ -75,8 +75,14 @@ public class Order {
     @Column(length = 20)
     private String sizeNm;  // 선택 사이즈 (사이즈 없는 상품은 null)
 
+    @Column
+    private LocalDateTime deliveredAt;  // 배송완료 처리 일시
+
     public void updateStatus(OrderStatus status) {
         this.status = status;
+        if (status == OrderStatus.DELIVERED) {
+            this.deliveredAt = LocalDateTime.now();
+        }
     }
 
     public void registerShipping(String trackingNumber) {

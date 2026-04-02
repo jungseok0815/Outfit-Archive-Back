@@ -25,8 +25,14 @@ public class ResponseUserOrderDto {
     private LocalDateTime orderDate;
     private String sizeNm;
     private String trackingNumber;
+    private LocalDateTime deliveredDate;
+    private boolean reviewWritten;
 
     public static ResponseUserOrderDto of(Order order, int earnedPoint) {
+        return of(order, earnedPoint, false);
+    }
+
+    public static ResponseUserOrderDto of(Order order, int earnedPoint, boolean reviewWritten) {
         String imgPath = order.getProduct().getImages() != null && !order.getProduct().getImages().isEmpty()
                 ? order.getProduct().getImages().get(0).getImgPath()
                 : null;
@@ -47,6 +53,8 @@ public class ResponseUserOrderDto {
                 .orderDate(order.getOrderDate())
                 .sizeNm(order.getSizeNm())
                 .trackingNumber(order.getTrackingNumber())
+                .deliveredDate(order.getDeliveredAt())
+                .reviewWritten(reviewWritten)
                 .build();
     }
 }

@@ -22,10 +22,10 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     // 후기 작성
-    @PostMapping
+    @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<ResponseReviewDto> insert(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestBody InsertReviewDto dto) {
+            @ModelAttribute InsertReviewDto dto) {
         return ResponseEntity.status(201).body(reviewService.insert(userDetails.getId(), dto));
     }
 
