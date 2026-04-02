@@ -25,6 +25,7 @@ public class ResponseUserOrderDto {
     private LocalDateTime orderDate;
     private String sizeNm;
     private String trackingNumber;
+    private LocalDateTime deliveredDate;
 
     public static ResponseUserOrderDto of(Order order, int earnedPoint) {
         String imgPath = order.getProduct().getImages() != null && !order.getProduct().getImages().isEmpty()
@@ -47,6 +48,7 @@ public class ResponseUserOrderDto {
                 .orderDate(order.getOrderDate())
                 .sizeNm(order.getSizeNm())
                 .trackingNumber(order.getTrackingNumber())
+                .deliveredDate(order.getDeliveredAt())
                 .build();
     }
 }
