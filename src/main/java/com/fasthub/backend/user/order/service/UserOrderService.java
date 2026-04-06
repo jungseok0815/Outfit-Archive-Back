@@ -81,10 +81,10 @@ public class UserOrderService {
 
             int totalPrice = product.getProductPrice() * dto.getQuantity();
 
-            // 쿠폰 할인 계산
+            // 쿠폰 할인 계산 (카테고리/브랜드 적용 대상 검증 포함)
             int couponDiscount = 0;
             if (dto.getUserCouponId() != null) {
-                couponDiscount = couponService.validateAndGetDiscount(userId, dto.getUserCouponId(), totalPrice);
+                couponDiscount = couponService.validateAndGetDiscount(userId, dto.getUserCouponId(), totalPrice, product);
             }
 
             // 포인트는 쿠폰 할인 후 금액을 초과할 수 없음

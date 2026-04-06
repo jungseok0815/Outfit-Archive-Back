@@ -1,5 +1,6 @@
 package com.fasthub.backend.user.coupon.service;
 
+import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.user.coupon.dto.CouponCreateDto;
@@ -52,6 +53,8 @@ public class CouponService {
                 .issuedCount(0)
                 .startAt(dto.getStartAt())
                 .endAt(dto.getEndAt())
+                .targetCategories(dto.getTargetCategories() != null ? dto.getTargetCategories() : List.of())
+                .targetBrandIds(dto.getTargetBrandIds() != null ? dto.getTargetBrandIds() : List.of())
                 .build());
         log.info("[Coupon] 쿠폰 생성 code={}", dto.getCode());
     }
@@ -73,9 +76,13 @@ public class CouponService {
     public void updateCoupon(Long id, CouponUpdateDto dto) {
         Coupon coupon = couponRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.COUPON_NOT_FOUND));
-        coupon.update(dto.getName(), dto.getDiscountType(), dto.getDiscountValue(),
+        coupon.update(
+                dto.getName(), dto.getDiscountType(), dto.getDiscountValue(),
                 dto.getMinOrderPrice(), dto.getMaxDiscountPrice(), dto.getTotalQuantity(),
-                dto.getStartAt(), dto.getEndAt());
+                dto.getStartAt(), dto.getEndAt(),
+                dto.getTargetCategories() != null ? dto.getTargetCategories() : List.of(),
+                dto.getTargetBrandIds() != null ? dto.getTargetBrandIds() : List.of()
+        );
         log.info("[Coupon] 쿠폰 수정 id={}", id);
     }
 
@@ -152,9 +159,10 @@ public class CouponService {
     // ───────────────────────────────────────────────
     // 주문 시 쿠폰 유효성 검증 → 할인 금액 반환
     //  - UserOrderService에서 호출
+    //  - 카테고리/브랜드 적용 대상 검증 포함
     // ───────────────────────────────────────────────
     @Transactional(readOnly = true)
-    public int validateAndGetDiscount(Long userId, Long userCouponId, int totalPrice) {
+    public int validateAndGetDiscount(Long userId, Long userCouponId, int totalPrice, Product product) {
         UserCoupon userCoupon = userCouponRepository.findById(userCouponId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.COUPON_NOT_FOUND));
 
@@ -169,6 +177,12 @@ public class CouponService {
         }
 
         Coupon coupon = userCoupon.getCoupon();
+
+        // 카테고리/브랜드 적용 대상 검증
+        if (!coupon.isApplicableToProduct(product.getCategory(), product.getBrand().getId())) {
+            throw new BusinessException(ErrorCode.COUPON_PRODUCT_NOT_APPLICABLE);
+        }
+
         if (totalPrice < coupon.getMinOrderPrice()) {
             throw new BusinessException(ErrorCode.COUPON_MIN_ORDER_NOT_MET);
         }
