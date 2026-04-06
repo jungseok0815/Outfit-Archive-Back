@@ -1,10 +1,13 @@
 package com.fasthub.backend.user.coupon.entity;
 
 import com.fasthub.backend.cmm.enums.CouponDiscountType;
+import com.fasthub.backend.cmm.enums.ProductCategory;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -49,13 +52,29 @@ public class Coupon {
     @Column(nullable = false)
     private LocalDateTime endAt;
 
+    // 적용 가능 카테고리 (비어있으면 전체 적용)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "coupon_target_categories", joinColumns = @JoinColumn(name = "coupon_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    @Builder.Default
+    private List<ProductCategory> targetCategories = new ArrayList<>();
+
+    // 적용 가능 브랜드 ID (비어있으면 전체 적용)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "coupon_target_brand_ids", joinColumns = @JoinColumn(name = "coupon_id"))
+    @Column(name = "brand_id")
+    @Builder.Default
+    private List<Long> targetBrandIds = new ArrayList<>();
+
     public void increaseIssuedCount() {
         this.issuedCount++;
     }
 
     public void update(String name, CouponDiscountType discountType, int discountValue,
                        int minOrderPrice, int maxDiscountPrice, int totalQuantity,
-                       LocalDateTime startAt, LocalDateTime endAt) {
+                       LocalDateTime startAt, LocalDateTime endAt,
+                       List<ProductCategory> targetCategories, List<Long> targetBrandIds) {
         this.name = name;
         this.discountType = discountType;
         this.discountValue = discountValue;
@@ -64,6 +83,10 @@ public class Coupon {
         this.totalQuantity = totalQuantity;
         this.startAt = startAt;
         this.endAt = endAt;
+        this.targetCategories.clear();
+        this.targetCategories.addAll(targetCategories);
+        this.targetBrandIds.clear();
+        this.targetBrandIds.addAll(targetBrandIds);
     }
 
     // 발급 가능 여부: 수량 & 기간 모두 충족해야 함
@@ -82,5 +105,13 @@ public class Coupon {
         // 정률: 비율 적용 후 최대 할인금액 캡
         int discount = orderPrice * discountValue / 100;
         return Math.min(discount, maxDiscountPrice);
+    }
+
+    // 상품이 이 쿠폰의 적용 대상인지 확인
+    public boolean isApplicableToProduct(ProductCategory productCategory, Long productBrandId) {
+        if (targetCategories.isEmpty() && targetBrandIds.isEmpty()) return true;
+        if (!targetCategories.isEmpty() && targetCategories.contains(productCategory)) return true;
+        if (!targetBrandIds.isEmpty() && targetBrandIds.contains(productBrandId)) return true;
+        return false;
     }
 }

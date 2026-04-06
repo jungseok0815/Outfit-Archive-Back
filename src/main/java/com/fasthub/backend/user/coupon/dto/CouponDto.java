@@ -1,11 +1,13 @@
 package com.fasthub.backend.user.coupon.dto;
 
 import com.fasthub.backend.cmm.enums.CouponDiscountType;
+import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.user.coupon.entity.Coupon;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -21,6 +23,8 @@ public class CouponDto {
     private int issuedCount;
     private LocalDateTime startAt;
     private LocalDateTime endAt;
+    private List<ProductCategory> targetCategories;
+    private List<Long> targetBrandIds;
 
     public static CouponDto of(Coupon coupon) {
         return CouponDto.builder()
@@ -35,6 +39,8 @@ public class CouponDto {
                 .issuedCount(coupon.getIssuedCount())
                 .startAt(coupon.getStartAt())
                 .endAt(coupon.getEndAt())
+                .targetCategories(coupon.getTargetCategories())
+                .targetBrandIds(coupon.getTargetBrandIds())
                 .build();
     }
 }
