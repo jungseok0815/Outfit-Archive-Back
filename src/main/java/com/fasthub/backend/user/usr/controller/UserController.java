@@ -96,6 +96,13 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    // 아이디 찾기 (전화번호 → 마스킹된 이메일)
+    @GetMapping("/find-id")
+    public ResponseEntity<Map<String, String>> findId(@RequestParam String phone) {
+        String maskedEmail = userService.findIdByPhone(phone);
+        return ResponseEntity.ok(Map.of("userId", maskedEmail));
+    }
+
     // 비밀번호 재설정 이메일 발송
     @PostMapping("/forgot-password")
     public ResponseEntity<Void> forgotPassword(@RequestBody @Valid ForgotPasswordDto dto) {

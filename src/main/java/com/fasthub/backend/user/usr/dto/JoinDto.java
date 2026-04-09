@@ -13,4 +13,5 @@ public class JoinDto {
     private String userNm;
     private int userAge;
     private String authName;
+    private String phone;
 }
