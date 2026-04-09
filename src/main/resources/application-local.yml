@@ -3,6 +3,14 @@
 cors:
   allowed-origin: http://localhost:3000
 
+spring:
+  mail:
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+
+app:
+  base-url: http://localhost:3000
+
 jwt:
   cookie-secure: false
   cookie-same-site: Lax
