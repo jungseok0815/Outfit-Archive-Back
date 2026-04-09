@@ -2,6 +2,7 @@ package com.fasthub.backend.user.usr.controller;
 
 import com.fasthub.backend.cmm.jwt.JwtService;
 import com.fasthub.backend.user.usr.dto.*;
+import com.fasthub.backend.user.usr.service.PasswordResetService;
 import com.fasthub.backend.user.usr.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +29,7 @@ public class UserController {
 
     private final UserService userService;
     private final JwtService jwtService;
+    private final PasswordResetService passwordResetService;
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
@@ -92,5 +94,19 @@ public class UserController {
     public ResponseEntity<Void> delete(@RequestParam Long id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // 비밀번호 재설정 이메일 발송
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Void> forgotPassword(@RequestBody @Valid ForgotPasswordDto dto) {
+        passwordResetService.sendResetEmail(dto);
+        return ResponseEntity.ok().build();
+    }
+
+    // 비밀번호 재설정 (토큰 검증 + 변경)
+    @PostMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordDto dto) {
+        passwordResetService.resetPassword(dto);
+        return ResponseEntity.ok().build();
     }
 }

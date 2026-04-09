@@ -106,7 +106,11 @@ public enum ErrorCode {
     COUPON_EXPIRED(HttpStatus.BAD_REQUEST, "CPN008", "만료된 쿠폰입니다."),
     COUPON_MIN_ORDER_NOT_MET(HttpStatus.BAD_REQUEST, "CPN009", "최소 주문금액을 충족하지 않습니다."),
     COUPON_HAS_ISSUED(HttpStatus.CONFLICT, "CPN010", "이미 발급된 쿠폰이 있어 삭제할 수 없습니다."),
-    COUPON_PRODUCT_NOT_APPLICABLE(HttpStatus.BAD_REQUEST, "CPN011", "이 상품에 적용할 수 없는 쿠폰입니다.");
+    COUPON_PRODUCT_NOT_APPLICABLE(HttpStatus.BAD_REQUEST, "CPN011", "이 상품에 적용할 수 없는 쿠폰입니다."),
+
+    // Password Reset
+    PASSWORD_RESET_TOKEN_INVALID(HttpStatus.BAD_REQUEST, "PR001", "유효하지 않거나 만료된 토큰입니다."),
+    PASSWORD_RESET_EMAIL_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "PR002", "이메일 발송에 실패했습니다.");
 
     private final HttpStatus status;
     private final String code;
