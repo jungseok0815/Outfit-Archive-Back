@@ -1,11 +1,13 @@
 package com.fasthub.backend.user.follow.service;
 
+import com.fasthub.backend.cmm.enums.NotificationType;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.user.follow.dto.FollowCountDto;
 import com.fasthub.backend.user.follow.dto.FollowUserDto;
 import com.fasthub.backend.user.follow.entity.Follow;
 import com.fasthub.backend.user.follow.repository.FollowRepository;
+import com.fasthub.backend.user.notification.service.NotificationService;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class FollowService {
 
     private final FollowRepository followRepository;
     private final AuthRepository authRepository;
+    private final NotificationService notificationService;
 
     @Transactional
     public void follow(Long followerId, Long targetId) {
@@ -41,6 +44,9 @@ public class FollowService {
                 .follower(follower)
                 .following(following)
                 .build());
+
+        notificationService.send(following, follower, NotificationType.FOLLOW,
+                follower.getUserNm() + "님이 팔로우했습니다.", null);
     }
 
     @Transactional
