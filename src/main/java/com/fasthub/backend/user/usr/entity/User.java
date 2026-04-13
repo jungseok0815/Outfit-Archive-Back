@@ -38,6 +38,9 @@ public class User  {
     @Enumerated(EnumType.STRING)
     private UserRole authName;
 
+    @Column(name = "PHONE", length = 20)
+    private String phone;
+
     @Column(name = "BIO", length = 200)
     private String bio;
 

@@ -44,7 +44,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/css/**","/js/**", "/img/**").permitAll()
                         .requestMatchers("/api/usr/login", "/api/usr/join", "/api/usr/logout", "/api/img/**").permitAll()
-                        .requestMatchers("/api/usr/forgot-password", "/api/usr/reset-password").permitAll()
+                        .requestMatchers("/api/usr/forgot-password", "/api/usr/reset-password", "/api/usr/find-id").permitAll()
                         .requestMatchers("/api/recommend/**").permitAll()
                         .requestMatchers("/api/admin/auth/login", "/api/admin/auth/logout").permitAll()
                         .requestMatchers("/api/usr/product/list", "/api/usr/product/**").permitAll()

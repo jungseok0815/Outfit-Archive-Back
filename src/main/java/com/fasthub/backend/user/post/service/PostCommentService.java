@@ -1,7 +1,9 @@
 package com.fasthub.backend.user.post.service;
 
+import com.fasthub.backend.cmm.enums.NotificationType;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
+import com.fasthub.backend.user.notification.service.NotificationService;
 import com.fasthub.backend.user.post.dto.InsertCommentDto;
 import com.fasthub.backend.user.post.dto.ResponseCommentDto;
 import com.fasthub.backend.user.post.dto.UpdateCommentDto;
@@ -25,6 +27,7 @@ public class PostCommentService {
     private final PostCommentRepository postCommentRepository;
     private final PostRepository postRepository;
     private final AuthRepository authRepository;
+    private final NotificationService notificationService;
 
     // 댓글 목록 조회
     public Page<ResponseCommentDto> list(Long postId, Pageable pageable) {
@@ -45,6 +48,9 @@ public class PostCommentService {
                 .user(user)
                 .post(post)
                 .build());
+
+        notificationService.send(post.getUser(), user, NotificationType.COMMENT,
+                user.getUserNm() + "님이 댓글을 달았습니다: " + dto.getContent(), post.getId());
     }
 
     // 댓글 수정 (본인만 가능)

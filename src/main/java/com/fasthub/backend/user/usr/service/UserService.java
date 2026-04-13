@@ -94,6 +94,23 @@ public class UserService {
         return ProfileDto.of(user, followerCount, followingCount, postCount);
     }
 
+    // 아이디 찾기 (전화번호 → 마스킹된 이메일 반환)
+    public String findIdByPhone(String phone) {
+        User user = authRepository.findByPhone(phone)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+        return maskEmail(user.getUserId());
+    }
+
+    private String maskEmail(String email) {
+        int atIndex = email.indexOf('@');
+        if (atIndex <= 2) return email; // 너무 짧으면 그냥 반환
+        String local = email.substring(0, atIndex);
+        String domain = email.substring(atIndex);
+        String visible = local.substring(0, 2);
+        String masked = "*".repeat(local.length() - 2);
+        return visible + masked + domain;
+    }
+
     // 유저 목록 조회 (이름으로 키워드 검색, 페이징)
     public Page<ResponseUserDto> list(String keyword, Pageable pageable) {
         return authRepository.findAllByKeyword(keyword, pageable)

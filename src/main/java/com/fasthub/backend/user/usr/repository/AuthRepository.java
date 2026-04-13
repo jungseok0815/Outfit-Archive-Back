@@ -13,6 +13,8 @@ public interface AuthRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUserId(String userId);
 
+    Optional<User> findByPhone(String phone);
+
     boolean existsByUserId(String userId);
 
     @Query("SELECT u FROM User u WHERE :keyword IS NULL OR :keyword = '' OR u.userNm LIKE %:keyword%")

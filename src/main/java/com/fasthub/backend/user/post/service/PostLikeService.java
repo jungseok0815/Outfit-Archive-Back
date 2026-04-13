@@ -1,7 +1,9 @@
 package com.fasthub.backend.user.post.service;
 
+import com.fasthub.backend.cmm.enums.NotificationType;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
+import com.fasthub.backend.user.notification.service.NotificationService;
 import com.fasthub.backend.user.post.entity.Post;
 import com.fasthub.backend.user.post.entity.PostLike;
 import com.fasthub.backend.user.post.repository.PostLikeRepository;
@@ -24,6 +26,7 @@ public class PostLikeService {
     private final PostLikeRepository postLikeRepository;
     private final PostRepository postRepository;
     private final AuthRepository authRepository;
+    private final NotificationService notificationService;
 
     // 좋아요 토글 (좋아요 → 취소, 취소 → 좋아요)
     // 반환값: true = 좋아요 완료, false = 좋아요 취소
@@ -44,6 +47,8 @@ public class PostLikeService {
                             .post(post)
                             .user(user)
                             .build());
+                    notificationService.send(post.getUser(), user, NotificationType.LIKE,
+                            user.getUserNm() + "님이 게시글을 좋아합니다.", postId);
                     return true;
                 });
     }
