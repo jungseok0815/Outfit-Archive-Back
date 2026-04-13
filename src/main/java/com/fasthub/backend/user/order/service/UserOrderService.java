@@ -109,7 +109,7 @@ public class UserOrderService {
                     .build());
 
             log.info("[Order] 주문 준비 userId={}, productId={}, tossOrderId={}", userId, dto.getProductId(), order.getTossOrderId());
-            return ResponseUserOrderDto.of(order, 0);
+            return ResponseUserOrderDto.of(order);
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -126,6 +126,6 @@ public class UserOrderService {
         User user = authRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
         return orderRepository.findByUserAndStatusNot(user, OrderStatus.PENDING, pageable)
-                .map(o -> ResponseUserOrderDto.of(o, 0, reviewRepository.existsByOrder(o)));
+                .map(o -> ResponseUserOrderDto.of(o, reviewRepository.existsByOrder(o)));
     }
 }

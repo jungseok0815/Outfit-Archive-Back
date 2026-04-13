@@ -32,11 +32,11 @@ public class ResponseUserOrderDto {
     private String shippingAddress;
     private boolean reviewWritten;
 
-    public static ResponseUserOrderDto of(Order order, int earnedPoint) {
-        return of(order, earnedPoint, false);
+    public static ResponseUserOrderDto of(Order order) {
+        return of(order, false);
     }
 
-    public static ResponseUserOrderDto of(Order order, int earnedPoint, boolean reviewWritten) {
+    public static ResponseUserOrderDto of(Order order, boolean reviewWritten) {
         String imgPath = order.getProduct().getImages() != null && !order.getProduct().getImages().isEmpty()
                 ? order.getProduct().getImages().get(0).getImgPath()
                 : null;
@@ -52,7 +52,7 @@ public class ResponseUserOrderDto {
                 .totalPrice(order.getTotalPrice())
                 .usedPoint(order.getUsedPoint())
                 .couponDiscount(order.getCouponDiscount())
-                .earnedPoint(earnedPoint)
+                .earnedPoint(order.getEarnedPoint())
                 .actualPayment(order.getTotalPrice() - order.getUsedPoint() - order.getCouponDiscount())
                 .status(order.getStatus())
                 .orderDate(order.getOrderDate())

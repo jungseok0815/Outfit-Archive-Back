@@ -93,8 +93,9 @@ public class Order {
         this.status = OrderStatus.SHIPPING;
     }
 
-    public void confirmPayment(String paymentKey) {
+    public void confirmPayment(String paymentKey, int earnedPoint) {
         this.paymentKey = paymentKey;
+        this.earnedPoint = earnedPoint;
         this.status = OrderStatus.PAYMENT_COMPLETE;
     }
 

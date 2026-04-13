@@ -105,7 +105,7 @@ public class PaymentService {
                     .build());
 
             // 주문 상태 업데이트
-            order.confirmPayment(dto.getPaymentKey());
+            order.confirmPayment(dto.getPaymentKey(), earnPoint);
 
             log.info("[Payment] 결제 완료 orderId={}, amount={}, earnPoint={}", dto.getOrderId(), dto.getAmount(), earnPoint);
 
@@ -175,10 +175,10 @@ public class PaymentService {
                     .build());
 
             // 주문 상태 업데이트 (PG 키 없이 DIRECT로 표시)
-            order.confirmPayment("DIRECT");
+            order.confirmPayment("DIRECT", earnPoint);
 
             log.info("[Payment] 직접 결제 완료 tossOrderId={}, amount={}, earnPoint={}", tossOrderId, actualPayment, earnPoint);
-            return ResponseUserOrderDto.of(order, earnPoint);
+            return ResponseUserOrderDto.of(order);
 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
