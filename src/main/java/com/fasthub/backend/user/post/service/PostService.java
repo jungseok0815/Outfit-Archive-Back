@@ -51,6 +51,17 @@ public class PostService {
                 ));
     }
 
+    // 특정 유저의 게시글 목록 조회
+    public Page<ResponsePostDto> listByUser(Long targetUserId, Long loginUserId, Pageable pageable) {
+        return postRepository.findByUser_Id(targetUserId, pageable)
+                .map(post -> new ResponsePostDto(
+                        post,
+                        postLikeRepository.countByPostId(post.getId()),
+                        postCommentRepository.countByPostId(post.getId()),
+                        loginUserId != null && postLikeRepository.existsByPostIdAndUserId(post.getId(), loginUserId)
+                ));
+    }
+
     // 게시글 목록 조회 (제목으로 키워드 검색, 페이징)
     public Page<ResponsePostDto> list(String keyword, Long userId, Pageable pageable) {
         return postRepository.findAllByKeyword(keyword, pageable)

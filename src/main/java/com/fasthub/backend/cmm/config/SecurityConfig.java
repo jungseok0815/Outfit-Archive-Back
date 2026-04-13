@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/auth/login", "/api/admin/auth/logout").permitAll()
                         .requestMatchers("/api/usr/product/list", "/api/usr/product/**").permitAll()
                         .requestMatchers("/api/usr/brand/list", "/api/usr/brand/**").permitAll()
-                        .requestMatchers("/api/usr/post/list", "/api/usr/post/search", "/api/usr/post/product/**").permitAll()
+                        .requestMatchers("/api/usr/post/list", "/api/usr/post/search", "/api/usr/post/product/**", "/api/usr/post/user/**").permitAll()
                         .requestMatchers("/api/usr/banner/list").permitAll()
                         .requestMatchers("/api/admin/product/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
                         .requestMatchers("/api/admin/order/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN", "PARTNER")
