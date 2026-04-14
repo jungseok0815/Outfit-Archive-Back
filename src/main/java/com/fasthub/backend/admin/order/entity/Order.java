@@ -78,6 +78,9 @@ public class Order {
     @Column
     private LocalDateTime deliveredAt;  // 배송완료 처리 일시
 
+    @Column(nullable = false, columnDefinition = "int not null default 0")
+    private int earnedPoint = 0;  // 결제 시 적립된 포인트
+
     public void updateStatus(OrderStatus status) {
         this.status = status;
         if (status == OrderStatus.DELIVERED) {
@@ -90,8 +93,9 @@ public class Order {
         this.status = OrderStatus.SHIPPING;
     }
 
-    public void confirmPayment(String paymentKey) {
+    public void confirmPayment(String paymentKey, int earnedPoint) {
         this.paymentKey = paymentKey;
+        this.earnedPoint = earnedPoint;
         this.status = OrderStatus.PAYMENT_COMPLETE;
     }
 

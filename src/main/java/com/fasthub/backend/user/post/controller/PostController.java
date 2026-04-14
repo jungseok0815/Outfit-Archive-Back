@@ -62,6 +62,16 @@ public class PostController {
         return ResponseEntity.ok(postService.listByProduct(productId, userId, pageable));
     }
 
+    // 특정 유저의 게시글 목록 조회 (비로그인 접근 가능)
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Page<ResponsePostDto>> listByUser(
+            @PathVariable Long userId,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PageableDefault(size = 100, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        Long loginUserId = userDetails != null ? userDetails.getId() : null;
+        return ResponseEntity.ok(postService.listByUser(userId, loginUserId, pageable));
+    }
+
     // 게시글 등록
     @PostMapping("/insert")
     public ResponseEntity<Void> insert(

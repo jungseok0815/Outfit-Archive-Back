@@ -13,6 +13,7 @@ public class ResponseUserOrderDto {
     private Long orderId;
     private String tossOrderId;  // 토스 결제창에 전달할 주문번호
     private String productNm;
+    private String productEnNm;
     private String brandNm;
     private String productImgPath;  // 상품 대표 이미지
     private int quantity;
@@ -26,13 +27,16 @@ public class ResponseUserOrderDto {
     private String sizeNm;
     private String trackingNumber;
     private LocalDateTime deliveredDate;
+    private String recipientName;
+    private String recipientPhone;
+    private String shippingAddress;
     private boolean reviewWritten;
 
-    public static ResponseUserOrderDto of(Order order, int earnedPoint) {
-        return of(order, earnedPoint, false);
+    public static ResponseUserOrderDto of(Order order) {
+        return of(order, false);
     }
 
-    public static ResponseUserOrderDto of(Order order, int earnedPoint, boolean reviewWritten) {
+    public static ResponseUserOrderDto of(Order order, boolean reviewWritten) {
         String imgPath = order.getProduct().getImages() != null && !order.getProduct().getImages().isEmpty()
                 ? order.getProduct().getImages().get(0).getImgPath()
                 : null;
@@ -41,19 +45,23 @@ public class ResponseUserOrderDto {
                 .orderId(order.getId())
                 .tossOrderId(order.getTossOrderId())
                 .productNm(order.getProduct().getProductNm())
+                .productEnNm(order.getProduct().getProductEnNm())
                 .brandNm(order.getProduct().getBrand() != null ? order.getProduct().getBrand().getBrandNm() : null)
                 .productImgPath(imgPath)
                 .quantity(order.getQuantity())
                 .totalPrice(order.getTotalPrice())
                 .usedPoint(order.getUsedPoint())
                 .couponDiscount(order.getCouponDiscount())
-                .earnedPoint(earnedPoint)
+                .earnedPoint(order.getEarnedPoint())
                 .actualPayment(order.getTotalPrice() - order.getUsedPoint() - order.getCouponDiscount())
                 .status(order.getStatus())
                 .orderDate(order.getOrderDate())
                 .sizeNm(order.getSizeNm())
                 .trackingNumber(order.getTrackingNumber())
                 .deliveredDate(order.getDeliveredAt())
+                .recipientName(order.getRecipientName())
+                .recipientPhone(order.getRecipientPhone())
+                .shippingAddress(order.getShippingAddress())
                 .reviewWritten(reviewWritten)
                 .build();
     }
