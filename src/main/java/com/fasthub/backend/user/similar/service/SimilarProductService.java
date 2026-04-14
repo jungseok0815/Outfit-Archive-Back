@@ -15,10 +15,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// @Service  // AI 유사 상품 기능 비활성화
+@Service
 @RequiredArgsConstructor
 @Slf4j
-// @Transactional(readOnly = true)
+@Transactional(readOnly = true)
 public class SimilarProductService {
 
     private final ProductRepository productRepository;
