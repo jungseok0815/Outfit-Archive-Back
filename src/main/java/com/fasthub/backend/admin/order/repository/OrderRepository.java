@@ -71,8 +71,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     // 사용자 본인 주문 목록
     Page<Order> findByUser(User user, Pageable pageable);
 
-    // 사용자 본인 주문 목록 (PENDING 제외)
-    Page<Order> findByUserAndStatusNot(User user, OrderStatus status, Pageable pageable);
+    // 사용자 본인 주문 목록 (PENDING 제외, product+brand fetch join으로 N+1 방지)
+    @Query(value = "SELECT o FROM Order o JOIN FETCH o.product p LEFT JOIN FETCH p.brand WHERE o.user = :user AND o.status != :status",
+           countQuery = "SELECT COUNT(o) FROM Order o WHERE o.user = :user AND o.status != :status")
+    Page<Order> findByUserAndStatusNot(@Param("user") User user, @Param("status") OrderStatus status, Pageable pageable);
 
     // 토스 주문번호로 조회
     java.util.Optional<Order> findByTossOrderId(String tossOrderId);

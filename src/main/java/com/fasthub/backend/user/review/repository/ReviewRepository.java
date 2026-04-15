@@ -16,6 +16,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     boolean existsByOrder(Order order);
 
+    // 특정 유저의 리뷰가 있는 orderId 목록 (N+1 방지용 일괄 조회)
+    @Query("SELECT r.order.id FROM Review r WHERE r.order.id IN :orderIds")
+    List<Long> findReviewedOrderIds(@Param("orderIds") List<Long> orderIds);
+
     Page<Review> findByProduct(Product product, Pageable pageable);
 
     @Modifying

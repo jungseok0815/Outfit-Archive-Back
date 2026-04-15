@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -125,7 +126,14 @@ public class UserOrderService {
     public Page<ResponseUserOrderDto> myOrders(Long userId, Pageable pageable) {
         User user = authRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-        return orderRepository.findByUserAndStatusNot(user, OrderStatus.PENDING, pageable)
-                .map(o -> ResponseUserOrderDto.of(o, reviewRepository.existsByOrder(o)));
+        Page<Order> orders = orderRepository.findByUserAndStatusNot(user, OrderStatus.PENDING, pageable);
+
+        // 리뷰 작성 여부를 한 번에 조회 (N+1 방지)
+        List<Long> orderIds = orders.getContent().stream().map(Order::getId).toList();
+        java.util.Set<Long> reviewedOrderIds = new java.util.HashSet<>(
+                orderIds.isEmpty() ? java.util.List.of() : reviewRepository.findReviewedOrderIds(orderIds)
+        );
+
+        return orders.map(o -> ResponseUserOrderDto.of(o, reviewedOrderIds.contains(o.getId())));
     }
 }
