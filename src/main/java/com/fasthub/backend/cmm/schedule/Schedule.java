@@ -4,20 +4,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class Schedule {
 
-//    @Scheduled(fixedDelay = 60000)
-//    public void testSchedule(){
-//        log.info("[test : ] ");
-//    }
-//
-//    @Scheduled(fixedDelay = 30000)
-//    public void testSchdule2(){
-//        log.info("[test2222 : : ]");
-//    }
+    @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Seoul")
+    public void collectNaverProducts() {
+        log.info("[Naver 수집 스케줄] 실행 시작 - 매일 새벽 2시");
+        // TODO: NaverProductCollectService 주입 후 호출 예정
+        log.info("[Naver 수집 스케줄] 실행 완료");
+    }
 }

@@ -60,6 +60,11 @@ clip:
   server:
     url: ${CLIP_SERVER_URL:http://localhost:8000}
 
+naver:
+  api:
+    client-id: ENC(NQzrT7St66P0XLZx5/KlIU6YsEVUGUBgiicGrP+zA8U=)
+    client-secret: ENC(E2IvR6uBJ+yusNeTh9WlcPa3Rm7kNyVL)
+
 cloud:
   aws:
     s3:

@@ -146,7 +146,7 @@ class UserServiceTest {
         @Test
         @DisplayName("성공")
         void join_success() {
-            JoinDto dto = new JoinDto("user01", "rawPwd", "홍길동", 25, "USER");
+            JoinDto dto = new JoinDto("user01", "rawPwd", "홍길동", 25, "USER", null);
             User user = buildUser();
             UserDto userDto = new UserDto(user);
 
@@ -165,7 +165,7 @@ class UserServiceTest {
         @Test
         @DisplayName("실패 - 중복 아이디")
         void join_fail_duplicateId() {
-            JoinDto dto = new JoinDto("user01", "rawPwd", "홍길동", 25, "USER");
+            JoinDto dto = new JoinDto("user01", "rawPwd", "홍길동", 25, "USER", null);
 
             given(authRepository.existsByUserId("user01")).willReturn(true);
 
