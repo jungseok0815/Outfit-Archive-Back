@@ -30,6 +30,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE (:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND (:category IS NULL OR p.category = :category)")
     Page<Product> findAllByKeywordAndCategory(@Param("keyword") String keyword, @Param("category") ProductCategory category, Pageable pageable);
 
+    boolean existsByNaverProductId(String naverProductId);
+
     @Query("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.images WHERE p.embedding IS NOT NULL AND p.hidden = false")
     List<Product> findAllWithEmbedding();
 

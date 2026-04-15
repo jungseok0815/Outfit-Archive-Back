@@ -53,6 +53,9 @@ public class Product {
     @JsonIgnore
     private List<ProductSize> sizes = new ArrayList<>();
 
+    @Column(name = "NAVER_PRODUCT_ID", unique = true)
+    private String naverProductId;
+
     @Column(name = "EMBEDDING", columnDefinition = "TEXT")
     private String embedding;
 

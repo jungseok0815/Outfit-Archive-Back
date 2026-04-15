@@ -118,7 +118,7 @@ class PostServiceTest {
             given(postLikeRepository.countByPostId(post.getId())).willReturn(0L);
             given(postCommentRepository.countByPostId(post.getId())).willReturn(0L);
 
-            Page<ResponsePostDto> result = postService.list(null, pageable);
+            Page<ResponsePostDto> result = postService.list(null, null, pageable);
 
             assertThat(result.getContent()).hasSize(1);
             assertThat(result.getContent().get(0).getTitle()).isEqualTo("오늘의 코디");
@@ -137,7 +137,7 @@ class PostServiceTest {
             given(postLikeRepository.countByPostId(post.getId())).willReturn(3L);
             given(postCommentRepository.countByPostId(post.getId())).willReturn(5L);
 
-            Page<ResponsePostDto> result = postService.list(keyword, pageable);
+            Page<ResponsePostDto> result = postService.list(keyword, null, pageable);
 
             assertThat(result.getContent()).hasSize(1);
             assertThat(result.getContent().get(0).getLikeCount()).isEqualTo(3L);
@@ -152,7 +152,7 @@ class PostServiceTest {
             given(postRepository.findAllByKeyword("없는키워드", pageable))
                     .willReturn(new PageImpl<>(List.of()));
 
-            Page<ResponsePostDto> result = postService.list("없는키워드", pageable);
+            Page<ResponsePostDto> result = postService.list("없는키워드", null, pageable);
 
             assertThat(result.getContent()).isEmpty();
         }
