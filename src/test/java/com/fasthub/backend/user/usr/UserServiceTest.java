@@ -5,9 +5,18 @@ import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
 import com.fasthub.backend.cmm.jwt.JwtService;
+import com.fasthub.backend.admin.order.repository.OrderRepository;
+import com.fasthub.backend.user.coupon.repository.UserCouponRepository;
 import com.fasthub.backend.user.follow.repository.FollowRepository;
+import com.fasthub.backend.user.point.repository.PointHistoryRepository;
+import com.fasthub.backend.user.post.repository.PostCommentRepository;
+import com.fasthub.backend.user.post.repository.PostLikeRepository;
 import com.fasthub.backend.user.post.repository.PostRepository;
+import com.fasthub.backend.user.productview.repository.ProductViewRepository;
+import com.fasthub.backend.user.recommend.service.TasteVectorService;
+import com.fasthub.backend.user.review.repository.ReviewRepository;
 import com.fasthub.backend.user.usr.dto.*;
+import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.mapper.AuthMapper;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
@@ -64,6 +73,33 @@ class UserServiceTest {
 
     @Mock
     private PostRepository postRepository;
+
+    @Mock
+    private UserCouponRepository userCouponRepository;
+
+    @Mock
+    private PointHistoryRepository pointHistoryRepository;
+
+    @Mock
+    private WishlistRepository wishlistRepository;
+
+    @Mock
+    private ReviewRepository reviewRepository;
+
+    @Mock
+    private OrderRepository orderRepository;
+
+    @Mock
+    private PostCommentRepository postCommentRepository;
+
+    @Mock
+    private PostLikeRepository postLikeRepository;
+
+    @Mock
+    private ProductViewRepository productViewRepository;
+
+    @Mock
+    private TasteVectorService tasteVectorService;
 
     @Mock
     private HttpServletResponse response;

@@ -7,6 +7,14 @@ from app.model.clip_model import CLIPEmbedder
 
 
 class ImageService:
+    labels = [
+          "a single product photo on clean background",   # 단독 상품
+          "a person wearing clothes",                      # 사람 착용
+          "multiple color variants of the same product",  # 다색상 콜라주
+          "clothes on a mannequin",                        # 마네킹
+          "flat lay clothing on floor",                    # 플랫레이
+      ]
+
     def __init__(self, embedder: CLIPEmbedder):
         self.embedder = embedder
 

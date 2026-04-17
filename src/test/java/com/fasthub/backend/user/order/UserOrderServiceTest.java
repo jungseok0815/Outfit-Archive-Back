@@ -11,7 +11,10 @@ import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.user.order.dto.InsertUserOrderDto;
 import com.fasthub.backend.user.order.dto.ResponseUserOrderDto;
+import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
+import com.fasthub.backend.user.coupon.service.CouponService;
 import com.fasthub.backend.user.order.service.UserOrderService;
+import com.fasthub.backend.user.review.repository.ReviewRepository;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +32,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -54,7 +58,16 @@ class UserOrderServiceTest {
     private ProductRepository productRepository;
 
     @Mock
+    private ProductSizeRepository productSizeRepository;
+
+    @Mock
     private AuthRepository authRepository;
+
+    @Mock
+    private CouponService couponService;
+
+    @Mock
+    private ReviewRepository reviewRepository;
 
     @Mock
     private RedissonClient redissonClient;
@@ -85,6 +98,7 @@ class UserOrderServiceTest {
                 .productPrice(price)
                 .productQuantity(quantity)
                 .category(ProductCategory.TOP)
+                .sizes(new ArrayList<>())
                 .build();
     }
 
