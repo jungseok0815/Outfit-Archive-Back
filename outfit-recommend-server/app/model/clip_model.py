@@ -24,7 +24,7 @@ class CLIPEmbedder:
 
     def classify(self, image: Image, labels: list[str]) -> list[float]
         inputs = self.processor(text=labels, images=image, return_tensors="pt", padding=True).to(self.device)
-        with
+        with torch.no_grad():
 
 
 
