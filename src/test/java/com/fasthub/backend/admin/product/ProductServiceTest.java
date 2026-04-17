@@ -2,6 +2,7 @@ package com.fasthub.backend.admin.product;
 
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
+import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.dto.InsertProductDto;
 import com.fasthub.backend.admin.product.dto.ResponseProductDto;
 import com.fasthub.backend.admin.product.dto.UpdateProductDto;
@@ -10,11 +11,19 @@ import com.fasthub.backend.admin.product.entity.ProductImg;
 import com.fasthub.backend.admin.product.mapper.ProductMapper;
 import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
+import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
 import com.fasthub.backend.admin.product.service.ProductService;
 import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
+import com.fasthub.backend.user.post.repository.PostProductRepository;
+import com.fasthub.backend.user.productview.repository.ProductViewRepository;
+import com.fasthub.backend.user.review.repository.ReviewRepository;
+import com.fasthub.backend.user.similar.service.EmbeddingService;
+import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.ApplicationEventPublisher;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -53,13 +62,40 @@ class ProductServiceTest {
     private ProductImgRepository productImgRepository;
 
     @Mock
+    private ProductSizeRepository productSizeRepository;
+
+    @Mock
     private BrandRepository brandRepository;
+
+    @Mock
+    private OrderRepository orderRepository;
+
+    @Mock
+    private ReviewRepository reviewRepository;
+
+    @Mock
+    private PostProductRepository postProductRepository;
+
+    @Mock
+    private WishlistRepository wishlistRepository;
+
+    @Mock
+    private ProductViewRepository productViewRepository;
 
     @Mock
     private ImgHandler imgHandler;
 
     @Mock
     private ProductMapper productMapper;
+
+    @Mock
+    private ObjectMapper objectMapper;
+
+    @Mock
+    private EmbeddingService embeddingService;
+
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     private Brand buildBrand() {
         return Brand.builder()
@@ -226,7 +262,7 @@ class ProductServiceTest {
         }
 
         @Test
-        @DisplayName("성공 - 이미지 교체 수정")
+        @DisplayName("성공 - 이미지 추가 수정")
         void update_success_withImage() {
             MultipartFile mockFile = mock(MultipartFile.class);
             UpdateProductDto dto = new UpdateProductDto();
@@ -249,7 +285,6 @@ class ProductServiceTest {
 
             productService.update(dto);
 
-            then(productImgRepository).should().deleteByProduct(product);
             then(productImgRepository).should().save(productImg);
         }
 
@@ -299,6 +334,7 @@ class ProductServiceTest {
             Product product = buildProduct(brand);
 
             given(productRepository.findById(1L)).willReturn(Optional.of(product));
+            given(productImgRepository.findByProduct(product)).willReturn(List.of());
 
             productService.delete("1");
 

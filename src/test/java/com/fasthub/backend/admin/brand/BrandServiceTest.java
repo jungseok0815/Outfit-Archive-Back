@@ -9,9 +9,15 @@ import com.fasthub.backend.admin.brand.mapper.BrandMapper;
 import com.fasthub.backend.admin.brand.repository.BrandImgRepository;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
 import com.fasthub.backend.admin.brand.service.BrandService;
+import com.fasthub.backend.admin.order.repository.OrderRepository;
+import com.fasthub.backend.admin.product.repository.ProductImgRepository;
+import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
+import com.fasthub.backend.user.post.repository.PostProductRepository;
+import com.fasthub.backend.user.review.repository.ReviewRepository;
+import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -49,6 +55,24 @@ class BrandServiceTest {
 
     @Mock
     private BrandImgRepository brandImgRepository;
+
+    @Mock
+    private ProductRepository productRepository;
+
+    @Mock
+    private ProductImgRepository productImgRepository;
+
+    @Mock
+    private OrderRepository orderRepository;
+
+    @Mock
+    private ReviewRepository reviewRepository;
+
+    @Mock
+    private WishlistRepository wishlistRepository;
+
+    @Mock
+    private PostProductRepository postProductRepository;
 
     @Mock
     private ImgHandler imgHandler;
@@ -145,7 +169,7 @@ class BrandServiceTest {
 
             given(brandMapper.insertDtoToBrand(dto)).willReturn(brand);
             given(brandRepository.save(brand)).willReturn(brand);
-            given(imgHandler.createImg(eq(dto.getBrandImg()), any(), eq(brand))).willReturn(brandImg);
+            given(imgHandler.createImg(any(), any(), eq(brand), anyInt(), anyInt())).willReturn(brandImg);
 
             brandService.insert(dto);
 
@@ -192,7 +216,7 @@ class BrandServiceTest {
             BrandImg newBrandImg = new BrandImg();
 
             given(brandRepository.findById(1L)).willReturn(Optional.of(brand));
-            given(imgHandler.createImg(eq(dto.getBrandImg()), any(), eq(brand))).willReturn(newBrandImg);
+            given(imgHandler.createImg(any(), any(), eq(brand), anyInt(), anyInt())).willReturn(newBrandImg);
 
             brandService.update(dto);
 
@@ -227,6 +251,7 @@ class BrandServiceTest {
             Brand brand = buildBrand();
 
             given(brandRepository.findById(1L)).willReturn(Optional.of(brand));
+            given(productRepository.findAllByBrandIdWithImages(any())).willReturn(List.of());
 
             brandService.delete("1");
 

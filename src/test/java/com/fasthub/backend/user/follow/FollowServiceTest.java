@@ -8,6 +8,7 @@ import com.fasthub.backend.user.follow.dto.FollowUserDto;
 import com.fasthub.backend.user.follow.entity.Follow;
 import com.fasthub.backend.user.follow.repository.FollowRepository;
 import com.fasthub.backend.user.follow.service.FollowService;
+import com.fasthub.backend.user.notification.service.NotificationService;
 import com.fasthub.backend.user.usr.entity.User;
 import com.fasthub.backend.user.usr.repository.AuthRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -40,6 +41,9 @@ class FollowServiceTest {
 
     @Mock
     private AuthRepository authRepository;
+
+    @Mock
+    private NotificationService notificationService;
 
     // ────────────────────────────────────────────────
     // 공통 픽스처

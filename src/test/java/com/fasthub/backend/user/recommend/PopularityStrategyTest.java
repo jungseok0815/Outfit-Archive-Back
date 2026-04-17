@@ -91,7 +91,7 @@ class PopularityStrategyTest {
 
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
                     .willReturn(projections);
-            given(productRepository.findAllById(List.of(1L, 2L)))
+            given(productRepository.findAllByIdInWithImages(List.of(1L, 2L)))
                     .willReturn(List.of(product1, product2));
             given(reviewRepository.findReviewStatsByProductIds(anyList()))
                     .willReturn(Collections.emptyList());
@@ -112,7 +112,7 @@ class PopularityStrategyTest {
 
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
                     .willReturn(projections);
-            given(productRepository.findAllById(List.of(1L)))
+            given(productRepository.findAllByIdInWithImages(List.of(1L)))
                     .willReturn(List.of(product));
             given(reviewRepository.findReviewStatsByProductIds(anyList()))
                     .willReturn(Collections.emptyList());
@@ -138,7 +138,7 @@ class PopularityStrategyTest {
 
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
                     .willReturn(projections);
-            given(productRepository.findAllById(List.of(1L, 2L, 3L)))
+            given(productRepository.findAllByIdInWithImages(List.of(1L, 2L, 3L)))
                     .willReturn(List.of(p1, p2, p3));
             given(reviewRepository.findReviewStatsByProductIds(anyList()))
                     .willReturn(Collections.emptyList());
@@ -169,7 +169,7 @@ class PopularityStrategyTest {
                     .willReturn(Collections.emptyList())               // 1번 호출 (30일)
                     .willReturn(List.of(buildProjection(1L, 2L)));     // 2번 호출 (90일)
 
-            given(productRepository.findAllById(List.of(1L)))
+            given(productRepository.findAllByIdInWithImages(List.of(1L)))
                     .willReturn(List.of(product));
             given(reviewRepository.findReviewStatsByProductIds(anyList()))
                     .willReturn(Collections.emptyList());
