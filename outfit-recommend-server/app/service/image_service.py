@@ -1,6 +1,7 @@
 import io
 
 import httpx
+from loguru import logger
 from PIL import Image
 
 from app.model.clip_model import CLIPEmbedder
@@ -19,11 +20,19 @@ class ImageService:
         self.embedder = embedder
 
     def vectorize_bytes(self, image_bytes: bytes) -> list[float]:
+        logger.debug(f"bytes 이미지 벡터화 시작: size={len(image_bytes)} bytes")
         image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-        return self.embedder.embed(image)
+        logger.debug(f"이미지 열기 완료: image size={image.size}")
+        result = self.embedder.embed(image)
+        logger.info("bytes 이미지 벡터화 완료")
+        return result
 
     async def vectorize_url(self, url: str) -> list[float]:
+        logger.info(f"URL 이미지 벡터화 시작: url={url}")
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(url)
             response.raise_for_status()
-        return self.vectorize_bytes(response.content)
+        logger.debug(f"이미지 다운로드 완료: content_length={len(response.content)} bytes")
+        result = self.vectorize_bytes(response.content)
+        logger.info("URL 이미지 벡터화 완료")
+        return result
