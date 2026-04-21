@@ -1,6 +1,6 @@
 package com.fasthub.backend.admin.keyword.entity;
 
-import com.fasthub.backend.cmm.enums.ProductCategory;
+import com.fasthub.backend.admin.category.entity.Category;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,9 +24,9 @@ public class CollectKeyword {
     @Column(name = "KEYWORD", nullable = false)
     private String keyword;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "CATEGORY", nullable = false)
-    private ProductCategory category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     @Column(name = "ACTIVE", nullable = false)
     private boolean active = true;

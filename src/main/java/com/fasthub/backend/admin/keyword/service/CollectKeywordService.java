@@ -1,5 +1,7 @@
 package com.fasthub.backend.admin.keyword.service;
 
+import com.fasthub.backend.admin.category.entity.Category;
+import com.fasthub.backend.admin.category.repository.CategoryRepository;
 import com.fasthub.backend.admin.keyword.dto.InsertKeywordDto;
 import com.fasthub.backend.admin.keyword.dto.ResponseKeywordDto;
 import com.fasthub.backend.admin.keyword.entity.CollectKeyword;
@@ -17,6 +19,7 @@ import java.util.List;
 public class CollectKeywordService {
 
     private final CollectKeywordRepository collectKeywordRepository;
+    private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public List<ResponseKeywordDto> list() {
@@ -27,9 +30,11 @@ public class CollectKeywordService {
 
     @Transactional
     public void insert(InsertKeywordDto dto) {
+        Category category = categoryRepository.findById(dto.getCategoryId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.CATEGORY_NOT_FOUND));
         CollectKeyword keyword = CollectKeyword.builder()
                 .keyword(dto.getKeyword())
-                .category(dto.getCategory())
+                .category(category)
                 .active(true)
                 .build();
         collectKeywordRepository.save(keyword);
@@ -46,7 +51,7 @@ public class CollectKeywordService {
         ResponseKeywordDto dto = new ResponseKeywordDto();
         dto.setId(keyword.getId());
         dto.setKeyword(keyword.getKeyword());
-        dto.setCategory(keyword.getCategory());
+        dto.setCategoryId(keyword.getCategory().getId());
         dto.setCategoryName(keyword.getCategory().getKorName());
         dto.setActive(keyword.isActive());
         dto.setCreatedAt(keyword.getCreatedAt());

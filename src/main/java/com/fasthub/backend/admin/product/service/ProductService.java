@@ -24,7 +24,8 @@ import com.fasthub.backend.user.wishlist.repository.WishlistRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasthub.backend.cmm.enums.ProductCategory;
+import com.fasthub.backend.admin.category.entity.Category;
+import com.fasthub.backend.admin.category.repository.CategoryRepository;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
@@ -56,6 +57,7 @@ public class ProductService {
     private final ProductImgRepository productImgRepository;
     private final ProductSizeRepository productSizeRepository;
     private final BrandRepository brandRepository;
+    private final CategoryRepository categoryRepository;
     private final OrderRepository orderRepository;
     private final ReviewRepository reviewRepository;
     private final PostProductRepository postProductRepository;
@@ -71,13 +73,15 @@ public class ProductService {
     public void insert(InsertProductDto productDto) {
         Brand brand = brandRepository.findById(productDto.getBrandId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
+        Category category = categoryRepository.findById(productDto.getCategoryId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.CATEGORY_NOT_FOUND));
         Product product = productRepository.save(Product.builder()
                 .productNm(productDto.getProductNm())
                 .productEnNm(productDto.getProductEnNm())
                 .productCode(productDto.getProductCode())
                 .productPrice(productDto.getProductPrice())
                 .productQuantity(productDto.getProductQuantity())
-                .category(productDto.getCategory())
+                .category(category)
                 .brand(brand)
                 .build());
         if (productDto.getImage() != null) {
@@ -117,8 +121,8 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ResponseProductDto> listForUser(String keyword, ProductCategory category, Pageable pageable) {
-        return productRepository.findAllByKeywordAndCategory(keyword, category, pageable)
+    public Page<ResponseProductDto> listForUser(String keyword, Long categoryId, Pageable pageable) {
+        return productRepository.findAllByKeywordAndCategory(keyword, categoryId, pageable)
                 .map(productMapper::productToProductDto);
     }
 
@@ -128,8 +132,10 @@ public class ProductService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_FAIL_UPDATE));
         Brand brand = brandRepository.findById(productDto.getBrandId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
+        Category category = categoryRepository.findById(productDto.getCategoryId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.CATEGORY_NOT_FOUND));
         product.update(productDto.getProductNm(), productDto.getProductEnNm(), productDto.getProductCode(),
-                productDto.getProductPrice(), productDto.getProductQuantity(), productDto.getCategory(), brand);
+                productDto.getProductPrice(), productDto.getProductQuantity(), category, brand);
         // 선택된 이미지만 삭제
         if (productDto.getDeleteImageIds() != null && !productDto.getDeleteImageIds().isEmpty()) {
             productDto.getDeleteImageIds().forEach(imgId ->
@@ -202,10 +208,9 @@ public class ProductService {
                 Brand brand = brandRepository.findById(brandId)
                         .orElseThrow(() -> new BusinessException(ErrorCode.BRAND_NOT_FOUND));
 
-                ProductCategory category;
-                try {
-                    category = ProductCategory.valueOf(categoryStr.toUpperCase());
-                } catch (IllegalArgumentException e) {
+                Category category = categoryRepository.findByName(categoryStr.toUpperCase())
+                        .orElse(null);
+                if (category == null) {
                     log.warn("[BulkInsert] 알 수 없는 카테고리: {}, 행 {} 건너뜀", categoryStr, i);
                     continue;
                 }

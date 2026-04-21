@@ -1,12 +1,12 @@
 package com.fasthub.backend.user.product.repository;
 
 import com.fasthub.backend.admin.product.entity.Product;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 import java.util.Optional;
 
 public interface UserProductRepository extends JpaRepository<Product, Long> {
@@ -17,13 +17,13 @@ public interface UserProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE " +
             "p.hidden = false AND " +
             "(:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND " +
-            "(:category IS NULL OR p.category = :category) AND " +
+            "(:categoryId IS NULL OR p.category.id = :categoryId) AND " +
             "(:brandId IS NULL OR p.brand.id = :brandId) AND " +
             "(:minPrice IS NULL OR p.productPrice >= :minPrice) AND " +
             "(:maxPrice IS NULL OR p.productPrice <= :maxPrice)")
     Page<Product> searchProducts(
             @Param("keyword") String keyword,
-            @Param("category") ProductCategory category,
+            @Param("categoryId") Long categoryId,
             @Param("brandId") Long brandId,
             @Param("minPrice") Integer minPrice,
             @Param("maxPrice") Integer maxPrice,
@@ -32,7 +32,7 @@ public interface UserProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "SELECT p FROM Product p WHERE " +
             "p.hidden = false AND " +
             "(:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND " +
-            "(:category IS NULL OR p.category = :category) AND " +
+            "(:categoryId IS NULL OR p.category.id = :categoryId) AND " +
             "(:brandId IS NULL OR p.brand.id = :brandId) AND " +
             "(:minPrice IS NULL OR p.productPrice >= :minPrice) AND " +
             "(:maxPrice IS NULL OR p.productPrice <= :maxPrice) " +
@@ -40,13 +40,13 @@ public interface UserProductRepository extends JpaRepository<Product, Long> {
            countQuery = "SELECT COUNT(p) FROM Product p WHERE " +
             "p.hidden = false AND " +
             "(:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND " +
-            "(:category IS NULL OR p.category = :category) AND " +
+            "(:categoryId IS NULL OR p.category.id = :categoryId) AND " +
             "(:brandId IS NULL OR p.brand.id = :brandId) AND " +
             "(:minPrice IS NULL OR p.productPrice >= :minPrice) AND " +
             "(:maxPrice IS NULL OR p.productPrice <= :maxPrice)")
     Page<Product> searchProductsByPopularity(
             @Param("keyword") String keyword,
-            @Param("category") ProductCategory category,
+            @Param("categoryId") Long categoryId,
             @Param("brandId") Long brandId,
             @Param("minPrice") Integer minPrice,
             @Param("maxPrice") Integer maxPrice,

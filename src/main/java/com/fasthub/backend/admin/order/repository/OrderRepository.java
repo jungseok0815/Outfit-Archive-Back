@@ -3,7 +3,6 @@ package com.fasthub.backend.admin.order.repository;
 import com.fasthub.backend.admin.order.entity.Order;
 import com.fasthub.backend.admin.order.dto.RevenueByBrandDto;
 import com.fasthub.backend.cmm.enums.OrderStatus;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.user.recommend.strategy.PopularProductProjection;
 import com.fasthub.backend.user.usr.entity.User;
 import org.springframework.data.domain.Page;
@@ -45,12 +44,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o.product.id AS productId, COUNT(o) AS orderCount " +
            "FROM Order o " +
            "WHERE o.orderDate >= :since " +
-           "AND (o.product.category IN :categories OR o.product.brand.id IN :brandIds) " +
+           "AND (o.product.category.id IN :categoryIds OR o.product.brand.id IN :brandIds) " +
            "AND o.product.id NOT IN :excludeIds " +
            "GROUP BY o.product.id " +
            "ORDER BY orderCount DESC")
     List<PopularProductProjection> findPopularProductsByCategoriesOrBrands(
-            @Param("categories") List<ProductCategory> categories,
+            @Param("categoryIds") List<Long> categoryIds,
             @Param("brandIds") List<Long> brandIds,
             @Param("excludeIds") List<Long> excludeIds,
             @Param("since") LocalDateTime since,

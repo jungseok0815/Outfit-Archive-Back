@@ -1,7 +1,6 @@
 package com.fasthub.backend.admin.product.repository;
 
 import com.fasthub.backend.admin.product.entity.Product;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -27,8 +26,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE :keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%")
     Page<Product> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query("SELECT p FROM Product p WHERE (:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND (:category IS NULL OR p.category = :category)")
-    Page<Product> findAllByKeywordAndCategory(@Param("keyword") String keyword, @Param("category") ProductCategory category, Pageable pageable);
+    @Query("SELECT p FROM Product p WHERE (:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND (:categoryId IS NULL OR p.category.id = :categoryId)")
+    Page<Product> findAllByKeywordAndCategory(@Param("keyword") String keyword, @Param("categoryId") Long categoryId, Pageable pageable);
 
     boolean existsByNaverProductId(String naverProductId);
 
@@ -37,16 +36,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE " +
             "(:keyword IS NULL OR :keyword = '' OR p.productNm LIKE %:keyword%) AND " +
-            "(:category IS NULL OR p.category = :category) AND " +
+            "(:categoryId IS NULL OR p.category.id = :categoryId) AND " +
             "(:brandId IS NULL OR p.brand.id = :brandId) AND " +
             "(:minPrice IS NULL OR p.productPrice >= :minPrice) AND " +
             "(:maxPrice IS NULL OR p.productPrice <= :maxPrice)")
     Page<Product> searchProducts(
             @Param("keyword") String keyword,
-            @Param("category") ProductCategory category,
+            @Param("categoryId") Long categoryId,
             @Param("brandId") Long brandId,
             @Param("minPrice") Integer minPrice,
             @Param("maxPrice") Integer maxPrice,
             Pageable pageable);
-
 }

@@ -1,7 +1,8 @@
 package com.fasthub.backend.user.post.dto;
 
+import com.fasthub.backend.admin.category.dto.ResponseCategoryDto;
+import com.fasthub.backend.admin.category.entity.Category;
 import com.fasthub.backend.admin.product.entity.Product;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.user.post.entity.Post;
 import com.fasthub.backend.user.post.entity.PostImg;
 import lombok.Getter;
@@ -51,15 +52,25 @@ public class ResponsePostDto {
         private final Long id;
         private final String productNm;
         private final int productPrice;
-        private final ProductCategory category;
+        private final ResponseCategoryDto category;
         private final String brandNm;
 
         public ProductSummary(Product product) {
             this.id = product.getId();
             this.productNm = product.getProductNm();
             this.productPrice = product.getProductPrice();
-            this.category = product.getCategory();
-            this.brandNm = product.getBrand().getBrandNm();
+            this.category = toCategoryDto(product.getCategory());
+            this.brandNm = product.getBrand() != null ? product.getBrand().getBrandNm() : null;
+        }
+
+        private static ResponseCategoryDto toCategoryDto(Category category) {
+            if (category == null) return null;
+            ResponseCategoryDto dto = new ResponseCategoryDto();
+            dto.setId(category.getId());
+            dto.setName(category.getName());
+            dto.setKorName(category.getKorName());
+            dto.setEngName(category.getEngName());
+            return dto;
         }
     }
 }

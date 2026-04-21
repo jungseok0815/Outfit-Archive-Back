@@ -3,7 +3,6 @@ package com.fasthub.backend.user.product.service;
 import com.fasthub.backend.admin.product.dto.ResponseProductDto;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.mapper.ProductMapper;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.admin.order.repository.OrderRepository;
@@ -31,10 +30,10 @@ public class UserProductService {
     private final ReviewRepository reviewRepository;
     private final OrderRepository orderRepository;
 
-    public Page<ResponseProductDto> search(String keyword, ProductCategory category, Long brandId, Integer minPrice, Integer maxPrice, String sortBy, Pageable pageable) {
+    public Page<ResponseProductDto> search(String keyword, Long categoryId, Long brandId, Integer minPrice, Integer maxPrice, String sortBy, Pageable pageable) {
         Page<Product> productPage = "popular".equals(sortBy)
-                ? userProductRepository.searchProductsByPopularity(keyword, category, brandId, minPrice, maxPrice, pageable)
-                : userProductRepository.searchProducts(keyword, category, brandId, minPrice, maxPrice, pageable);
+                ? userProductRepository.searchProductsByPopularity(keyword, categoryId, brandId, minPrice, maxPrice, pageable)
+                : userProductRepository.searchProducts(keyword, categoryId, brandId, minPrice, maxPrice, pageable);
 
         List<Long> ids = productPage.getContent().stream().map(Product::getId).toList();
 

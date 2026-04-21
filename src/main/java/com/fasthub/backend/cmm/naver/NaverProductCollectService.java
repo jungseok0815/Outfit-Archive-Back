@@ -2,6 +2,7 @@ package com.fasthub.backend.cmm.naver;
 
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
+import com.fasthub.backend.admin.category.entity.Category;
 import com.fasthub.backend.admin.keyword.entity.CollectKeyword;
 import com.fasthub.backend.admin.keyword.repository.CollectKeywordRepository;
 import com.fasthub.backend.admin.product.entity.Product;
@@ -11,7 +12,6 @@ import com.fasthub.backend.admin.product.event.BulkProductSavedEvent;
 import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.naver.dto.NaverShoppingItem;
 import com.fasthub.backend.user.recommend.client.ClipClient;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -41,15 +41,6 @@ public class NaverProductCollectService {
     private final CollectKeywordRepository collectKeywordRepository;
 
     private static final int DEFAULT_QUANTITY = 50;
-
-    private static final Map<ProductCategory, List<String>> DEFAULT_SIZES = Map.of(
-            ProductCategory.TOP,    List.of("S", "M", "L", "XL"),
-            ProductCategory.BOTTOM, List.of("S", "M", "L", "XL"),
-            ProductCategory.OUTER,  List.of("S", "M", "L", "XL"),
-            ProductCategory.DRESS,  List.of("S", "M", "L", "XL"),
-            ProductCategory.SHOES,  List.of("230", "240", "250", "260", "270"),
-            ProductCategory.BAG,    List.of("FREE")
-    );
 
     // 트랜잭션 per item 적용을 위한 self-injection
     @Autowired
@@ -90,7 +81,7 @@ public class NaverProductCollectService {
     }
 
     @Transactional
-    public Long saveProduct(NaverShoppingItem item, ProductCategory category) {
+    public Long saveProduct(NaverShoppingItem item, Category category) {
         // 중복 체크
         if (productRepository.existsByNaverProductId(item.getProductId())) {
             return null;
@@ -104,11 +95,15 @@ public class NaverProductCollectService {
 
         Brand brand = findOrCreateBrand(item.getBrand());
 
+        List<String> sizes = (category.getDefaultSizes() != null && !category.getDefaultSizes().isBlank())
+                ? Arrays.asList(category.getDefaultSizes().split(","))
+                : List.of("FREE");
+
         Product product = productRepository.save(Product.builder()
                 .productNm(item.getCleanTitle())
                 .productCode(item.getProductId())
                 .productPrice(item.getPriceAsInt())
-                .productQuantity(DEFAULT_QUANTITY * DEFAULT_SIZES.get(category).size())
+                .productQuantity(DEFAULT_QUANTITY * sizes.size())
                 .category(category)
                 .brand(brand)
                 .naverProductId(item.getProductId())
@@ -123,10 +118,10 @@ public class NaverProductCollectService {
         img.setMappingEntity(product);
         productImgRepository.save(img);
 
-        DEFAULT_SIZES.get(category).forEach(sizeNm ->
+        sizes.forEach(sizeNm ->
                 productSizeRepository.save(ProductSize.builder()
                         .product(product)
-                        .sizeNm(sizeNm)
+                        .sizeNm(sizeNm.trim())
                         .quantity(DEFAULT_QUANTITY)
                         .build())
         );

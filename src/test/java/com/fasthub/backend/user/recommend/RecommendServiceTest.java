@@ -1,7 +1,6 @@
 package com.fasthub.backend.user.recommend;
 
 import com.fasthub.backend.admin.order.repository.OrderRepository;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
 import com.fasthub.backend.user.recommend.service.RecommendService;
 import com.fasthub.backend.user.recommend.strategy.ContentBasedStrategy;
@@ -47,7 +46,7 @@ class RecommendServiceTest {
                         .productId(1L)
                         .productNm("나이키 에어포스 1")
                         .productPrice(119000)
-                        .category(ProductCategory.SHOES)
+                        .category(null)
                         .brandNm("나이키")
                         .orderCount(5)
                         .reason("최근 30일 인기 상품")
@@ -56,7 +55,7 @@ class RecommendServiceTest {
                         .productId(2L)
                         .productNm("아디다스 트레이닝 팬츠")
                         .productPrice(89000)
-                        .category(ProductCategory.BOTTOM)
+                        .category(null)
                         .brandNm("아디다스")
                         .orderCount(3)
                         .reason("최근 30일 인기 상품")

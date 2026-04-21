@@ -1,6 +1,5 @@
 package com.fasthub.backend.admin.product.dto;
 
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +16,7 @@ public class InsertProductDto {
     private int productPrice;
     private int productQuantity;
     private Long brandId;
-    private ProductCategory category;
+    private Long categoryId;
     private List<MultipartFile> image;
-    private String sizesJson; // JSON 문자열로 전달: [{"sizeNm":"M","quantity":10}, ...]
+    private String sizesJson;
 }

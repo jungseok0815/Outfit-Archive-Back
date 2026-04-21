@@ -2,12 +2,14 @@ package com.fasthub.backend.cmm.naver;
 
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
+import com.fasthub.backend.admin.category.entity.Category;
+import com.fasthub.backend.admin.keyword.entity.CollectKeyword;
+import com.fasthub.backend.admin.keyword.repository.CollectKeywordRepository;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.event.BulkProductSavedEvent;
 import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.naver.dto.NaverShoppingItem;
 import com.fasthub.backend.user.recommend.client.ClipClient;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,10 +52,30 @@ class NaverProductCollectServiceTest {
     @Mock private BrandRepository brandRepository;
     @Mock private ApplicationEventPublisher eventPublisher;
     @Mock private ClipClient clipClient;
+    @Mock private CollectKeywordRepository collectKeywordRepository;
+
+    private Category buildCategory() {
+        return Category.builder()
+                .id(1L)
+                .name("TOP")
+                .korName("상의")
+                .engName("Tops")
+                .defaultSizes("S,M,L,XL")
+                .active(true)
+                .build();
+    }
 
     @BeforeEach
     void setUp() {
         ReflectionTestUtils.setField(naverProductCollectService, "self", naverProductCollectService);
+    }
+
+    private CollectKeyword buildCollectKeyword(String keyword) {
+        return CollectKeyword.builder()
+                .keyword(keyword)
+                .category(buildCategory())
+                .active(true)
+                .build();
     }
 
     private NaverShoppingItem buildItem(String productId, String title, String brand) {
@@ -85,7 +107,7 @@ class NaverProductCollectServiceTest {
             given(brandRepository.findByBrandNm("나이키")).willReturn(Optional.of(brand));
             given(productRepository.save(any(Product.class))).willReturn(product);
 
-            Long savedId = naverProductCollectService.saveProduct(item, ProductCategory.TOP);
+            Long savedId = naverProductCollectService.saveProduct(item, buildCategory());
 
             assertThat(savedId).isEqualTo(1L);
             then(productRepository).should().save(any(Product.class));
@@ -100,7 +122,7 @@ class NaverProductCollectServiceTest {
 
             given(productRepository.existsByNaverProductId("NAVER001")).willReturn(true);
 
-            Long savedId = naverProductCollectService.saveProduct(item, ProductCategory.TOP);
+            Long savedId = naverProductCollectService.saveProduct(item, buildCategory());
 
             assertThat(savedId).isNull();
             then(productRepository).should(never()).save(any());
@@ -114,7 +136,7 @@ class NaverProductCollectServiceTest {
             given(productRepository.existsByNaverProductId("NAVER001")).willReturn(false);
             given(clipClient.detectCleanProduct("https://image.com/test.jpg")).willReturn(false);
 
-            Long savedId = naverProductCollectService.saveProduct(item, ProductCategory.TOP);
+            Long savedId = naverProductCollectService.saveProduct(item, buildCategory());
 
             assertThat(savedId).isNull();
             then(productRepository).should(never()).save(any());
@@ -133,7 +155,7 @@ class NaverProductCollectServiceTest {
             given(brandRepository.save(any(Brand.class))).willReturn(brand);
             given(productRepository.save(any(Product.class))).willReturn(product);
 
-            Long savedId = naverProductCollectService.saveProduct(item, ProductCategory.TOP);
+            Long savedId = naverProductCollectService.saveProduct(item, buildCategory());
 
             assertThat(savedId).isEqualTo(2L);
             then(brandRepository).should().save(any(Brand.class));
@@ -154,6 +176,7 @@ class NaverProductCollectServiceTest {
             Brand brand = Brand.builder().brandNm("리바이스").build();
             Product product = Product.builder().id(1L).productNm("청바지").build();
 
+            given(collectKeywordRepository.findAllByActiveTrue()).willReturn(List.of(buildCollectKeyword("청바지")));
             given(naverShoppingClient.search(anyString(), anyInt())).willReturn(List.of(item));
             given(productRepository.existsByNaverProductId("NAVER001")).willReturn(false);
             given(clipClient.detectCleanProduct("https://image.com/test.jpg")).willReturn(true);
@@ -172,6 +195,7 @@ class NaverProductCollectServiceTest {
         void collect_allDuplicate_noEvent() {
             NaverShoppingItem item = buildItem("NAVER001", "청바지", "리바이스");
 
+            given(collectKeywordRepository.findAllByActiveTrue()).willReturn(List.of(buildCollectKeyword("청바지")));
             given(naverShoppingClient.search(anyString(), anyInt())).willReturn(List.of(item));
             given(productRepository.existsByNaverProductId("NAVER001")).willReturn(true);
 
@@ -185,6 +209,7 @@ class NaverProductCollectServiceTest {
         void collect_allNotClean_noEvent() {
             NaverShoppingItem item = buildItem("NAVER001", "청바지", "리바이스");
 
+            given(collectKeywordRepository.findAllByActiveTrue()).willReturn(List.of(buildCollectKeyword("청바지")));
             given(naverShoppingClient.search(anyString(), anyInt())).willReturn(List.of(item));
             given(productRepository.existsByNaverProductId("NAVER001")).willReturn(false);
             given(clipClient.detectCleanProduct("https://image.com/test.jpg")).willReturn(false);
@@ -200,6 +225,7 @@ class NaverProductCollectServiceTest {
             NaverShoppingItem item = mock(NaverShoppingItem.class);
             given(item.getProductId()).willReturn(null);
 
+            given(collectKeywordRepository.findAllByActiveTrue()).willReturn(List.of(buildCollectKeyword("청바지")));
             given(naverShoppingClient.search(anyString(), anyInt())).willReturn(List.of(item));
 
             naverProductCollectService.collect();
@@ -214,6 +240,7 @@ class NaverProductCollectServiceTest {
             given(item.getProductId()).willReturn("NAVER001");
             given(item.getImage()).willReturn(null);
 
+            given(collectKeywordRepository.findAllByActiveTrue()).willReturn(List.of(buildCollectKeyword("청바지")));
             given(naverShoppingClient.search(anyString(), anyInt())).willReturn(List.of(item));
 
             naverProductCollectService.collect();

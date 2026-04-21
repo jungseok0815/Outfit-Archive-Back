@@ -1,7 +1,6 @@
 package com.fasthub.backend.user.coupon.dto;
 
 import com.fasthub.backend.cmm.enums.CouponDiscountType;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.user.coupon.entity.UserCoupon;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -24,7 +23,7 @@ public class UserCouponDto {
     private boolean isUsed;
     private LocalDateTime issuedAt;
     private LocalDateTime expiredAt;
-    private List<ProductCategory> targetCategories;
+    private List<Long> targetCategoryIds;
     private List<Long> targetBrandIds;
 
     public static UserCouponDto of(UserCoupon uc) {
@@ -39,7 +38,7 @@ public class UserCouponDto {
                 .isUsed(uc.isUsed())
                 .issuedAt(uc.getIssuedAt())
                 .expiredAt(uc.getExpiredAt())
-                .targetCategories(uc.getCoupon().getTargetCategories())
+                .targetCategoryIds(uc.getCoupon().getTargetCategoryIds())
                 .targetBrandIds(uc.getCoupon().getTargetBrandIds())
                 .build();
     }

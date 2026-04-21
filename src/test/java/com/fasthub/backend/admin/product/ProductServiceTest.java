@@ -2,6 +2,8 @@ package com.fasthub.backend.admin.product;
 
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
+import com.fasthub.backend.admin.category.entity.Category;
+import com.fasthub.backend.admin.category.repository.CategoryRepository;
 import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.dto.InsertProductDto;
 import com.fasthub.backend.admin.product.dto.ResponseProductDto;
@@ -13,7 +15,6 @@ import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
 import com.fasthub.backend.admin.product.service.ProductService;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.cmm.img.ImgHandler;
@@ -68,6 +69,9 @@ class ProductServiceTest {
     private BrandRepository brandRepository;
 
     @Mock
+    private CategoryRepository categoryRepository;
+
+    @Mock
     private OrderRepository orderRepository;
 
     @Mock
@@ -104,13 +108,24 @@ class ProductServiceTest {
                 .build();
     }
 
+    private Category buildCategory() {
+        return Category.builder()
+                .id(1L)
+                .name("SHOES")
+                .korName("신발")
+                .engName("Shoes")
+                .defaultSizes("230,240,250,260,270")
+                .active(true)
+                .build();
+    }
+
     private Product buildProduct(Brand brand) {
         return Product.builder()
                 .productNm("에어맥스")
                 .productCode("AM-001")
                 .productPrice(150000)
                 .productQuantity(100)
-                .category(ProductCategory.SHOES)
+                .category(null)
                 .brand(brand)
                 .build();
     }
@@ -131,12 +146,14 @@ class ProductServiceTest {
             dto.setProductCode("AM-001");
             dto.setProductPrice(150000);
             dto.setProductQuantity(100);
-            dto.setCategory(ProductCategory.SHOES);
+            dto.setCategoryId(1L);
 
             Brand brand = buildBrand();
+            Category category = buildCategory();
             Product product = buildProduct(brand);
 
             given(brandRepository.findById(1L)).willReturn(Optional.of(brand));
+            given(categoryRepository.findById(1L)).willReturn(Optional.of(category));
             given(productRepository.save(any(Product.class))).willReturn(product);
 
             productService.insert(dto);
@@ -155,14 +172,16 @@ class ProductServiceTest {
             dto.setProductCode("AM-001");
             dto.setProductPrice(150000);
             dto.setProductQuantity(100);
-            dto.setCategory(ProductCategory.SHOES);
+            dto.setCategoryId(1L);
             dto.setImage(List.of(mockFile));
 
             Brand brand = buildBrand();
+            Category category = buildCategory();
             Product product = buildProduct(brand);
             ProductImg productImg = new ProductImg();
 
             given(brandRepository.findById(1L)).willReturn(Optional.of(brand));
+            given(categoryRepository.findById(1L)).willReturn(Optional.of(category));
             given(productRepository.save(any(Product.class))).willReturn(product);
             given(imgHandler.createImg(eq(mockFile), any(), eq(product))).willReturn(productImg);
 
@@ -247,13 +266,15 @@ class ProductServiceTest {
             dto.setProductCode("AF-001");
             dto.setProductPrice(120000);
             dto.setProductQuantity(50);
-            dto.setCategory(ProductCategory.SHOES);
+            dto.setCategoryId(1L);
 
             Brand brand = buildBrand();
+            Category category = buildCategory();
             Product product = buildProduct(brand);
 
             given(productRepository.findById(1L)).willReturn(Optional.of(product));
             given(brandRepository.findById(1L)).willReturn(Optional.of(brand));
+            given(categoryRepository.findById(1L)).willReturn(Optional.of(category));
 
             productService.update(dto);
 
@@ -272,15 +293,17 @@ class ProductServiceTest {
             dto.setProductCode("AF-001");
             dto.setProductPrice(120000);
             dto.setProductQuantity(50);
-            dto.setCategory(ProductCategory.SHOES);
+            dto.setCategoryId(1L);
             dto.setImage(List.of(mockFile));
 
             Brand brand = buildBrand();
+            Category category = buildCategory();
             Product product = buildProduct(brand);
             ProductImg productImg = new ProductImg();
 
             given(productRepository.findById(1L)).willReturn(Optional.of(product));
             given(brandRepository.findById(1L)).willReturn(Optional.of(brand));
+            given(categoryRepository.findById(1L)).willReturn(Optional.of(category));
             given(imgHandler.createImg(eq(mockFile), any(), eq(product))).willReturn(productImg);
 
             productService.update(dto);

@@ -113,7 +113,10 @@ public enum ErrorCode {
     PASSWORD_RESET_EMAIL_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "PR002", "이메일 발송에 실패했습니다."),
 
     //KEYWORD
-    KEYWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "KW001", "키워드를 찾을 수 없습니다.");
+    KEYWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "KW001", "키워드를 찾을 수 없습니다."),
+
+    //CATEGORY
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "CAT001", "카테고리를 찾을 수 없습니다.");
 
     private final HttpStatus status;
     private final String code;

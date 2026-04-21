@@ -1,6 +1,5 @@
 package com.fasthub.backend.admin.product.dto;
 
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +16,6 @@ public class ProductDto {
     private int productPrice;
     private int productQuantity;
     private String productBrand;
-    private ProductCategory category;
+    private Long categoryId;
     private List<MultipartFile> image;
 }

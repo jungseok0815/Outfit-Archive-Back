@@ -1,6 +1,7 @@
 package com.fasthub.backend.user.recommend.dto;
 
-import com.fasthub.backend.cmm.enums.ProductCategory;
+import com.fasthub.backend.admin.category.dto.ResponseCategoryDto;
+import com.fasthub.backend.admin.category.entity.Category;
 import com.fasthub.backend.admin.product.entity.Product;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,13 +13,13 @@ public class RecommendProductDto {
     private String productNm;
     private String productCode;
     private int productPrice;
-    private ProductCategory category;
+    private ResponseCategoryDto category;
     private String brandNm;
-    private String imgPath;    // 첫 번째 이미지 경로
-    private long orderCount;   // 기간 내 주문 수
-    private long reviewCount;  // 전체 리뷰 수
-    private double avgRating;  // 평균 평점 (소수점 1자리)
-    private String reason;     // 추천 이유 텍스트
+    private String imgPath;
+    private long orderCount;
+    private long reviewCount;
+    private double avgRating;
+    private String reason;
 
     public static RecommendProductDto of(Product product, long orderCount) {
         String imgPath = (product.getImages() != null && !product.getImages().isEmpty())
@@ -28,7 +29,7 @@ public class RecommendProductDto {
                 .productNm(product.getProductNm())
                 .productCode(product.getProductCode())
                 .productPrice(product.getProductPrice())
-                .category(product.getCategory())
+                .category(toDto(product.getCategory()))
                 .brandNm(product.getBrand() != null ? product.getBrand().getBrandNm() : null)
                 .imgPath(imgPath)
                 .orderCount(orderCount)
@@ -36,5 +37,15 @@ public class RecommendProductDto {
                 .avgRating(0.0)
                 .reason("최근 등록 상품")
                 .build();
+    }
+
+    private static ResponseCategoryDto toDto(Category category) {
+        if (category == null) return null;
+        ResponseCategoryDto dto = new ResponseCategoryDto();
+        dto.setId(category.getId());
+        dto.setName(category.getName());
+        dto.setKorName(category.getKorName());
+        dto.setEngName(category.getEngName());
+        return dto;
     }
 }
