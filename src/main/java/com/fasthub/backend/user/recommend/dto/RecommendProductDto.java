@@ -39,7 +39,7 @@ public class RecommendProductDto {
                 .build();
     }
 
-    private static ResponseCategoryDto toDto(Category category) {
+    public static ResponseCategoryDto toDto(Category category) {
         if (category == null) return null;
         ResponseCategoryDto dto = new ResponseCategoryDto();
         dto.setId(category.getId());

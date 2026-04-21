@@ -83,9 +83,7 @@ public class NaverProductCollectService {
     @Transactional
     public Long saveProduct(NaverShoppingItem item, Category category) {
         // 중복 체크
-        if (productRepository.existsByNaverProductId(item.getProductId())) {
-            return null;
-        }
+        if (productRepository.existsByNaverProductId(item.getProductId())) return null;
 
         // 단독 상품 이미지 여부 판별
         if (!clipClient.detectCleanProduct(item.getImage())) {

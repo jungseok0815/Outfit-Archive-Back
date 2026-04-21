@@ -1,5 +1,6 @@
 package com.fasthub.backend.user.recommend.strategy;
 
+import com.fasthub.backend.admin.category.dto.ResponseCategoryDto;
 import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
@@ -110,6 +111,7 @@ public class PopularityStrategy {
                     Product product = productMap.get(id);
                     long orderCnt = orderCountMap.getOrDefault(id, 0L);
                     ReviewStatsProjection stats = reviewStatsMap.get(id);
+                    ResponseCategoryDto responseCategoryDto = null;
                     long reviewCnt = stats != null ? stats.getReviewCount() : 0L;
                     double avgRating = stats != null && stats.getAvgRating() != null
                             ? Math.round(stats.getAvgRating() * 10.0) / 10.0 : 0.0;
@@ -125,7 +127,7 @@ public class PopularityStrategy {
                             .productNm(product.getProductNm())
                             .productCode(product.getProductCode())
                             .productPrice(product.getProductPrice())
-                            .category(product.getCategory())
+                            .category(responseCategoryDto)
                             .brandNm(product.getBrand() != null ? product.getBrand().getBrandNm() : null)
                             .imgPath(imgPath)
                             .orderCount(orderCnt)

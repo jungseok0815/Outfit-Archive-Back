@@ -52,7 +52,7 @@ public class VectorBasedStrategy {
                             .productNm(p.getProductNm())
                             .productCode(p.getProductCode())
                             .productPrice(p.getProductPrice())
-                            .category(p.getCategory())
+                            .category(RecommendProductDto.toDto(p.getCategory()))
                             .brandNm(p.getBrand() != null ? p.getBrand().getBrandNm() : null)
                             .imgPath(imgPath)
                             .orderCount(0L)
