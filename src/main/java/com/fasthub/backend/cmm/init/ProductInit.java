@@ -2,9 +2,10 @@ package com.fasthub.backend.cmm.init;
 
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
+import com.fasthub.backend.admin.category.entity.Category;
+import com.fasthub.backend.admin.category.repository.CategoryRepository;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -22,6 +23,7 @@ public class ProductInit implements ApplicationRunner {
 
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -35,12 +37,19 @@ public class ProductInit implements ApplicationRunner {
         Brand zara   = brands.get(2); // 자라
         Brand cos    = brands.get(3); // COS
 
+        Category top    = categoryRepository.findByName("TOP").orElseThrow();
+        Category bottom = categoryRepository.findByName("BOTTOM").orElseThrow();
+        Category outer  = categoryRepository.findByName("OUTER").orElseThrow();
+        Category dress  = categoryRepository.findByName("DRESS").orElseThrow();
+        Category shoes  = categoryRepository.findByName("SHOES").orElseThrow();
+        Category bag    = categoryRepository.findByName("BAG").orElseThrow();
+
         productRepository.save(Product.builder()
                 .productNm("나이키 에어포스 1")
                 .productCode("NK-001")
                 .productPrice(119000)
                 .productQuantity(50)
-                .category(ProductCategory.SHOES)
+                .category(shoes)
                 .brand(nike)
                 .build());
 
@@ -49,7 +58,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("NK-002")
                 .productPrice(99000)
                 .productQuantity(30)
-                .category(ProductCategory.TOP)
+                .category(top)
                 .brand(nike)
                 .build());
 
@@ -58,7 +67,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("AD-001")
                 .productPrice(89000)
                 .productQuantity(40)
-                .category(ProductCategory.BOTTOM)
+                .category(bottom)
                 .brand(adidas)
                 .build());
 
@@ -67,7 +76,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("AD-002")
                 .productPrice(59000)
                 .productQuantity(20)
-                .category(ProductCategory.BAG)
+                .category(bag)
                 .brand(adidas)
                 .build());
 
@@ -76,7 +85,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("ZR-001")
                 .productPrice(159000)
                 .productQuantity(25)
-                .category(ProductCategory.OUTER)
+                .category(outer)
                 .brand(zara)
                 .build());
 
@@ -86,7 +95,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("COS-001")
                 .productPrice(69000)
                 .productQuantity(40)
-                .category(ProductCategory.TOP)
+                .category(top)
                 .brand(cos)
                 .build());
 
@@ -95,7 +104,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("COS-002")
                 .productPrice(190000)
                 .productQuantity(20)
-                .category(ProductCategory.TOP)
+                .category(top)
                 .brand(cos)
                 .build());
 
@@ -104,7 +113,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("COS-003")
                 .productPrice(129000)
                 .productQuantity(35)
-                .category(ProductCategory.BOTTOM)
+                .category(bottom)
                 .brand(cos)
                 .build());
 
@@ -113,7 +122,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("COS-004")
                 .productPrice(350000)
                 .productQuantity(15)
-                .category(ProductCategory.OUTER)
+                .category(outer)
                 .brand(cos)
                 .build());
 
@@ -122,7 +131,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("COS-005")
                 .productPrice(159000)
                 .productQuantity(25)
-                .category(ProductCategory.DRESS)
+                .category(dress)
                 .brand(cos)
                 .build());
 
@@ -131,7 +140,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("COS-006")
                 .productPrice(220000)
                 .productQuantity(18)
-                .category(ProductCategory.BAG)
+                .category(bag)
                 .brand(cos)
                 .build());
 
@@ -140,7 +149,7 @@ public class ProductInit implements ApplicationRunner {
                 .productCode("COS-007")
                 .productPrice(250000)
                 .productQuantity(22)
-                .category(ProductCategory.SHOES)
+                .category(shoes)
                 .brand(cos)
                 .build());
 

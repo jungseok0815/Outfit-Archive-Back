@@ -1,10 +1,11 @@
 package com.fasthub.backend.user.recommend.strategy;
 
+import com.fasthub.backend.admin.category.dto.ResponseCategoryDto;
+import com.fasthub.backend.admin.category.entity.Category;
 import com.fasthub.backend.admin.order.entity.Order;
 import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.user.productview.entity.ProductView;
 import com.fasthub.backend.user.productview.repository.ProductViewRepository;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
@@ -61,10 +62,11 @@ public class ContentBasedStrategy {
                 .collect(toList());
 
         // 3. 카테고리 빈도 집계 → 상위 TOP_N 추출
-        List<ProductCategory> topCategories = recentOrders.stream()
-                .collect(groupingBy(o -> o.getProduct().getCategory(), counting()))
+        List<Long> topCategoryIds = recentOrders.stream()
+                .filter(o -> o.getProduct().getCategory() != null)
+                .collect(groupingBy(o -> o.getProduct().getCategory().getId(), counting()))
                 .entrySet().stream()
-                .sorted(Map.Entry.<ProductCategory, Long>comparingByValue().reversed())
+                .sorted(Map.Entry.<Long, Long>comparingByValue().reversed())
                 .limit(TOP_N)
                 .map(Map.Entry::getKey)
                 .collect(toList());
@@ -79,15 +81,16 @@ public class ContentBasedStrategy {
                 .map(Map.Entry::getKey)
                 .collect(toList());
 
-        log.info("[ContentBased] userId={} topCategories={} topBrandIds={}", userId, topCategories, topBrandIds);
+        log.info("[ContentBased] userId={} topCategoryIds={} topBrandIds={}", userId, topCategoryIds, topBrandIds);
 
         // IN 절에 빈 리스트가 들어가면 SQL 오류 → 더미값으로 방어
+        if (topCategoryIds.isEmpty()) topCategoryIds = List.of(-1L);
         if (topBrandIds.isEmpty()) topBrandIds = List.of(-1L);
 
         // 5. 해당 카테고리/브랜드의 인기 상품 조회 (구매 이력 제외)
         LocalDateTime popularSince = LocalDateTime.now().minusDays(POPULAR_DAYS);
         List<PopularProductProjection> popular = orderRepository.findPopularProductsByCategoriesOrBrands(
-                topCategories, topBrandIds, purchasedIds, popularSince,
+                topCategoryIds, topBrandIds, purchasedIds, popularSince,
                 PageRequest.of(0, limit * 3));
 
         if (popular.isEmpty()) {
@@ -129,7 +132,7 @@ public class ContentBasedStrategy {
                             .productNm(product.getProductNm())
                             .productCode(product.getProductCode())
                             .productPrice(product.getProductPrice())
-                            .category(product.getCategory())
+                            .category(toCategoryDto(product.getCategory()))
                             .brandNm(product.getBrand() != null ? product.getBrand().getBrandNm() : null)
                             .imgPath(imgPath)
                             .orderCount(orderCnt)
@@ -166,10 +169,11 @@ public class ContentBasedStrategy {
                 .collect(toList());
 
         // 3. 카테고리/브랜드 빈도 집계
-        List<ProductCategory> topCategories = recentViews.stream()
-                .collect(groupingBy(pv -> pv.getProduct().getCategory(), counting()))
+        List<Long> topCategoryIds = recentViews.stream()
+                .filter(pv -> pv.getProduct().getCategory() != null)
+                .collect(groupingBy(pv -> pv.getProduct().getCategory().getId(), counting()))
                 .entrySet().stream()
-                .sorted(Map.Entry.<ProductCategory, Long>comparingByValue().reversed())
+                .sorted(Map.Entry.<Long, Long>comparingByValue().reversed())
                 .limit(TOP_N)
                 .map(Map.Entry::getKey)
                 .collect(toList());
@@ -183,14 +187,15 @@ public class ContentBasedStrategy {
                 .map(Map.Entry::getKey)
                 .collect(toList());
 
-        log.info("[ContentBased-View] userId={} topCategories={} topBrandIds={}", userId, topCategories, topBrandIds);
+        log.info("[ContentBased-View] userId={} topCategoryIds={} topBrandIds={}", userId, topCategoryIds, topBrandIds);
 
+        if (topCategoryIds.isEmpty()) topCategoryIds = List.of(-1L);
         if (topBrandIds.isEmpty()) topBrandIds = List.of(-1L);
 
         // 4. 해당 카테고리/브랜드의 인기 상품 조회 (조회 이력 제외)
         LocalDateTime popularSince = LocalDateTime.now().minusDays(POPULAR_DAYS);
         List<PopularProductProjection> popular = orderRepository.findPopularProductsByCategoriesOrBrands(
-                topCategories, topBrandIds, viewedIds, popularSince,
+                topCategoryIds, topBrandIds, viewedIds, popularSince,
                 PageRequest.of(0, limit * 3));
 
         if (popular.isEmpty()) {
@@ -230,7 +235,7 @@ public class ContentBasedStrategy {
                             .productNm(product.getProductNm())
                             .productCode(product.getProductCode())
                             .productPrice(product.getProductPrice())
-                            .category(product.getCategory())
+                            .category(toCategoryDto(product.getCategory()))
                             .brandNm(product.getBrand() != null ? product.getBrand().getBrandNm() : null)
                             .imgPath(imgPath)
                             .orderCount(orderCnt)
@@ -245,5 +250,15 @@ public class ContentBasedStrategy {
                         + dto.getAvgRating() * RATING_WEIGHT)))
                 .limit(limit)
                 .collect(toList());
+    }
+
+    private ResponseCategoryDto toCategoryDto(Category category) {
+        if (category == null) return null;
+        ResponseCategoryDto dto = new ResponseCategoryDto();
+        dto.setId(category.getId());
+        dto.setName(category.getName());
+        dto.setKorName(category.getKorName());
+        dto.setEngName(category.getEngName());
+        return dto;
     }
 }

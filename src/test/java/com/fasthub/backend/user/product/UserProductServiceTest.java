@@ -4,7 +4,6 @@ import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.dto.ResponseProductDto;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.mapper.ProductMapper;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.user.product.repository.UserProductRepository;
@@ -59,7 +58,7 @@ class UserProductServiceTest {
                 .productCode("P00" + id)
                 .productPrice(50000)
                 .productQuantity(100)
-                .category(ProductCategory.TOP)
+                .category(null)
                 .build();
     }
 

@@ -4,7 +4,6 @@ import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.order.repository.OrderRepository;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.user.recommend.dto.RecommendProductDto;
 import com.fasthub.backend.user.recommend.strategy.PopularProductProjection;
 import com.fasthub.backend.user.recommend.strategy.PopularityStrategy;
@@ -52,7 +51,7 @@ class PopularityStrategyTest {
         };
     }
 
-    private Product buildProduct(Long id, String name, ProductCategory category) {
+    private Product buildProduct(Long id, String name) {
         Brand brand = Brand.builder()
                 .brandNm("나이키")
                 .build();
@@ -62,7 +61,7 @@ class PopularityStrategyTest {
                 .productCode("NK-00" + id)
                 .productPrice(100000)
                 .productQuantity(10)
-                .category(category)
+                .category(null)
                 .brand(brand)
                 .build();
     }
@@ -86,8 +85,8 @@ class PopularityStrategyTest {
                     buildProjection(1L, 5L),
                     buildProjection(2L, 3L)
             );
-            Product product1 = buildProduct(1L, "나이키 에어포스", ProductCategory.SHOES);
-            Product product2 = buildProduct(2L, "나이키 후디",    ProductCategory.TOP);
+            Product product1 = buildProduct(1L, "나이키 에어포스");
+            Product product2 = buildProduct(2L, "나이키 후디");
 
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
                     .willReturn(projections);
@@ -108,7 +107,7 @@ class PopularityStrategyTest {
         void recommend_30day_reasonText() {
             int limit = 1;
             List<PopularProductProjection> projections = List.of(buildProjection(1L, 5L));
-            Product product = buildProduct(1L, "나이키 에어포스", ProductCategory.SHOES);
+            Product product = buildProduct(1L, "나이키 에어포스");
 
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
                     .willReturn(projections);
@@ -132,9 +131,9 @@ class PopularityStrategyTest {
                     buildProjection(2L, 7L),
                     buildProjection(3L, 2L)
             );
-            Product p1 = buildProduct(1L, "상품A", ProductCategory.SHOES);
-            Product p2 = buildProduct(2L, "상품B", ProductCategory.TOP);
-            Product p3 = buildProduct(3L, "상품C", ProductCategory.BOTTOM);
+            Product p1 = buildProduct(1L, "상품A");
+            Product p2 = buildProduct(2L, "상품B");
+            Product p3 = buildProduct(3L, "상품C");
 
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
                     .willReturn(projections);
@@ -162,7 +161,7 @@ class PopularityStrategyTest {
         @DisplayName("30일 결과 없으면 90일 결과 반환")
         void recommend_fallsBackTo90Days_whenNo30DayData() {
             int limit = 2;
-            Product product = buildProduct(1L, "나이키 에어포스", ProductCategory.SHOES);
+            Product product = buildProduct(1L, "나이키 에어포스");
 
             // 30일 → 결과 없음, 90일 → 결과 있음
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
@@ -192,8 +191,8 @@ class PopularityStrategyTest {
         @DisplayName("30일, 90일 모두 결과 없으면 최신 상품 반환")
         void recommend_fallsBackToLatest_whenNoOrderHistory() {
             int limit = 2;
-            Product product1 = buildProduct(1L, "최신상품A", ProductCategory.TOP);
-            Product product2 = buildProduct(2L, "최신상품B", ProductCategory.OUTER);
+            Product product1 = buildProduct(1L, "최신상품A");
+            Product product2 = buildProduct(2L, "최신상품B");
 
             // 30일, 90일 모두 결과 없음 (fetchLatest 경로는 reviewRepository 호출 없음)
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
@@ -213,7 +212,7 @@ class PopularityStrategyTest {
         @DisplayName("최신 상품 fallback 시 orderCount는 0")
         void recommend_latestFallback_orderCountIsZero() {
             int limit = 1;
-            Product product = buildProduct(1L, "최신상품A", ProductCategory.TOP);
+            Product product = buildProduct(1L, "최신상품A");
 
             given(orderRepository.findPopularProductIds(any(), any(Pageable.class)))
                     .willReturn(Collections.emptyList());

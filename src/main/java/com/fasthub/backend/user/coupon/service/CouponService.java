@@ -53,7 +53,7 @@ public class CouponService {
                 .issuedCount(0)
                 .startAt(dto.getStartAt())
                 .endAt(dto.getEndAt())
-                .targetCategories(dto.getTargetCategories() != null ? dto.getTargetCategories() : List.of())
+                .targetCategoryIds(dto.getTargetCategoryIds() != null ? dto.getTargetCategoryIds() : List.of())
                 .targetBrandIds(dto.getTargetBrandIds() != null ? dto.getTargetBrandIds() : List.of())
                 .build());
         log.info("[Coupon] 쿠폰 생성 code={}", dto.getCode());
@@ -80,7 +80,7 @@ public class CouponService {
                 dto.getName(), dto.getDiscountType(), dto.getDiscountValue(),
                 dto.getMinOrderPrice(), dto.getMaxDiscountPrice(), dto.getTotalQuantity(),
                 dto.getStartAt(), dto.getEndAt(),
-                dto.getTargetCategories() != null ? dto.getTargetCategories() : List.of(),
+                dto.getTargetCategoryIds() != null ? dto.getTargetCategoryIds() : List.of(),
                 dto.getTargetBrandIds() != null ? dto.getTargetBrandIds() : List.of()
         );
         log.info("[Coupon] 쿠폰 수정 id={}", id);
@@ -179,7 +179,9 @@ public class CouponService {
         Coupon coupon = userCoupon.getCoupon();
 
         // 카테고리/브랜드 적용 대상 검증
-        if (!coupon.isApplicableToProduct(product.getCategory(), product.getBrand().getId())) {
+        Long categoryId = product.getCategory() != null ? product.getCategory().getId() : null;
+        Long brandId = product.getBrand() != null ? product.getBrand().getId() : null;
+        if (!coupon.isApplicableToProduct(categoryId, brandId)) {
             throw new BusinessException(ErrorCode.COUPON_PRODUCT_NOT_APPLICABLE);
         }
 

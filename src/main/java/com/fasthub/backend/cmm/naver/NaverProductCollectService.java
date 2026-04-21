@@ -2,6 +2,9 @@ package com.fasthub.backend.cmm.naver;
 
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
+import com.fasthub.backend.admin.category.entity.Category;
+import com.fasthub.backend.admin.keyword.entity.CollectKeyword;
+import com.fasthub.backend.admin.keyword.repository.CollectKeywordRepository;
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.entity.ProductImg;
 import com.fasthub.backend.admin.product.entity.ProductSize;
@@ -9,7 +12,6 @@ import com.fasthub.backend.admin.product.event.BulkProductSavedEvent;
 import com.fasthub.backend.admin.product.repository.ProductImgRepository;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.naver.dto.NaverShoppingItem;
 import com.fasthub.backend.user.recommend.client.ClipClient;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -36,17 +38,9 @@ public class NaverProductCollectService {
     private final BrandRepository brandRepository;
     private final ApplicationEventPublisher eventPublisher;
     private final ClipClient clipClient;
+    private final CollectKeywordRepository collectKeywordRepository;
 
     private static final int DEFAULT_QUANTITY = 50;
-
-    private static final Map<ProductCategory, List<String>> DEFAULT_SIZES = Map.of(
-            ProductCategory.TOP,    List.of("S", "M", "L", "XL"),
-            ProductCategory.BOTTOM, List.of("S", "M", "L", "XL"),
-            ProductCategory.OUTER,  List.of("S", "M", "L", "XL"),
-            ProductCategory.DRESS,  List.of("S", "M", "L", "XL"),
-            ProductCategory.SHOES,  List.of("230", "240", "250", "260", "270"),
-            ProductCategory.BAG,    List.of("FREE")
-    );
 
     // 트랜잭션 per item 적용을 위한 self-injection
     @Autowired
@@ -55,51 +49,18 @@ public class NaverProductCollectService {
 
     private static final int DISPLAY_PER_KEYWORD = 50;
 
-    private record KeywordCategory(String keyword, ProductCategory category) {}
-
-    private static final List<KeywordCategory> KEYWORDS = List.of(
-            // TOP (5 × 50 = 250개)
-            new KeywordCategory("반팔티", ProductCategory.TOP),
-            new KeywordCategory("긴팔티", ProductCategory.TOP),
-            new KeywordCategory("니트", ProductCategory.TOP),
-            new KeywordCategory("맨투맨", ProductCategory.TOP),
-            new KeywordCategory("후드티", ProductCategory.TOP),
-            // BOTTOM (4 × 50 = 200개)
-            new KeywordCategory("청바지", ProductCategory.BOTTOM),
-            new KeywordCategory("슬랙스", ProductCategory.BOTTOM),
-            new KeywordCategory("반바지", ProductCategory.BOTTOM),
-            new KeywordCategory("스커트", ProductCategory.BOTTOM),
-            // OUTER (4 × 50 = 200개)
-            new KeywordCategory("패딩", ProductCategory.OUTER),
-            new KeywordCategory("코트", ProductCategory.OUTER),
-            new KeywordCategory("자켓", ProductCategory.OUTER),
-            new KeywordCategory("트렌치코트", ProductCategory.OUTER),
-            // DRESS (2 × 50 = 100개)
-            new KeywordCategory("원피스", ProductCategory.DRESS),
-            new KeywordCategory("투피스", ProductCategory.DRESS),
-            // SHOES (4 × 50 = 200개)
-            new KeywordCategory("운동화", ProductCategory.SHOES),
-            new KeywordCategory("구두", ProductCategory.SHOES),
-            new KeywordCategory("부츠", ProductCategory.SHOES),
-            new KeywordCategory("샌들", ProductCategory.SHOES),
-            // BAG (1 × 50 = 50개)
-            new KeywordCategory("백팩", ProductCategory.BAG)
-    );
-
     public void collect() {
-        log.info("[Naver수집] 시작 - 총 {}개 키워드, 목표 {}건", KEYWORDS.size(), KEYWORDS.size() * DISPLAY_PER_KEYWORD);
+        List<CollectKeyword> keywords = collectKeywordRepository.findAllByActiveTrue();
+        log.info("[Naver수집] 시작 - 총 {}개 키워드, 목표 {}건", keywords.size(), keywords.size() * DISPLAY_PER_KEYWORD);
         List<Long> savedIds = new ArrayList<>();
         int skipCount = 0;
 
-        for (KeywordCategory kc : KEYWORDS) {
-            List<NaverShoppingItem> items = naverShoppingClient.search(kc.keyword(), DISPLAY_PER_KEYWORD);
-
+        for (CollectKeyword kc : keywords) {
+            List<NaverShoppingItem> items = naverShoppingClient.search(kc.getKeyword(), DISPLAY_PER_KEYWORD);
             for (NaverShoppingItem item : items) {
                 if (item.getProductId() == null || item.getImage() == null) continue;
-
                 try {
-
-                    Long savedId = self.saveProduct(item, kc.category());
+                    Long savedId = self.saveProduct(item, kc.getCategory());
                     if (savedId != null) {
                         savedIds.add(savedId);
                     } else {
@@ -120,7 +81,7 @@ public class NaverProductCollectService {
     }
 
     @Transactional
-    public Long saveProduct(NaverShoppingItem item, ProductCategory category) {
+    public Long saveProduct(NaverShoppingItem item, Category category) {
         // 중복 체크
         if (productRepository.existsByNaverProductId(item.getProductId())) {
             return null;
@@ -134,11 +95,15 @@ public class NaverProductCollectService {
 
         Brand brand = findOrCreateBrand(item.getBrand());
 
+        List<String> sizes = (category.getDefaultSizes() != null && !category.getDefaultSizes().isBlank())
+                ? Arrays.asList(category.getDefaultSizes().split(","))
+                : List.of("FREE");
+
         Product product = productRepository.save(Product.builder()
                 .productNm(item.getCleanTitle())
                 .productCode(item.getProductId())
                 .productPrice(item.getPriceAsInt())
-                .productQuantity(DEFAULT_QUANTITY * DEFAULT_SIZES.get(category).size())
+                .productQuantity(DEFAULT_QUANTITY * sizes.size())
                 .category(category)
                 .brand(brand)
                 .naverProductId(item.getProductId())
@@ -153,10 +118,10 @@ public class NaverProductCollectService {
         img.setMappingEntity(product);
         productImgRepository.save(img);
 
-        DEFAULT_SIZES.get(category).forEach(sizeNm ->
+        sizes.forEach(sizeNm ->
                 productSizeRepository.save(ProductSize.builder()
                         .product(product)
-                        .sizeNm(sizeNm)
+                        .sizeNm(sizeNm.trim())
                         .quantity(DEFAULT_QUANTITY)
                         .build())
         );

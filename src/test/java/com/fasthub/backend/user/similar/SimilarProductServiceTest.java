@@ -2,7 +2,6 @@ package com.fasthub.backend.user.similar;
 
 import com.fasthub.backend.admin.product.entity.Product;
 import com.fasthub.backend.admin.product.repository.ProductRepository;
-import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.error.ErrorCode;
 import com.fasthub.backend.cmm.error.exception.BusinessException;
 import com.fasthub.backend.user.similar.dto.SimilarProductDto;
@@ -43,7 +42,7 @@ class SimilarProductServiceTest {
                 .productCode("P00" + id)
                 .productPrice(50000)
                 .productQuantity(100)
-                .category(ProductCategory.TOP)
+                .category(null)
                 .embedding(embedding)
                 .build();
     }

@@ -2,7 +2,7 @@ package com.fasthub.backend.admin.product.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasthub.backend.admin.brand.entity.Brand;
-import com.fasthub.backend.cmm.enums.ProductCategory;
+import com.fasthub.backend.admin.category.entity.Category;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,9 +37,9 @@ public class Product {
     @Column(name = "PRODUCT_QUANTITY", nullable = false)
     private int productQuantity;
 
-    @Column(nullable = false, name = "CATEGORY")
-    @Enumerated(EnumType.STRING)
-    private ProductCategory category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
@@ -67,7 +67,7 @@ public class Product {
         this.hidden = !this.hidden;
     }
 
-    public void update(String productNm, String productEnNm, String productCode, int productPrice, int productQuantity, ProductCategory category, Brand brand) {
+    public void update(String productNm, String productEnNm, String productCode, int productPrice, int productQuantity, Category category, Brand brand) {
         this.productNm = productNm;
         this.productEnNm = productEnNm;
         this.productCode = productCode;
@@ -89,5 +89,3 @@ public class Product {
         this.embedding = embedding;
     }
 }
-
-

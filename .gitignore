@@ -55,3 +55,6 @@ outfit-recommend-server/*.pyc
 *.jpg
 *.gif
 *.webp
+
+### Integration Test (contains API keys) ###
+src/test/**/NaverApiIntegrationTest.java
