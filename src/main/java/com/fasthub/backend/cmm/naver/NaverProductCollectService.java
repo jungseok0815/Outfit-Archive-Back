@@ -11,6 +11,7 @@ import com.fasthub.backend.admin.product.repository.ProductRepository;
 import com.fasthub.backend.admin.product.repository.ProductSizeRepository;
 import com.fasthub.backend.cmm.enums.ProductCategory;
 import com.fasthub.backend.cmm.naver.dto.NaverShoppingItem;
+import com.fasthub.backend.user.recommend.client.ClipClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class NaverProductCollectService {
     private final ProductSizeRepository productSizeRepository;
     private final BrandRepository brandRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final ClipClient clipClient;
 
     private static final int DEFAULT_QUANTITY = 50;
 
@@ -96,6 +98,7 @@ public class NaverProductCollectService {
                 if (item.getProductId() == null || item.getImage() == null) continue;
 
                 try {
+
                     Long savedId = self.saveProduct(item, kc.category());
                     if (savedId != null) {
                         savedIds.add(savedId);
@@ -120,6 +123,12 @@ public class NaverProductCollectService {
     public Long saveProduct(NaverShoppingItem item, ProductCategory category) {
         // 중복 체크
         if (productRepository.existsByNaverProductId(item.getProductId())) {
+            return null;
+        }
+
+        // 단독 상품 이미지 여부 판별
+        if (!clipClient.detectCleanProduct(item.getImage())) {
+            log.debug("[Naver수집] 단독 상품 이미지 아님 - 스킵 productId={}", item.getProductId());
             return null;
         }
 

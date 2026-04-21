@@ -38,9 +38,33 @@ public class ClipClient {
         }
     }
 
+    /**
+     * 이미지 URL → 단독 상품 이미지 여부 판별
+     * FastAPI: POST /api/v1/image/detect-clean-product
+     */
+    public boolean detectCleanProduct(String imageUrl) {
+        try {
+            CleanProductResponse response = restClient.post()
+                    .uri("/api/v1/image/detect-clean-product")
+                    .body(Map.of("url", imageUrl))
+                    .retrieve()
+                    .body(CleanProductResponse.class);
+            return response != null && response.isCleanProduct();
+        } catch (Exception e) {
+            log.error("[ClipClient] 단독 상품 판별 실패 imageUrl={}, error={}", imageUrl, e.getMessage());
+            return false;
+        }
+    }
+
     @lombok.Getter
     public static class VectorResponse {
         private List<Double> vector;
         private int dimension;
+    }
+
+    @lombok.Getter
+    public static class CleanProductResponse {
+        @com.fasterxml.jackson.annotation.JsonProperty("is_clean_product")
+        private boolean isCleanProduct;
     }
 }
