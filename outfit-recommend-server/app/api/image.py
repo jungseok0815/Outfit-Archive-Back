@@ -36,6 +36,12 @@ async def vectorize_image_url(
     return VectorResponse(vector=vector, dimension=len(vector))
 
 @router.post("/detect-clean-product")
-async def detect_clean_product(body: ImageUrlRequest, ...):
-    result = await service.detect_clean_product(str(body.url)
+async def detect_clean_product(
+    body: ImageUrlRequest,
+    service: ImageService = Depends(get_image_service),
+):
+    try:
+        result = await service.detect_clean_product(str(body.url))
+    except Exception:
+        raise HTTPException(status_code=400, detail="이미지 URL을 처리할 수 없습니다.")
     return {"is_clean_product": result}

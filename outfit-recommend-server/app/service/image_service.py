@@ -36,3 +36,15 @@ class ImageService:
         result = self.vectorize_bytes(response.content)
         logger.info("URL 이미지 벡터화 완료")
         return result
+
+
+    async def detect_clean_product(self, url: str) -> bool:
+        logger.info(f"단독 상품 이미지 판별 시작: url={url}")
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.get(url)
+            response.raise_for_status()
+        image = Image.open(io.BytesIO(response.content)).convert("RGB")
+        probs = self.embedder.classify(image, self.labels)
+        clean_product_prob = probs[0]
+        logger.info(f"판별 완료: 단독 상품 확률={clean_product_prob:.2f}")
+        return clean_product_prob >= 0.8
