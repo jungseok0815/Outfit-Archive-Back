@@ -1,9 +1,11 @@
 package com.fasthub.backend.admin.product.controller;
 
+import com.fasthub.backend.admin.product.dto.CollectRequestDto;
 import com.fasthub.backend.admin.product.dto.InsertProductDto;
 import com.fasthub.backend.admin.product.dto.ResponseProductDto;
 import com.fasthub.backend.admin.product.dto.UpdateProductDto;
 import com.fasthub.backend.admin.product.service.ProductService;
+import com.fasthub.backend.cmm.naver.NaverProductCollectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductController {
 
     private final ProductService productService;
+    private final NaverProductCollectService naverProductCollectService;
 
     @PostMapping(value = "/insert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> insert(@ModelAttribute InsertProductDto productDto) {
@@ -60,5 +63,11 @@ public class ProductController {
             @RequestParam(value = "brandId", required = false) Long brandId) {
         int count = productService.bulkInsert(file, brandId);
         return ResponseEntity.ok(count + "개 상품이 등록되었습니다.");
+    }
+
+    @PostMapping("/collect")
+    public ResponseEntity<Void> collect(@RequestBody CollectRequestDto dto) {
+        naverProductCollectService.collectByBrands(dto.getBrandIds(), dto.getKeywordIds());
+        return ResponseEntity.accepted().build();
     }
 }
