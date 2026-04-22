@@ -24,10 +24,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -132,8 +134,8 @@ public class NaverProductCollectService {
         return product.getId();
     }
 
-    @Async
-    public void collectByBrands(List<Long> brandIds, List<Long> keywordIds) {
+    @Async("collectExecutor")
+    public void collectByBrands(SseEmitter emitter, List<Long> brandIds, List<Long> keywordIds) {
         List<Brand> brands = brandRepository.findAllById(brandIds);
 
         boolean useKeywords = keywordIds != null && !keywordIds.isEmpty();
@@ -145,50 +147,81 @@ public class NaverProductCollectService {
         List<Long> savedIds = new ArrayList<>();
         int skipCount = 0;
 
-        if (keywords.isEmpty()) {
-            List<Category> categories = categoryRepository.findAllByActiveTrue();
-            log.info("[Naver수집-브랜드] 키워드 없음 - 카테고리 {}개로 대체 검색", categories.size());
-            for (Brand brand : brands) {
-                for (Category category : categories) {
-                    String searchKeyword = brand.getBrandNm() + " " + category.getKorName();
-                    List<NaverShoppingItem> items = naverShoppingClient.search(searchKeyword, DISPLAY_PER_KEYWORD);
-                    for (NaverShoppingItem item : items) {
-                        if (item.getProductId() == null || item.getImage() == null) continue;
-                        try {
-                            Long savedId = self.saveProductForBrand(item, category, brand);
-                            if (savedId != null) savedIds.add(savedId);
-                            else skipCount++;
-                        } catch (Exception e) {
-                            log.warn("[Naver수집-브랜드] 저장 실패 - productId={}, error={}", item.getProductId(), e.getMessage());
+        try {
+            if (keywords.isEmpty()) {
+                List<Category> categories = categoryRepository.findAllByActiveTrue();
+                int total = brands.size() * categories.size();
+                int current = 0;
+                for (Brand brand : brands) {
+                    for (Category category : categories) {
+                        current++;
+                        String searchKeyword = brand.getBrandNm() + " " + category.getKorName();
+                        sendProgress(emitter, brand.getBrandNm() + " " + category.getKorName() + " 검색 중...",
+                                savedIds.size(), skipCount, current, total);
+                        List<NaverShoppingItem> items = naverShoppingClient.search(searchKeyword, DISPLAY_PER_KEYWORD);
+                        for (NaverShoppingItem item : items) {
+                            if (item.getProductId() == null || item.getImage() == null) continue;
+                            try {
+                                Long savedId = self.saveProductForBrand(item, category, brand);
+                                if (savedId != null) savedIds.add(savedId);
+                                else skipCount++;
+                            } catch (Exception e) {
+                                log.warn("[Naver수집-브랜드] 저장 실패 - productId={}, error={}", item.getProductId(), e.getMessage());
+                            }
+                        }
+                    }
+                }
+            } else {
+                int total = brands.size() * keywords.size();
+                int current = 0;
+                for (Brand brand : brands) {
+                    for (CollectKeyword kc : keywords) {
+                        current++;
+                        String searchKeyword = brand.getBrandNm() + " " + kc.getKeyword();
+                        sendProgress(emitter, brand.getBrandNm() + " " + kc.getKeyword() + " 검색 중...",
+                                savedIds.size(), skipCount, current, total);
+                        List<NaverShoppingItem> items = naverShoppingClient.search(searchKeyword, DISPLAY_PER_KEYWORD);
+                        for (NaverShoppingItem item : items) {
+                            if (item.getProductId() == null || item.getImage() == null) continue;
+                            try {
+                                Long savedId = self.saveProductForBrand(item, kc.getCategory(), brand);
+                                if (savedId != null) savedIds.add(savedId);
+                                else skipCount++;
+                            } catch (Exception e) {
+                                log.warn("[Naver수집-브랜드] 저장 실패 - productId={}, error={}", item.getProductId(), e.getMessage());
+                            }
                         }
                     }
                 }
             }
-        } else {
-            for (Brand brand : brands) {
-                for (CollectKeyword kc : keywords) {
-                    String searchKeyword = brand.getBrandNm() + " " + kc.getKeyword();
-                    List<NaverShoppingItem> items = naverShoppingClient.search(searchKeyword, DISPLAY_PER_KEYWORD);
-                    for (NaverShoppingItem item : items) {
-                        if (item.getProductId() == null || item.getImage() == null) continue;
-                        try {
-                            Long savedId = self.saveProductForBrand(item, kc.getCategory(), brand);
-                            if (savedId != null) savedIds.add(savedId);
-                            else skipCount++;
-                        } catch (Exception e) {
-                            log.warn("[Naver수집-브랜드] 저장 실패 - productId={}, error={}", item.getProductId(), e.getMessage());
-                        }
-                    }
-                }
+
+            if (!savedIds.isEmpty()) {
+                eventPublisher.publishEvent(new BulkProductSavedEvent(savedIds));
+                log.info("[Naver수집-브랜드] CLIP 벡터 추출 예약 - {}건", savedIds.size());
             }
-        }
 
-        if (!savedIds.isEmpty()) {
-            eventPublisher.publishEvent(new BulkProductSavedEvent(savedIds));
-            log.info("[Naver수집-브랜드] CLIP 벡터 추출 예약 - {}건", savedIds.size());
-        }
+            log.info("[Naver수집-브랜드] 완료 - 신규={}건, 중복 스킵={}건", savedIds.size(), skipCount);
+            emitter.send(SseEmitter.event()
+                    .name("complete")
+                    .data(Map.of("saved", savedIds.size(), "skipped", skipCount)));
+            emitter.complete();
 
-        log.info("[Naver수집-브랜드] 완료 - 신규={}건, 중복 스킵={}건", savedIds.size(), skipCount);
+        } catch (Exception e) {
+            log.error("[Naver수집-브랜드] 오류 발생", e);
+            try {
+                emitter.send(SseEmitter.event().name("error").data(Map.of("message", e.getMessage())));
+                emitter.complete();
+            } catch (Exception ignored) {}
+        }
+    }
+
+    private void sendProgress(SseEmitter emitter, String message, int saved, int skipped, int current, int total) {
+        try {
+            emitter.send(SseEmitter.event()
+                    .name("progress")
+                    .data(Map.of("message", message, "saved", saved, "skipped", skipped,
+                            "current", current, "total", total)));
+        } catch (Exception ignored) {}
     }
 
     @Transactional

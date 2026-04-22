@@ -16,6 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/product")
@@ -65,9 +68,12 @@ public class ProductController {
         return ResponseEntity.ok(count + "개 상품이 등록되었습니다.");
     }
 
-    @PostMapping("/collect")
-    public ResponseEntity<Void> collect(@RequestBody CollectRequestDto dto) {
-        naverProductCollectService.collectByBrands(dto.getBrandIds(), dto.getKeywordIds());
-        return ResponseEntity.accepted().build();
+    @GetMapping(value = "/collect/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter collectStream(
+            @RequestParam List<Long> brandIds,
+            @RequestParam(required = false) List<Long> keywordIds) {
+        SseEmitter emitter = new SseEmitter(600_000L);
+        naverProductCollectService.collectByBrands(emitter, brandIds, keywordIds);
+        return emitter;
     }
 }
