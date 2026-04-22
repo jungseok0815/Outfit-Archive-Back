@@ -3,6 +3,7 @@ package com.fasthub.backend.cmm.naver;
 import com.fasthub.backend.admin.brand.entity.Brand;
 import com.fasthub.backend.admin.brand.repository.BrandRepository;
 import com.fasthub.backend.admin.category.entity.Category;
+import com.fasthub.backend.admin.category.repository.CategoryRepository;
 import com.fasthub.backend.admin.keyword.entity.CollectKeyword;
 import com.fasthub.backend.admin.keyword.repository.CollectKeywordRepository;
 import com.fasthub.backend.admin.product.entity.Product;
@@ -41,6 +42,7 @@ public class NaverProductCollectService {
     private final ApplicationEventPublisher eventPublisher;
     private final ClipClient clipClient;
     private final CollectKeywordRepository collectKeywordRepository;
+    private final CategoryRepository categoryRepository;
 
     private static final int DEFAULT_QUANTITY = 50;
 
@@ -131,26 +133,51 @@ public class NaverProductCollectService {
     }
 
     @Async
-    public void collectByBrands(List<Long> brandIds) {
+    public void collectByBrands(List<Long> brandIds, List<Long> keywordIds) {
         List<Brand> brands = brandRepository.findAllById(brandIds);
-        List<CollectKeyword> keywords = collectKeywordRepository.findAllByActiveTrue();
+
+        boolean useKeywords = keywordIds != null && !keywordIds.isEmpty();
+        List<CollectKeyword> keywords = useKeywords
+                ? collectKeywordRepository.findAllById(keywordIds)
+                : List.of();
 
         log.info("[Naver수집-브랜드] 시작 - 브랜드 {}개, 키워드 {}개", brands.size(), keywords.size());
         List<Long> savedIds = new ArrayList<>();
         int skipCount = 0;
 
-        for (Brand brand : brands) {
-            for (CollectKeyword kc : keywords) {
-                String searchKeyword = brand.getBrandNm() + " " + kc.getKeyword();
-                List<NaverShoppingItem> items = naverShoppingClient.search(searchKeyword, DISPLAY_PER_KEYWORD);
-                for (NaverShoppingItem item : items) {
-                    if (item.getProductId() == null || item.getImage() == null) continue;
-                    try {
-                        Long savedId = self.saveProductForBrand(item, kc.getCategory(), brand);
-                        if (savedId != null) savedIds.add(savedId);
-                        else skipCount++;
-                    } catch (Exception e) {
-                        log.warn("[Naver수집-브랜드] 저장 실패 - productId={}, error={}", item.getProductId(), e.getMessage());
+        if (keywords.isEmpty()) {
+            List<Category> categories = categoryRepository.findAllByActiveTrue();
+            log.info("[Naver수집-브랜드] 키워드 없음 - 카테고리 {}개로 대체 검색", categories.size());
+            for (Brand brand : brands) {
+                for (Category category : categories) {
+                    String searchKeyword = brand.getBrandNm() + " " + category.getKorName();
+                    List<NaverShoppingItem> items = naverShoppingClient.search(searchKeyword, DISPLAY_PER_KEYWORD);
+                    for (NaverShoppingItem item : items) {
+                        if (item.getProductId() == null || item.getImage() == null) continue;
+                        try {
+                            Long savedId = self.saveProductForBrand(item, category, brand);
+                            if (savedId != null) savedIds.add(savedId);
+                            else skipCount++;
+                        } catch (Exception e) {
+                            log.warn("[Naver수집-브랜드] 저장 실패 - productId={}, error={}", item.getProductId(), e.getMessage());
+                        }
+                    }
+                }
+            }
+        } else {
+            for (Brand brand : brands) {
+                for (CollectKeyword kc : keywords) {
+                    String searchKeyword = brand.getBrandNm() + " " + kc.getKeyword();
+                    List<NaverShoppingItem> items = naverShoppingClient.search(searchKeyword, DISPLAY_PER_KEYWORD);
+                    for (NaverShoppingItem item : items) {
+                        if (item.getProductId() == null || item.getImage() == null) continue;
+                        try {
+                            Long savedId = self.saveProductForBrand(item, kc.getCategory(), brand);
+                            if (savedId != null) savedIds.add(savedId);
+                            else skipCount++;
+                        } catch (Exception e) {
+                            log.warn("[Naver수집-브랜드] 저장 실패 - productId={}, error={}", item.getProductId(), e.getMessage());
+                        }
                     }
                 }
             }

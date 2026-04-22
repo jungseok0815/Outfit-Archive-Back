@@ -67,7 +67,7 @@ public class ProductController {
 
     @PostMapping("/collect")
     public ResponseEntity<Void> collect(@RequestBody CollectRequestDto dto) {
-        naverProductCollectService.collectByBrands(dto.getBrandIds());
+        naverProductCollectService.collectByBrands(dto.getBrandIds(), dto.getKeywordIds());
         return ResponseEntity.accepted().build();
     }
 }

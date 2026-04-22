@@ -9,4 +9,5 @@ import java.util.List;
 @Setter
 public class CollectRequestDto {
     private List<Long> brandIds;
+    private List<Long> keywordIds;
 }
