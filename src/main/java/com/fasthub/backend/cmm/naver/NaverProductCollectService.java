@@ -22,6 +22,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.scheduling.annotation.Async;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -125,6 +127,82 @@ public class NaverProductCollectService {
         );
 
         log.debug("[Naver수집] 저장 완료 - productId={}, name={}", product.getId(), product.getProductNm());
+        return product.getId();
+    }
+
+    @Async
+    public void collectByBrands(List<Long> brandIds) {
+        List<Brand> brands = brandRepository.findAllById(brandIds);
+        List<CollectKeyword> keywords = collectKeywordRepository.findAllByActiveTrue();
+
+        log.info("[Naver수집-브랜드] 시작 - 브랜드 {}개, 키워드 {}개", brands.size(), keywords.size());
+        List<Long> savedIds = new ArrayList<>();
+        int skipCount = 0;
+
+        for (Brand brand : brands) {
+            for (CollectKeyword kc : keywords) {
+                String searchKeyword = brand.getBrandNm() + " " + kc.getKeyword();
+                List<NaverShoppingItem> items = naverShoppingClient.search(searchKeyword, DISPLAY_PER_KEYWORD);
+                for (NaverShoppingItem item : items) {
+                    if (item.getProductId() == null || item.getImage() == null) continue;
+                    try {
+                        Long savedId = self.saveProductForBrand(item, kc.getCategory(), brand);
+                        if (savedId != null) savedIds.add(savedId);
+                        else skipCount++;
+                    } catch (Exception e) {
+                        log.warn("[Naver수집-브랜드] 저장 실패 - productId={}, error={}", item.getProductId(), e.getMessage());
+                    }
+                }
+            }
+        }
+
+        if (!savedIds.isEmpty()) {
+            eventPublisher.publishEvent(new BulkProductSavedEvent(savedIds));
+            log.info("[Naver수집-브랜드] CLIP 벡터 추출 예약 - {}건", savedIds.size());
+        }
+
+        log.info("[Naver수집-브랜드] 완료 - 신규={}건, 중복 스킵={}건", savedIds.size(), skipCount);
+    }
+
+    @Transactional
+    public Long saveProductForBrand(NaverShoppingItem item, Category category, Brand brand) {
+        if (productRepository.existsByNaverProductId(item.getProductId())) return null;
+
+        if (!clipClient.detectCleanProduct(item.getImage())) {
+            log.debug("[Naver수집-브랜드] 단독 상품 이미지 아님 - 스킵 productId={}", item.getProductId());
+            return null;
+        }
+
+        List<String> sizes = (category.getDefaultSizes() != null && !category.getDefaultSizes().isBlank())
+                ? Arrays.asList(category.getDefaultSizes().split(","))
+                : List.of("FREE");
+
+        Product product = productRepository.save(Product.builder()
+                .productNm(item.getCleanTitle())
+                .productCode(item.getProductId())
+                .productPrice(item.getPriceAsInt())
+                .productQuantity(DEFAULT_QUANTITY * sizes.size())
+                .category(category)
+                .brand(brand)
+                .naverProductId(item.getProductId())
+                .build());
+
+        ProductImg img = new ProductImg();
+        img.setImgPath(item.getImage());
+        img.setImgNm("");
+        img.setImgOriginNm(item.getCleanTitle());
+        img.setMappingEntity(product);
+        productImgRepository.save(img);
+
+        sizes.forEach(sizeNm ->
+                productSizeRepository.save(ProductSize.builder()
+                        .product(product)
+                        .sizeNm(sizeNm.trim())
+                        .quantity(DEFAULT_QUANTITY)
+                        .build())
+        );
+
+        log.debug("[Naver수집-브랜드] 저장 완료 - productId={}, brandNm={}", product.getId(), brand.getBrandNm());
         return product.getId();
     }
 
