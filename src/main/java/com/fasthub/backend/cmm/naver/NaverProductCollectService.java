@@ -171,7 +171,8 @@ public class NaverProductCollectService {
                         }
                     }
                 }
-            } else {
+            }
+            else {
                 int total = brands.size() * keywords.size();
                 int current = 0;
                 for (Brand brand : brands) {

@@ -2,6 +2,8 @@ package com.fasthub.backend.user.recommend.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -17,6 +19,7 @@ public class ClipClient {
     public ClipClient(@Value("${clip.server.url:http://localhost:8000}") String clipServerUrl) {
         this.restClient = RestClient.builder()
                 .baseUrl(clipServerUrl)
+                .requestFactory(new SimpleClientHttpRequestFactory())
                 .build();
     }
 
@@ -28,6 +31,7 @@ public class ClipClient {
         try {
             VectorResponse response = restClient.post()
                     .uri("/api/v1/image/vectorize-url")
+                    .contentType(MediaType.APPLICATION_JSON)
                     .body(Map.of("url", imageUrl))
                     .retrieve()
                     .body(VectorResponse.class);
@@ -46,9 +50,11 @@ public class ClipClient {
         try {
             CleanProductResponse response = restClient.post()
                     .uri("/api/v1/image/detect-clean-product")
+                    .contentType(MediaType.APPLICATION_JSON)
                     .body(Map.of("url", imageUrl))
                     .retrieve()
                     .body(CleanProductResponse.class);
+            log.info("response : {}", response.isCleanProduct());
             return response != null && response.isCleanProduct();
         } catch (Exception e) {
             log.error("[ClipClient] 단독 상품 판별 실패 imageUrl={}, error={}", imageUrl, e.getMessage());
