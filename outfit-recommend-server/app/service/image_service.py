@@ -6,6 +6,10 @@ from PIL import Image
 
 from app.model.clip_model import CLIPEmbedder
 
+_HTTP_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+}
+
 
 class ImageService:
     labels = [
@@ -29,7 +33,7 @@ class ImageService:
 
     async def vectorize_url(self, url: str) -> list[float]:
         logger.info(f"URL 이미지 벡터화 시작: url={url}")
-        async with httpx.AsyncClient(timeout=10.0) as client:
+        async with httpx.AsyncClient(timeout=10.0, headers=_HTTP_HEADERS) as client:
             response = await client.get(url)
             response.raise_for_status()
         logger.debug(f"이미지 다운로드 완료: content_length={len(response.content)} bytes")
@@ -40,7 +44,7 @@ class ImageService:
 
     async def detect_clean_product(self, url: str) -> bool:
         logger.info(f"단독 상품 이미지 판별 시작: url={url}")
-        async with httpx.AsyncClient(timeout=10.0) as client:
+        async with httpx.AsyncClient(timeout=10.0, headers=_HTTP_HEADERS) as client:
             response = await client.get(url)
             response.raise_for_status()
         image = Image.open(io.BytesIO(response.content)).convert("RGB")

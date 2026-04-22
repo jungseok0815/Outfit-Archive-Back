@@ -45,6 +45,7 @@ async def vectorize_image(
         _log_stats("vectorize")
         return VectorResponse(vector=vector, dimension=len(vector))
     except Exception as e:
+        logger.exception(f"[vectorize] 처리 실패: {e}")
         _stats["vectorize"]["fail"] += 1
         _log_stats("vectorize")
         raise HTTPException(status_code=500, detail=str(e))
@@ -60,7 +61,8 @@ async def vectorize_image_url(
         _stats["vectorize_url"]["success"] += 1
         _log_stats("vectorize_url")
         return VectorResponse(vector=vector, dimension=len(vector))
-    except Exception:
+    except Exception as e:
+        logger.exception(f"[vectorize_url] 처리 실패: {e}")
         _stats["vectorize_url"]["fail"] += 1
         _log_stats("vectorize_url")
         raise HTTPException(status_code=400, detail="이미지 URL을 처리할 수 없습니다.")
@@ -72,11 +74,13 @@ async def detect_clean_product(
     service: ImageService = Depends(get_image_service),
 ):
     try:
+        logger.info("상품 이미지 분류 시작!!!!")
         result = await service.detect_clean_product(str(body.url))
         _stats["detect_clean"]["success"] += 1
         _log_stats("detect_clean")
         return {"is_clean_product": result}
-    except Exception:
+    except Exception as e:
+        logger.exception(f"[detect_clean_product] 처리 실패: {e}")
         _stats["detect_clean"]["fail"] += 1
         _log_stats("detect_clean")
         raise HTTPException(status_code=400, detail="이미지 URL을 처리할 수 없습니다.")

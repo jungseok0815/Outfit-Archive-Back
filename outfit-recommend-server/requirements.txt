@@ -1,3 +1,4 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
 fastapi==0.135.2
 uvicorn==0.42.0
 pydantic==2.12.5
@@ -7,3 +8,5 @@ Pillow==11.2.1
 transformers==4.51.3
 httpx==0.28.1
 loguru==0.7.3
+torch
+torchvision
