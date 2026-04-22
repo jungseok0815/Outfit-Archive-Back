@@ -52,9 +52,9 @@ class ImageService:
         logger.info(f"판별 완료: 단독 상품 확률={clean_product_prob:.2f}")
         return clean_product_prob >= 0.8
 
-    async def detect_clean_product_batch(self, urls: list[urls]) -> list[bool]:
+    async def detect_clean_product_batch(self, urls: list[str]) -> list[bool]:
         results = []
-        for url in urls
+        for url in urls:
             logger.info(f"url ={url}")
             result = await self.detect_clean_product(url)
             logger.info(f"result : {result}")

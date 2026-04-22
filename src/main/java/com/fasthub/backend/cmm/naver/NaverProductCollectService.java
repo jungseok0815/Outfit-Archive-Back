@@ -140,7 +140,7 @@ public class NaverProductCollectService {
 
         boolean useKeywords = keywordIds != null && !keywordIds.isEmpty();
         List<CollectKeyword> keywords = useKeywords
-                ? collectKeywordRepository.findAllById(keywordIds)
+                ? collectKeywordRepository.findAllByIdWithCategory(keywordIds)
                 : List.of();
 
         log.info("[Naver수집-브랜드] 시작 - 브랜드 {}개, 키워드 {}개", brands.size(), keywords.size());

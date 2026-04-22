@@ -2,7 +2,7 @@ from loguru import logger
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 
 from app.model.clip_model import CLIPEmbedder, get_clip_embedder
-from app.schema.image_schema import ImageUrlRequest, VectorResponse
+from app.schema.image_schema import ImageUrlRequest, ImageUrlBatchRequest, VectorResponse
 from app.service.image_service import ImageService
 
 router = APIRouter(prefix="/image", tags=["image"])
@@ -94,5 +94,5 @@ async def detect_clean_product_batch(
         results = await service.detect_clean_product_batch([str(url) for url in body.urls])
         return {"results" : results}
     except Exception as e:
-        logger.Exception("f"[detect_clean_product_batch] 처리 실패: {e}"")
+        logger.exception(f"[detect_clean_product_batch] 처리 실패: {e}")
         raise HTTPException(status_code=400, detail="배치 처리 실패")
