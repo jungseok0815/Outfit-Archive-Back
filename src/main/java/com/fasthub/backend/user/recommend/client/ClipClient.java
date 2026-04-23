@@ -62,19 +62,18 @@ public class ClipClient {
         }
     }
 
-    public boolean detectCleanProductBatch(String imageUrl) {
+    public List<Boolean> detectCleanProductBatch(List<String> imageUrls) {
         try {
-            CleanProductResponse response = restClient.post()
-                    .uri("/api/v1/image/detect-clean-product")
+            CleanProductBatchResponse response = restClient.post()
+                    .uri("/api/v1/image/detect-clean-product-batch")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(Map.of("url", imageUrl))
+                    .body(Map.of("urls", imageUrls))
                     .retrieve()
-                    .body(CleanProductResponse.class);
-            log.info("response : {}", response.isCleanProduct());
-            return response != null && response.isCleanProduct();
+                    .body(CleanProductBatchResponse.class);
+            return response != null ? response.getResults() : List.of();
         } catch (Exception e) {
-            log.error("[ClipClient] 단독 상품 판별 실패 imageUrl={}, error={}", imageUrl, e.getMessage());
-            return false;
+            log.error("[ClipClient] 배치 단독 상품 판별 실패 error={}", e.getMessage());
+            return List.of();
         }
     }
 
@@ -88,5 +87,11 @@ public class ClipClient {
     public static class CleanProductResponse {
         @com.fasterxml.jackson.annotation.JsonProperty("is_clean_product")
         private boolean isCleanProduct;
+    }
+
+    @lombok.Getter
+    public static class CleanProductBatchResponse {
+        @com.fasterxml.jackson.annotation.JsonProperty("results")
+        private List<Boolean> results;
     }
 }
