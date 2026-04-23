@@ -1,6 +1,7 @@
 package com.fasthub.backend.cmm.config;
 
 import com.fasthub.backend.admin.auth.repository.AdminMemberRepository;
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletResponse;
 import com.fasthub.backend.cmm.jwt.JwtAuthFilter;
 import com.fasthub.backend.cmm.jwt.JwtService;
@@ -41,6 +42,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/css/**","/js/**", "/img/**").permitAll()
                         .requestMatchers("/api/usr/login", "/api/usr/join", "/api/usr/logout", "/api/img/**").permitAll()

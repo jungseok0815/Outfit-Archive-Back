@@ -41,7 +41,6 @@ class ImageService:
         logger.info("URL 이미지 벡터화 완료")
         return result
 
-
     async def detect_clean_product(self, url: str) -> bool:
         logger.info(f"단독 상품 이미지 판별 시작: url={url}")
         async with httpx.AsyncClient(timeout=10.0, headers=_HTTP_HEADERS) as client:
@@ -52,3 +51,12 @@ class ImageService:
         clean_product_prob = probs[0]
         logger.info(f"판별 완료: 단독 상품 확률={clean_product_prob:.2f}")
         return clean_product_prob >= 0.8
+
+    async def detect_clean_product_batch(self, urls: list[str]) -> list[bool]:
+        results = []
+        for url in urls:
+            logger.info(f"url ={url}")
+            result = await self.detect_clean_product(url)
+            logger.info(f"result : {result}")
+            results.append(result)
+        return results

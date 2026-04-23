@@ -8,3 +8,6 @@ class VectorResponse(BaseModel):
 
 class ImageUrlRequest(BaseModel):
     url: HttpUrl
+
+class ImageUrlBatchRequest(BaseModel):
+    urls: list[str]
