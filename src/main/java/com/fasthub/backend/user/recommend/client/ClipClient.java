@@ -62,6 +62,22 @@ public class ClipClient {
         }
     }
 
+    public boolean detectCleanProductBatch(String imageUrl) {
+        try {
+            CleanProductResponse response = restClient.post()
+                    .uri("/api/v1/image/detect-clean-product")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(Map.of("url", imageUrl))
+                    .retrieve()
+                    .body(CleanProductResponse.class);
+            log.info("response : {}", response.isCleanProduct());
+            return response != null && response.isCleanProduct();
+        } catch (Exception e) {
+            log.error("[ClipClient] 단독 상품 판별 실패 imageUrl={}, error={}", imageUrl, e.getMessage());
+            return false;
+        }
+    }
+
     @lombok.Getter
     public static class VectorResponse {
         private List<Double> vector;
