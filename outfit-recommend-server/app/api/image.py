@@ -85,7 +85,7 @@ async def detect_clean_product(
         _log_stats("detect_clean")
         raise HTTPException(status_code=400, detail="이미지 URL을 처리할 수 없습니다.")
 
-@router.post("/detect_clean_product-batch")
+@router.post("/detect-clean-product-batch")
 async def detect_clean_product_batch(
     body: ImageUrlBatchRequest,
     service: ImageService = Depends(get_image_service),
