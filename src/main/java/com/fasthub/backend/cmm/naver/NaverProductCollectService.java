@@ -135,6 +135,12 @@ public class NaverProductCollectService {
 
         List<String> imageUrls = newItems.stream().map(NaverShoppingItem::getImage).toList();
         Map<String, Boolean> cleanResults = clipClient.detectCleanProductBatch(imageUrls);
+        log.info("[Naver수집-브랜드] 배치 클린 체크 결과 - 총={}건, 통과={}건, 스킵={}건",
+                cleanResults.size(),
+                cleanResults.values().stream().filter(v -> v).count(),
+                cleanResults.values().stream().filter(v -> !v).count());
+        cleanResults.forEach((url, clean) ->
+                log.debug("[Naver수집-브랜드] 클린 체크 - url={}, clean={}", url, clean));
 
         List<String> sizes = (category.getDefaultSizes() != null && !category.getDefaultSizes().isBlank())
                 ? Arrays.asList(category.getDefaultSizes().split(","))
