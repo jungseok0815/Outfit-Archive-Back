@@ -46,8 +46,9 @@ logs/
 
 ### Python ###
 outfit-recommend-server/venv/
-outfit-recommend-server/__pycache__/
-outfit-recommend-server/*.pyc
+**/__pycache__/
+**/*.pyc
+**/*.pyo
 
 ### Image Storage ###
 *.png
