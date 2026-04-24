@@ -68,8 +68,12 @@ class ImageService:
             if isinstance(response, Exception):
                 logger.error(f"[detect_clean_product_batch] 다운로드 실패: url={url}")
                 continue
-            valid_urls.append(url)
-            valid_images.append(Image.open(io.BytesIO(response.content)).convert("RGB"))
+            try:
+                valid_urls.append(url)
+                valid_images.append(Image.open(io.BytesIO(response.content)).convert("RGB"))
+            except Exception as e:
+                logger.error(f"[detect_clean_product_batch] 이미지 변환 실패: url={url}, error={e}")
+                valid_urls.pop()
 
         if not valid_images:
             return {}
