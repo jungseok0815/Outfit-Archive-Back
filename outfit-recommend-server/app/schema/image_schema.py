@@ -10,4 +10,4 @@ class ImageUrlRequest(BaseModel):
     url: HttpUrl
 
 class ImageUrlBatchRequest(BaseModel):
-    urls: list[HttpUrl]
+    urls: list[str]

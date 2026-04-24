@@ -17,9 +17,12 @@ public class ClipClient {
     private final RestClient restClient;
 
     public ClipClient(@Value("${clip.server.url:http://localhost:8000}") String clipServerUrl) {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(5_000);
+        factory.setReadTimeout(120_000);
         this.restClient = RestClient.builder()
                 .baseUrl(clipServerUrl)
-                .requestFactory(new SimpleClientHttpRequestFactory())
+                .requestFactory(factory)
                 .build();
     }
 
