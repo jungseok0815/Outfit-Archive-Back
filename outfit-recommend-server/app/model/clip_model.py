@@ -41,6 +41,21 @@ class CLIPEmbedder:
         logger.info(f"분류 완료: {dict(zip(labels, result))}")
         return result
 
+    def classify_batch(self, images: list[Image], labels: list[str]) -> list[list[float]]:
+        logger.debug(f"배치 이미지 분류 시작: count={len(images)}, labels={labels}")
+        inputs = self.processor(
+            text=labels,
+            images=images,
+            return_tensors="pt",
+            padding=True
+        ).to(self.device)
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+            probs = outputs.logits_per_image.softmax(dim=1)  # shape: [batch_size, len(labels)]
+        result = probs.tolist()
+        logger.info(f"배치 분류 완료: count={len(result)}")
+        return result
+
 
 
 @lru_cache(maxsize=1)
