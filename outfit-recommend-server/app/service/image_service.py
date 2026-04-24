@@ -1,3 +1,4 @@
+import asyncio
 import io
 
 import httpx
@@ -53,10 +54,35 @@ class ImageService:
         return clean_product_prob >= 0.8
 
     async def detect_clean_product_batch(self, urls: list[str]) -> dict[str, bool]:
-        results = {}
-        for url in urls:
-            logger.info(f"url ={url}")
-            result = await self.detect_clean_product(url)
-            logger.info(f"result : {result}")
-            results[url] = result
-        return results
+        # 1. 병렬 다운로드
+        async with httpx.AsyncClient(timeout=10.0, headers=_HTTP_HEADERS) as client:
+            responses = await asyncio.gather(
+                *[client.get(url) for url in urls],
+                return_exceptions=True
+            )
+
+        # 2. 실패 필터링
+        valid_urls = []
+        valid_images = []
+        for url, response in zip(urls, responses):
+            if isinstance(response, Exception):
+                logger.error(f"[detect_clean_product_batch] 다운로드 실패: url={url}")
+                continue
+            try:
+                valid_urls.append(url)
+                valid_images.append(Image.open(io.BytesIO(response.content)).convert("RGB"))
+            except Exception as e:
+                logger.error(f"[detect_clean_product_batch] 이미지 변환 실패: url={url}, error={e}")
+                valid_urls.pop()
+
+        if not valid_images:
+            return {}
+
+        # 3. 배치 추론
+        probs_list = self.embedder.classify_batch(valid_images, self.labels)
+
+        # 4. 결과 매핑
+        return {
+            url: probs[0] >= 0.8
+            for url, probs in zip(valid_urls, probs_list)
+        }

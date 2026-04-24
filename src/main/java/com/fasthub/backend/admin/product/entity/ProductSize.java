@@ -26,6 +26,9 @@ public class ProductSize {
     private int quantity;
 
     public void decreaseQuantity(int qty) {
+        if (this.quantity < qty) {
+            throw new IllegalStateException("재고가 부족합니다. 현재 재고: " + this.quantity + ", 요청 수량: " + qty);
+        }
         this.quantity -= qty;
     }
 
