@@ -135,7 +135,13 @@ public class PostService {
 
         if (dto.getImages() != null) {
             // 기존 이미지를 S3에서 먼저 삭제 후 DB 엔티티 제거
-            post.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
+            post.getImages().forEach(img -> {
+                try {
+                    imgHandler.deleteFile(img.getImgNm());
+                } catch (Exception e) {
+                    log.warn("[PostService] S3 이미지 삭제 실패 (무시하고 진행): imgNm={}, error={}", img.getImgNm(), e.getMessage());
+                }
+            });
             postImgRepository.deleteByPost(post);
             dto.getImages().forEach(image ->
                     postImgRepository.save(imgHandler.createImg(image, PostImg::new, post)));
@@ -166,7 +172,13 @@ public class PostService {
         postCommentRepository.deleteByPost(post);
         postProductRepository.deleteByPost(post);
         // S3 이미지 먼저 제거 (CASCADE ALL로 DB 엔티티는 자동 삭제)
-        post.getImages().forEach(img -> imgHandler.deleteFile(img.getImgNm()));
+        post.getImages().forEach(img -> {
+            try {
+                imgHandler.deleteFile(img.getImgNm());
+            } catch (Exception e) {
+                log.warn("[PostService] S3 이미지 삭제 실패 (무시하고 진행): imgNm={}, error={}", img.getImgNm(), e.getMessage());
+            }
+        });
         postRepository.delete(post);
     }
 }
